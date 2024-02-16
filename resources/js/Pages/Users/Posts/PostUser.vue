@@ -59,13 +59,17 @@ import { Head, Link } from "@inertiajs/vue3";
                 </svg>
               </span>
             </div>
-
+          
             <transition>
               <div v-if="transitionVar" class="absolute right-2 top-8 bg-gray-300 rounded">
                 <ul class="cursor-pointer">
-                  <li v-if="post.video !== null || post.image !== null" class="py-2 px-1.5 hover:bg-gray-200 text-[12px]"
+                  <li v-if="post.image !== null" class="py-2 px-1.5 hover:bg-gray-200 text-[12px]"
                     @click="enregistrerImage()">
                     Enrégistrer cette image
+                  </li>
+                  <li v-else-if="post.video !== null" class="py-2 px-1.5 hover:bg-gray-200 text-[12px]"
+                    @click="enregistrerImage()">
+                    Enrégistrer cette vidéo
                   </li>
                   <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage()"
                     v-if="users.id === $page.props.auth.user.id">

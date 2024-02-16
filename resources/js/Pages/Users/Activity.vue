@@ -59,7 +59,7 @@ import { Head, Link } from "@inertiajs/vue3";
               </button>
             </div>
           </div>
-          <div class="mx-auto w-[95%] overflow-y-auto h-[500px]">
+          <div class="mx-auto w-[95%] overflow-y-auto h-[600px]">
             <div class="w-full p-1 relative">
               <template v-if="selectedColorIndex !== null">
                 <div class="h-64 flex items-center p-5" :class="`${colorArray[selectedColorIndex]}`">
@@ -188,11 +188,23 @@ import { Head, Link } from "@inertiajs/vue3";
                       </svg>
                     </span>
                     <transition>
-                      <div :id="'posts-' + index" v-if="el.video !== null || el.image !== null"
+                      <div :id="'posts-' + index" v-if="el.image !== null"
                         class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
                           <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
                             Enrégistrer cette image
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
+                            v-if="el.user_id === $page.props.auth.user.id">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                      <div :id="'posts-' + index" v-else-if="el.video !== null"
+                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                            Enrégistrer cette vidéo
                           </li>
                           <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
                             v-if="el.user_id === $page.props.auth.user.id">
@@ -454,17 +466,20 @@ export default {
 
   watch: {
     publish(newValue, oldValue) { 
-      if(newValue.trim().split(/\s+/).length >= 30)
+      if(newValue !== null)
       {
-        this.selectedColorIndex = null;
-        this.imageInput = true;
-      } else if(this.nameImg !== null || photos.value !== null)
-      {
-        this.imageInput = true;
-        this.selectedColorIndex = null;
-      }
-       else {
-        this.imageInput = false;
+        if(newValue.trim().split(/\s+/).length >= 30)
+        {
+          this.selectedColorIndex = null;
+          this.imageInput = true;
+        } else if(this.nameImg !== null || photos.value !== '')
+        {
+          this.imageInput = true;
+          this.selectedColorIndex = null;
+        }
+         else {
+          this.imageInput = false;
+        }
       }
     }
   },
@@ -688,7 +703,23 @@ export default {
     // By KolaDev
     // Fonction pour cacher le modal de création de post
     closeModalPublication() {
+      this.publish = null;
+      photos.value = "";
+      this.imageInput = false;
+      this.selectedColorIndex = null;
       divPost.classList.add("hidden");
+      if(this.nameImg !== null)
+      {
+        axios
+          .delete(
+            route("post.deleteImgDeo", {
+              nameImg: this.nameImg,
+            })
+          )
+          .then((response) => {
+            this.nameImg = null;
+          });
+      }
     },
 
     // By KolaDev
