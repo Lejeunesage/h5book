@@ -9,17 +9,20 @@ import { Head, Link } from '@inertiajs/vue3';
     <AuthenticatedLayout>
         <main class="mt-[-20px] mb-14">
             <ComposantUser :filesProfil="profil" :covers="cover" :lastImage="lImg" :niveau="'friends'"
-                :followin="userfollow" :followe="followers" :usersIdentifiant="user" :numberLik="numberLike" :allImg="getLastImgProfil" />
+                :followin="userfollow" :followe="followers" :usersIdentifiant="user" :numberLik="numberLike"
+                :allImg="getLastImgProfil" />
             <section class="bg-white mt-[13px] mb-8 pb-8">
                 <div class="border-[#e4e7e9e5] border-b-[1px]">
                     <div class="px-2 py-4 flex justify-between items-center mx-auto w-[90%]">
                         <div class="flex gap-4 basis-[50%]">
-                            <button class="font-bold text-[13px] text-sky-600" v-if="$page.props.auth.user.id === user.id" @click="friend(user.uuid)" id="amis">Amis</button>
+                            <button class="font-bold text-[13px] text-sky-600" v-if="$page.props.auth.user.id === user.id"
+                                @click="friend(user.uuid)" id="amis">Amis</button>
 
-                            <button class="font-bold text-[13px] text-sky-600" v-else @click="friend(user.uuid)" id="amis">Ses amis</button>
+                            <button class="font-bold text-[13px] text-sky-600" v-else @click="friend(user.uuid)"
+                                id="amis">Ses amis</button>
 
-                            <button v-if="$page.props.auth.user.id === user.id" class="font-bold text-[13px] text-gray-600" @click="suggest(user.uuid)"
-                                id="suggest">Suggestions</button>
+                            <button v-if="$page.props.auth.user.id === user.id" class="font-bold text-[13px] text-gray-600"
+                                @click="suggest(user.uuid)" id="suggest">Suggestions</button>
                         </div>
                     </div>
                 </div>
@@ -27,7 +30,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     <form class="basis-[45%] bg-[#e4e7e9e5] pr-2 flex items-center gap-2 rounded-lg border">
                         <input type="text" placeholder="Recherchez un proche..."
                             class="text-sm w-full focus:ring-0 focus:ring-transparent py-1 bg-[#e4e7e9e5] border-none outline-none rounded placeholder:text-[12px]"
-                            @input="searchInputFriend(user.uuid)" v-model="search">
+                            @keyup="searchInputFriend(user.uuid)" v-model="search">
                         <span class="cursor-pointer" @click="resetSearch(user.uuid)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-4 h-4">
@@ -37,13 +40,13 @@ import { Head, Link } from '@inertiajs/vue3';
                     </form>
                 </div>
 
-                <div id="divAmis" class="mx-auto w-[88%] mt-4 flex flex-col gap-y-2 max-h-[500px] overflow-y-auto" v-if="userfollowing.length > 0">
-                    <article class="basis-full flex items-center justify- borderFollow py-2" v-for="(el, index) in userfollowing"
-                        :key="index" :id="'parent-' + el.id">
+                <div id="divAmis" class="mx-auto w-[88%] mt-4 flex flex-col gap-y-2 max-h-[500px] overflow-y-auto"
+                    v-if="userfollowing.length > 0">
+                    <article class="basis-full flex items-center justify- borderFollow py-2"
+                        v-for="(el, index) in userfollowing" :key="index" :id="'parent-' + el.id">
                         <div class="flex items-center gap-2 basis-[70%]">
                             <div class="border-sky-600 border-l-4 rounded-full">
-                                <div
-                                    class="rounded-full border-white border-4">
+                                <div class="rounded-full border-white border-4">
                                     <img v-if="el.image" :src="`/storage/profilImage/${el.image}`"
                                         class="object-cover h-[30px] w-[30px] rounded-full" alt="image_de_profil">
                                     <img v-else :src="`/storage/images/account.png`"
@@ -51,27 +54,31 @@ import { Head, Link } from '@inertiajs/vue3';
                                 </div>
                             </div>
                             <div class="flex flex-col mt-[-5px]">
-                                <Link :href="route('myActivity', el.id)" class="text-gray-800 text-[12px] font-bold">{{ el.name }}</Link>
-                                <p v-if="el.abonne !== null" class="text-gray-400 font-medium text-[11px]">Depuis le {{ el.abonne.split("T")[0] }}</p>
+                                <Link :href="route('myActivity', el.id)"
+                                    class="nameAmis text-gray-800 text-[12px] font-bold">{{ el.name }}</Link>
+                                <p v-if="el.abonne !== null" class="text-gray-400 font-medium text-[11px]">Depuis le {{
+                                    el.abonne.split("T")[0] }}</p>
                             </div>
                         </div>
                         <div class="flex justify-end gap-2 basis-[30%]" v-if="$page.props.auth.user.id === user.id">
                             <button @click="unsubscribe(el.id, index)"
-                                class="basis-full rounded-lg text-white font-bold border-gray-500 py-1.5 bg-[#fc6949] text-[11px]">Ne plus suivre</button>
+                                class="basis-full rounded-lg text-white font-bold border-gray-500 py-1.5 bg-[#fc6949] text-[11px]">Ne
+                                plus suivre</button>
                         </div>
                     </article>
                 </div>
                 <div id="divAmis" class="flex justify-center" v-else>
-                    <p class="text-[14px] text-gray-600 mt-4" v-if="$page.props.auth.user.id === user.id">Vous n'avez pas d'amis</p>
+                    <p class="text-[14px] text-gray-600 mt-4" v-if="$page.props.auth.user.id === user.id">Vous n'avez pas
+                        d'amis</p>
                 </div>
 
-                <div id="divSuggest" class="hidden mx-auto w-[88%] mt-4 flex flex-col gap-y-2 max-h-[500px] overflow-y-auto">
-                    <article class="basis-full flex items-center justify- borderFollow py-2" v-for="(following, index) in users"
-                        :key="index">
+                <div id="divSuggest"
+                    class="hidden mx-auto w-[88%] mt-4 flex flex-col gap-y-2 max-h-[500px] overflow-y-auto">
+                    <article class="basis-full flex items-center justify- borderFollow py-2"
+                        v-for="(following, index) in users" :key="index">
                         <div class="flex gap-2 basis-[70%]">
                             <div class="border-sky-600 border-l-4 rounded-full">
-                                <div
-                                    class="rounded-full border-white border-4">
+                                <div class="rounded-full border-white border-4">
                                     <img v-if="following.image" :src="`/storage/profilImage/${following.image}`"
                                         class="object-cover h-[30px] w-[30px] rounded-full" alt="image_de_profil">
                                     <img v-else :src="`/storage/images/account.png`"
@@ -79,8 +86,11 @@ import { Head, Link } from '@inertiajs/vue3';
                                 </div>
                             </div>
                             <div class="flex flex-col mt-[5px]">
-                                <Link :href="route('myActivity', following.id)" class="text-gray-800 text-[12px] font-bold">{{ following.name }}</Link>
-                                <p v-if="following.created_at !== null" class="text-gray-400 font-medium text-[11px]">Depuis le {{ following.created_at.split("T")[0] }}</p>
+                                <Link :href="route('myActivity', following.id)"
+                                    class="nameSuggest text-gray-800 text-[12px] font-bold">
+                                {{ following.name }}</Link>
+                                <p v-if="following.created_at !== null" class="text-gray-400 font-medium text-[11px]">Depuis
+                                    le {{ following.created_at.split("T")[0] }}</p>
                             </div>
                         </div>
                         <div class="flex justify-end basis-[30%]" v-if="$page.props.auth.user.id === user.id">
@@ -140,6 +150,14 @@ export default {
             divAmis.classList.remove("hidden");
             divSuggest.classList.add("hidden");
             this.variableDependance = "friends";
+
+            let linkAll = document.querySelectorAll(".nameAmis");
+
+            for (let i = 0; i < linkAll.length; i++) {
+                let parent = linkAll[i].parentElement.parentElement.parentElement;
+                parent.style.display = "";
+            }
+
             this.resetSearch(uuid);
         },
 
@@ -153,6 +171,14 @@ export default {
             divAmis.classList.add("hidden");
             divSuggest.classList.remove("hidden");
             this.variableDependance = "suggestion";
+
+            let linkAll = document.querySelectorAll(".nameSuggest");
+
+            for (let i = 0; i < linkAll.length; i++) {
+                let parent = linkAll[i].parentElement.parentElement.parentElement;
+                parent.style.display = "";
+            }
+
             this.resetSearch(uuid);
         },
 
@@ -204,23 +230,50 @@ export default {
         // Fonction pour rechercher des amis
         // By KolaDev
         searchInputFriend(uuid) {
-            axios.post(route("searchInputFriend", {
-                search: this.search,
-                variable: this.variableDependance,
-                uuid: uuid
-            })).then(response => {
-                if (this.variableDependance === 'friends') {
-                    this.userfollowing = response.data.userFollowing;
+            // Déclararation des variables
+            let input, filter, txtValue, linkAll;
+            input = this.search;
+            filter = input.toUpperCase();
+
+            if (this.variableDependance === 'friends') {
+                linkAll = document.querySelectorAll(".nameAmis");
+
+            } else {
+                linkAll = document.querySelectorAll(".nameSuggest");
+            }
+
+            for (let i = 0; i < linkAll.length; i++) {
+                txtValue = linkAll[i].textContent || linkAll[i].innerText;
+                let parent = linkAll[i].parentElement.parentElement.parentElement;
+                if (this.search !== '') {
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        parent.style.display = "";
+                    } else {
+                        parent.style.display = "none";
+                    }
                 } else {
-                    this.users = response.data.follow;
+                    parent.style.display = "";
                 }
-            })
+            }
         },
 
         // Fonction pour vider le champ de recherche
         // By KolaDev
         resetSearch(uuid) {
             this.search = null;
+            
+            let linkAll;
+            if (this.variableDependance === 'friends') {
+                linkAll = document.querySelectorAll(".nameAmis");
+
+            } else {
+                linkAll = document.querySelectorAll(".nameSuggest");
+            }
+
+            for (let i = 0; i < linkAll.length; i++) {
+                let parent = linkAll[i].parentElement.parentElement.parentElement;
+                parent.style.display = "";
+            }
             this.getFollowers(uuid);
         }
     },
