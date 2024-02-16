@@ -4,8 +4,8 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div class="bg-gradient flex flex-col justify-center relative">
-        <div class="ml-5 absolute top-5 ">
+    <div class="bg-gradient flex flex-col justify-center min-h-[100%]">
+        <div class="ml-5 flex justify-center">
             <Link href="/">
             <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
             </Link>

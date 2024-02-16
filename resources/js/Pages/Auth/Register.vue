@@ -38,13 +38,13 @@ const googleConnect = () => {
     <GuestLayout>
 
         <Head title="Inscription" />
-        <div class="p-10">
+        <div class="p-5">
 
 
-            <h1 class="text-4xl font-extrabold text-gray-600 mb-5">S'inscrire</h1>
+            <h1 class="text-2xl text-center font-extrabold text-gray-600 mb-5">S'inscrire</h1>
 
 
-            <p class="mb-10 text-gray-400">Bienvenue sur H5book, veuillez vous inscrire et créer votre compte.</p>
+            <p class="mb-5 text-sm text-gray-400">Bienvenue sur H5book, veuillez vous inscrire et créer votre compte.</p>
 
             <form @submit.prevent="submit">
                 <div>
@@ -56,7 +56,7 @@ const googleConnect = () => {
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-1">
                     <InputLabel class="text-lg" for="email" value="Adresse Email" />
 
                     <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
@@ -65,7 +65,7 @@ const googleConnect = () => {
                     <InputError class="mt-2" :message="form.errors.email" />
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-1">
                     <label for="sexe" class="block font-medium text-sm text-gray-700">Sélectionnez votre sexe</label>
                     <select v-model="form.sexe" required name="sexe" id="sexe" class="mt-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
                         <option selected disabled>Votre sexe</option>
@@ -74,7 +74,7 @@ const googleConnect = () => {
                     </select>
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-1">
                     <InputLabel class="text-lg" for="password" value="Mot de passe" />
 
                     <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
@@ -83,7 +83,7 @@ const googleConnect = () => {
                     <InputError class="mt-2" :message="form.errors.password" />
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-1">
                     <InputLabel class="text-lg" for="password_confirmation" value="Confirmer mot de passe" />
 
                     <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
@@ -92,7 +92,7 @@ const googleConnect = () => {
                     <InputError class="mt-2" :message="form.errors.password_confirmation" />
                 </div>
 
-                <div class="flex  flex-col md:flex-row items-center gap-5 justify-between mt-4">
+                <div class="flex  flex-col md:flex-row items-center gap-5 justify-between mt-1">
                     <Link :href="route('login')"
                         class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Déjà inscrit?
@@ -102,7 +102,7 @@ const googleConnect = () => {
                         Inscription
                     </PrimaryButton>
                 </div>
-                <div class="text-center mt-10">
+                <div class="text-center mt-5">
                     <button @click="googleConnect" type="button" class="login-with-google-btn ">
                         Connectez-vous avec Google
                     </button>
