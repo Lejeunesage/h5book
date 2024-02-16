@@ -26,7 +26,7 @@ import { Head, Link } from '@inertiajs/vue3';
                         <input type="text" placeholder="Recherchez un proche..."
                             class="text-sm w-full focus:ring-0 focus:ring-transparent py-1 bg-[#e4e7e9e5] border-none outline-none rounded placeholder:text-[12px]"
                             @input="searchInputFriend(user.uuid)" v-model="search">
-                        <span class="cursor-pointer" @click="resetSearch">
+                        <span class="cursor-pointer" @click="resetSearch(user.uuid)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />

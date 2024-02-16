@@ -73,9 +73,9 @@ import { Link } from '@inertiajs/vue3';
         </div>
     </section>
     <div class="bg-white px-2 py-4 mt-[13px]">
-        <div class="flex gap-2 items-center mx-auto w-[97%] flex-wrap">
+        <div class="flex gap-1 items-center mx-auto w-[97%] flex-wrap">
             <Link :href="route('about', usersIdentifiant.id)"
-                :class="niveau === 'about' ? 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px] text-sky-800' : 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px]'">
+                :class="niveau === 'about' ? 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px] text-sky-800' : 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px]'">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="feather feather-info iw-14 ih-14">
@@ -84,7 +84,7 @@ import { Link } from '@inertiajs/vue3';
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>A propos</Link>
             <Link :href="route('showImage', usersIdentifiant.id)"
-                :class="niveau === 'photos' ? 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px] text-sky-800' : 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px]'">
+                :class="niveau === 'photos' ? 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px] text-sky-800' : 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px]'">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -92,7 +92,7 @@ import { Link } from '@inertiajs/vue3';
             </svg>
             Photos</Link>
             <Link v-if="$page.props.auth.user.id === usersIdentifiant.id" :href="route('myActivity', usersIdentifiant.id)"
-                :class="niveau === 'activity' ? 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px] text-sky-800' : 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px]'">
+                :class="niveau === 'activity' ? 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px] text-sky-800' : 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px]'">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="feather feather-list iw-14 ih-14">
@@ -104,7 +104,7 @@ import { Link } from '@inertiajs/vue3';
                 <line x1="3" y1="18" x2="3.01" y2="18"></line>
             </svg>Votre journal</Link>
             <Link v-else :href="route('myActivity', usersIdentifiant.id)"
-                :class="niveau === 'activity' ? 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px] text-sky-800' : 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1.5 px-2 rounded text-[12px]'">
+                :class="niveau === 'activity' ? 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px] text-sky-800' : 'basis-[35%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px]'">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="feather feather-list iw-14 ih-14">
@@ -174,6 +174,9 @@ import { Link } from '@inertiajs/vue3';
                 <input v-if="nameImg === null" type="file" id="profilFile" @change="imageProfil"
                     class="w-full mt-4 cursor-pointer py-1.5 border-gray-300 border-[1px] rounded-lg px-2" required>
 
+                <div id="loaders" class="hidden flex my-2 justify-center"><span class="loader"></span></div>
+                <div id="paragraphs" class="hidden flex my-4 justify-center font-bold bg-red-200 text-[14px] p-1 rounded text-red-500"></div>
+
                 <div v-if="nameImg" class="mt-4 shadow-2xl border rounded-lg py-4 px-2">
                     <div class="font-bold text-gray-600 text-[12px]">Rendu de l'image</div>
                     <div class="relative mt-2">
@@ -191,7 +194,7 @@ import { Link } from '@inertiajs/vue3';
                 </div>
 
                 <div
-                    class="fixed left-0 bottom-0 right-0 flex justify-end items-center border-gray-300 border-t-[1px] py-4 px-3.5">
+                    class="fixed left-0 bottom-10 right-0 flex justify-end items-center border-gray-300 border-t-[1px] py-4 px-3.5">
                     <button class="bg-sky-600 text-white text-[12px] font-bold py-2 px-3.5 rounded-lg">Charger l'image
                     </button>
                 </div>
@@ -200,6 +203,30 @@ import { Link } from '@inertiajs/vue3';
         </section>
     </div>
 </template>
+
+<style>
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 5px dotted rgb(129, 33, 33);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 2s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
 <script>
 export default {
     props: {
@@ -269,8 +296,6 @@ export default {
             })).then(response => {
                 if (response.data.success) {
                     this.lastImgCover();
-                } else {
-                    console.log(response.data.error);
                 }
             })
         },
@@ -285,6 +310,8 @@ export default {
         // By KolaDev
         closeModal() {
             this.variable = !this.variable;
+            paragraphs.classList.remove("hidden");
+            paragraphs.innerHTML = '';
         },
 
         // Fonction pour afficher le modal de chargement d'image
@@ -321,6 +348,7 @@ export default {
         // Fonction pour charger l'image
         // By KolaDev
         imageProfil() {
+            loaders.classList.remove("hidden");
             let myDataFile = profilFile.files[0];
             let formData = new FormData();
             formData.append("myPicture", myDataFile);
@@ -329,11 +357,15 @@ export default {
                     "Content-Type": "multipart/form-data",
                 },
             }).then(response => {
+                loaders.classList.add("hidden");
                 if (response.data.success) {
+                    paragraphs.classList.add("hidden");
+                    paragraphs.innerHTML = '';
                     profilFile.value = null;
                     this.nameImg = response.data.nameImg;
                 } else {
-                    console.log(response.data.error);
+                    paragraphs.classList.remove("hidden");
+                    paragraphs.innerHTML = response.data.error;
                 }
             })
         },
@@ -346,8 +378,6 @@ export default {
             })).then(response => {
                 if (response.data.success) {
                     this.nameImg = null;
-                } else {
-                    console.log(response.data.error);
                 }
             })
         }

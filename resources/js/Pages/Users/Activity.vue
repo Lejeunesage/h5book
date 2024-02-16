@@ -458,7 +458,7 @@ export default {
       {
         this.selectedColorIndex = null;
         this.imageInput = true;
-      } else if(this.nameImg !== null)
+      } else if(this.nameImg !== null || photos.value !== null)
       {
         this.imageInput = true;
         this.selectedColorIndex = null;
