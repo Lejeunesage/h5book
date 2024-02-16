@@ -10,9 +10,15 @@ import { Link } from '@inertiajs/vue3';
             <img :src="couverture !== null ? `/storage/coverImage/${couverture}` : `/storage/images/account.png`"
                 class="object-cover h-[200px] w-full" alt="image_de_couverture">
             <button v-if="$page.props.auth.user.id === usersIdentifiant.id"
-                class="absolute text-[12px] top-4 right-4 bg-white border-none colorblue font-bold py-1.5 px-2 rounded-lg hover:text-white hover:bg-[url('/storage/images/account.png')]"
-                @click="action">Modifier
-                couverture</button>
+                class="absolute text-[12px] top-4 right-4 bg-white border-none colorblue font-bold py-1.5 px-2 rounded-lg "
+                @click="action">
+                <svg class="w-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path
+                        d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z">
+                    </path>
+                </svg>
+            </button>
             <transition>
                 <div v-if="varBool1" class="absolute top-[50px] right-4 bg-white w-[170px] rounded z-40">
                     <ul>
@@ -48,9 +54,10 @@ import { Link } from '@inertiajs/vue3';
             <div class="h-[110px] w-[110px] rounded-full border-white border-[6px] z-30">
                 <div v-if="fileProfil === null"><img :src="`/storage/images/account.png`"
                         class="object-cover h-[100px] w-[100px] rounded-full" alt="image_de_profil"></div>
-                        <Link :href="route('postProfil', [usersIdentifiant.id, allImgs.id])" v-else><img :src="`/storage/profilImage/${fileProfil}`"
-                            class="object-cover h-[100px] w-[100px] rounded-full" alt="image_de_profil"></Link>
-                        </div>
+                <Link :href="route('postProfil', [usersIdentifiant.id, allImgs.id])" v-else><img
+                    :src="`/storage/profilImage/${fileProfil}`" class="object-cover h-[100px] w-[100px] rounded-full"
+                    alt="image_de_profil"></Link>
+            </div>
             <div class="flex flex-col items-center mt-[-15px]">
                 <h2 class="font-bold text-gray-600 text-[14px]">{{ usersIdentifiant.name }}</h2>
                 <p class="text-[12px] text-gray-600">{{ usersIdentifiant.email }}</p>
@@ -58,11 +65,13 @@ import { Link } from '@inertiajs/vue3';
             <div class="flex gap-8 mt-[-10px]">
                 <div class="flex items-center gap-2 px-4">
                     <p class="font-bold">{{ followin }}</p>
-                    <Link :href="route('abonnements', usersIdentifiant.uuid)" class="text-[13px] text-gray-500">Abonnement(s)</Link>
+                    <Link :href="route('abonnements', usersIdentifiant.uuid)" class="text-[13px] text-gray-500">
+                    Abonnement(s)</Link>
                 </div>
                 <div class="flex items-center gap-2 px-4">
                     <p class="font-bold">{{ followe }}</p>
-                    <Link :href="route('abonnees', usersIdentifiant.uuid)" class="text-[13px] text-gray-500">Abonné(s)</Link>
+                    <Link :href="route('abonnees', usersIdentifiant.uuid)" class="text-[13px] text-gray-500">Abonné(s)
+                    </Link>
                 </div>
             </div>
             <div class="mt-[-5px]">
@@ -123,12 +132,13 @@ import { Link } from '@inertiajs/vue3';
     <transition>
         <div v-if="variable" class="fixed top-0 bg-white h-full w-full z-50">
             <div class="relative">
-                <h4 class="border-gray-300 border-b-[1px] text-gray-600 text-[13px] font-bold py-6 px-3.5">Modifier vos informations
+                <h4 class="border-gray-300 border-b-[1px] text-gray-600 text-[13px] font-bold py-6 px-3.5">Modifier vos
+                    informations
                 </h4>
                 <span class="cursor-pointer absolute top-[25px] right-[10px] border-gray-300 border-[1px] bg-gray-300"
                     @click="closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black"
-                        class="w-4 h-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="black" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </span>
@@ -175,7 +185,8 @@ import { Link } from '@inertiajs/vue3';
                     class="w-full mt-4 cursor-pointer py-1.5 border-gray-300 border-[1px] rounded-lg px-2" required>
 
                 <div id="loaders" class="hidden flex my-2 justify-center"><span class="loader"></span></div>
-                <div id="paragraphs" class="hidden flex my-4 justify-center font-bold bg-red-200 text-[14px] p-1 rounded text-red-500"></div>
+                <div id="paragraphs"
+                    class="hidden flex my-4 justify-center font-bold bg-red-200 text-[14px] p-1 rounded text-red-500"></div>
 
                 <div v-if="nameImg" class="mt-4 shadow-2xl border rounded-lg py-4 px-2">
                     <div class="font-bold text-gray-600 text-[12px]">Rendu de l'image</div>
@@ -206,24 +217,24 @@ import { Link } from '@inertiajs/vue3';
 
 <style>
 .loader {
-  width: 30px;
-  height: 30px;
-  border: 5px dotted rgb(129, 33, 33);
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  animation: rotation 2s linear infinite;
+    width: 30px;
+    height: 30px;
+    border: 5px dotted rgb(129, 33, 33);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: rotation 2s linear infinite;
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
 

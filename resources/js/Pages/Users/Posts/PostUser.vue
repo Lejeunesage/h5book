@@ -86,8 +86,11 @@ import { Head, Link } from "@inertiajs/vue3";
               v-html="post.body"></p>
             <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto text-justify"
               v-html="post.body"></p>
-            <Link :href="route('postUser', [post.id, post.user_id])"><img v-if="post.image !== null"
-              :src="`/storage/post_images_videos/${post.image}`" alt="image_de_profil" class="w-full h-[380px]" /></Link>
+            <Link :href="route('postUser', [post.id, post.user_id])">
+              <img v-if="post.image !== null"
+              :src="`/storage/post_images_videos/${post.image}`" alt="image_de_profil" class="w-full h-[380px]" />
+            
+            </Link>
 
             <div class="mt-2" v-if="post.video">
               <video controls :src="`/storage/post_images_videos/${post.video}`"

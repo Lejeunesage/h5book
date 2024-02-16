@@ -15,11 +15,11 @@ import { Head, Link } from "@inertiajs/vue3";
         <div class="w-full p-4 flex flex-col gap-2">
           <div class="flex items-center gap-2">
             <div class="aspect-square rounded-full">
-              <img v-if="$page.props.auth.user.id === users.id" class="rounded-full aspect-square w-[35px]" :src="imageProfil !== null
+              <img v-if="$page.props.auth.user.id === users.id" class="rounded-full aspect-square w-[35px] object-cover" :src="imageProfil !== null
                 ? `/storage/profilImage/${imageProfil}`
                 : `/storage/images/account.png`
                 " alt="" />
-              <img v-else class="rounded-full aspect-square w-[35px]" :src="lastImgConnect !== null
+              <img v-else class="rounded-full aspect-square w-[35px] object-cover" :src="lastImgConnect !== null
                 ? `/storage/profilImage/${lastImgConnect.file_profile}`
                 : `/storage/images/account.png`
                 " alt="" />
@@ -143,7 +143,7 @@ import { Head, Link } from "@inertiajs/vue3";
                     <img :src="el.image_user !== null
                       ? `/storage/profilImage/${el.image_user}`
                       : `/storage/images/account.png`
-                      " alt="image_de_profil" class="rounded-full w-[35px] h-[35px]" />
+                      " alt="image_de_profil" class="rounded-full w-[35px] h-[35px] object-cover" />
                     <div>
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
                         v-if="el.tagged_names !== null && $page.props.auth.user.id == el.tagged_names.split('-')[0]">
@@ -231,8 +231,8 @@ import { Head, Link } from "@inertiajs/vue3";
                   <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto"
                     v-html="el.body"></p>
                   <Link :href="route('postUser', [el.id, el.user_id])"><img v-if="el.image !== null" :src="`/storage/post_images_videos/${el.image}`" alt="image_de_profil"
-                    class="w-full h-[380px]" /></Link>
-                  <div class="mt-2" v-if="el.video">
+                    class="w-full h-[380px] object-cover" /></Link>
+                    <div class="mt-2" v-if="el.video">
                     <video controls :src="`/storage/post_images_videos/${el.video}`"
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
                   </div>
@@ -287,7 +287,7 @@ import { Head, Link } from "@inertiajs/vue3";
                 <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2 px-2">
                   <img :src="`/storage/profilImage/${getLastImgProfil.file_profile}`" alt="image_de_profil"
-                    class="rounded-full w-[35px] h-[35px]" />
+                    class="rounded-full w-[35px] h-[35px] object-cover" />
                   <div>
                     <h3 class="font-bold text-gray-700 text-[12px]">{{ el.name }}</h3>
                   </div>
@@ -318,7 +318,7 @@ import { Head, Link } from "@inertiajs/vue3";
               </div>
 
               <div class="mt-[10px]" @click="viewPostProfil(getLastImgProfil.user_id, el.id)">
-                <img :src="`/storage/profilImage/${el.file_profile}`" alt="image_de_profil" class="w-full h-[380px]" />
+                <img :src="`/storage/profilImage/${el.file_profile}`" alt="image_de_profil" class="w-full h-[380px] object-cover" />
               </div>
               
               <div :class="el.likes > 0 ? '' : 'hidden'" class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
