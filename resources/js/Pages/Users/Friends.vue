@@ -41,7 +41,7 @@ import { Head, Link } from '@inertiajs/vue3';
                                     class="rounded-full border-white border-4">
                                     <img v-if="user.image" :src="`/storage/profilImage/${user.image}`"
                                         class="object-cover h-[50px] w-[50px] rounded-full" alt="image_de_profil">
-                                    <img v-else :src="`/storage/images/easy.png`"
+                                    <img v-else :src="`/storage/images/account.png`"
                                         class="object-cover h-[50px] w-[50px] rounded-full" alt="image_de_profil">
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ import { Head, Link } from '@inertiajs/vue3';
                                     class="rounded-full border-white border-4">
                                     <img v-if="following.image" :src="`/storage/profilImage/${following.image}`"
                                         class="object-cover h-[50px] w-[50px] rounded-full" alt="image_de_profil">
-                                    <img v-else :src="`/storage/images/easy.png`"
+                                    <img v-else :src="`/storage/images/account.png`"
                                         class="object-cover h-[50px] w-[50px] rounded-full" alt="image_de_profil">
                                 </div>
                             </div>
