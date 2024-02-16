@@ -1,30 +1,47 @@
 
 <script setup>
 import Icon from "@/Components/Icons/Icon.vue";
+
 </script>
 <template>
     <header class="headerBg py-2.5 sticky top-0 z-50">
         <div class="mx-auto w-[90%] flex justify-between items-center">
-            <div class="basis-[70%] flex items-center gap-4">
-               
+            <div class="basis-[70%] flex items-center gap-">
                 <Icon name="logo_bleu" />
-
-                <form class="basis-[70%] flex items-center gap-4 py-1 pl-2 pr-1 border border-sky-500 rounded-lg">
-                    <div class="">
-                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                    <input type="text"
-                        class="w-full headerBg py-1 rounded-lg placeholder:text-white placeholder:text-sm outline-none border-none focus:border-none focus:border-sky-600 color"
-                        placeholder="Recherchez un proche...">
-                </form>
             </div>
-            <div class="basis-[20%]">
-                <ul class="flex gap-4 justify-end items-center">
-                    <li v-if="bool">
+
+            <div class="flex items-center gap-2 mr-4">
+                <!-- Utilisez un bouton pour l'icône de la loupe -->
+                <button @click="toggleSearch" class="focus:outline-none">
+
+                    <div v-if="!bool">
+                        <svg  class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    </div>
+
+                    <div v-if="bool">
+                        <svg  data-slot="icon" width="25" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
+                        <path
+                            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z">
+                        </path>
+                    </svg>
+                    </div>
+
+                </button>
+
+                <!-- Input avec v-if pour le rendre visible ou non -->
+                <input v-if="bool" type="text"
+                    class=" headerBg py-1 rounded-lg placeholder:text-white placeholder:text-sm outline-none border-white focus:border-white focus:border-sky-600 color"
+                    placeholder="Recherchez un proche...">
+            </div>
+
+            <div class="basis-[20%] " :style="{ display: bool ? 'none' : 'flex' }">
+                <ul class="flex gap-5 justify-end items-center">
+                    <li v-if="dark" @click="darkMode">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                             stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="cursor-pointer feather feather-sun icon-light stroke-width-3 iw-16 ih-16">
@@ -39,7 +56,7 @@ import Icon from "@/Components/Icons/Icon.vue";
                             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                         </svg>
                     </li>
-                    <li v-else>
+                    <li v-else @click="darkMode">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                             stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="cursor-pointer feather feather-moon icon-light stroke-width-3 iw-16 ih-16">
@@ -63,16 +80,23 @@ import Icon from "@/Components/Icons/Icon.vue";
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+            bool: false,
+            dark: false
+        };
+    },
+    methods: {
+        toggleSearch() {
+            this.bool = !this.bool;
+        },
 
-export default
-    {
-        data() {
-            return {
-                bool: false
-            }
+        darkMode() {
+            this.dark = !this.dark;
         }
     }
-
+};
 </script>
 
 <style scope>
@@ -82,5 +106,4 @@ export default
 
 .headerBg {
     background-color: #0389c9;
-}
-</style>
+}</style>

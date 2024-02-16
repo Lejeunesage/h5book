@@ -51,7 +51,7 @@ const googleConnect = () => {
         </div>
 
       
-            <div class="p-5  max-w-96">
+            <div class="p-5 md:p-10 ">
 
 
 
