@@ -65,9 +65,9 @@ import { Head, Link } from '@inertiajs/vue3';
                         </div>
                     </div>
 
-                    <div class="mx-auto w-[90%] mt-4" v-if="varCover">
+                    <div class="mx-auto w-[90%] mt-2" v-if="varCover">
                         <div class="relative">
-                            <h4 class="text-gray-600 font-bold border-b-[1px] border-gray-300 py-3 px-2">Photos de
+                            <h4 class="text-gray-600 font-bold border-b-[1px] border-gray-300 py-3 text-[13px] px-2">Photos de
                                 couverture</h4>
                                 <span @click="actionsFour"
                                     class="absolute top-2 right-2 bg-gray-300 rounded-full cursor-pointer opacity-80 p-1">
@@ -104,9 +104,9 @@ import { Head, Link } from '@inertiajs/vue3';
                         </div>
                     </div>
 
-                    <div class="mx-auto w-[90%] mt-4" v-if="varCover1">
+                    <div class="mx-auto w-[90%] mt-2" v-if="varCover1">
                         <div class="relative">
-                            <h4 class="text-gray-600 font-bold border-b-[1px] border-gray-300 py-3 px-2">Photos de
+                            <h4 class="text-gray-600 font-bold border-b-[1px] border-gray-300 text-[13px] py-3 px-2">Photos de
                                 profil</h4>
                             
                             <span @click="actionsFive"
