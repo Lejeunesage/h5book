@@ -3,12 +3,9 @@
         <header class="headerBg py-2.5 sticky top-0 z-50">
             <div class="mx-auto w-[90%] flex justify-between items-center">
                 <div class="basis-[70%] flex items-center gap-4">
-                    <div class="relative basis-[20%]">
-                        <span class="absolute w-[25px] bg-white opacity-30 color rounded-lg px-3">H5</span>
-                        <h1 class="color text-[18px] font-bold">
-                            H5book
-                        </h1>
-                    </div>
+                    <img src="/storage/logos/logofinal2.svg" alt="logo" class="w-20">
+
+                    
                     <form class="basis-[70%] flex items-center gap-4 py-1 pl-2 pr-1 border border-sky-500 rounded-lg">
                         <div class="">
                             <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true"
@@ -63,6 +60,7 @@
     </template>
 
 <script>
+import Logo from "@/Components/ApplicationLogo.vue";
 export default
 {
     data()
