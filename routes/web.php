@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use Inertia\Inertia;
 
 /*
@@ -101,3 +102,8 @@ Route::get("redirect/{provider}", [SocialiteController::class, 'redirect'])->nam
 Route::get("callback/{provider}", [SocialiteController::class, 'callback'])->name('socialite.callback');
 
 require __DIR__.'/auth.php';
+
+
+
+Route::get('/chat', [ChatController::class, 'index'])->middleware(['auth', 'verified'])->name('chat');
+Route::get('/chatInstance', [ChatController::class, 'chatInstance'])->middleware(['auth', 'verified'])->name('chatInstance');
