@@ -6,7 +6,7 @@ import Icon from "@/Components/Icons/Icon.vue";
     <header class="headerBg py-2.5 sticky top-0 z-50">
         <div class="mx-auto w-[90%] flex justify-between items-center">
             <div class="basis-[70%] flex items-center gap-4">
-                <!-- <img src="/storage/logos/logofinal2.svg" alt="logo" class="w-20"> -->
+               
                 <Icon name="logo_bleu" />
 
                 <form class="basis-[70%] flex items-center gap-4 py-1 pl-2 pr-1 border border-sky-500 rounded-lg">

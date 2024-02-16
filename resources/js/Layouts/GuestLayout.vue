@@ -4,8 +4,8 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div class="bg-gradient">
-        <div class="p-10 ">
+    <div class="bg-gradient flex flex-col justify-center relative">
+        <div class="ml-5 absolute top-5 ">
             <Link href="/">
             <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
             </Link>
@@ -15,10 +15,9 @@ import { Link } from '@inertiajs/vue3';
 
             <div class="hidden lg:block font-bold  text-center  m-5">
                 <img src="storage/images/persona_smal.png" alt="">
-                <!-- <h1 class="text-white text-5xl mt-5">Content de te revoir!</h1> -->
             </div>
 
-            <div class="bg-white w-[600px] rounded-xl  m-5">
+            <div class="bg-white w-[600px] rounded-xl mx-5 ">
 
                 <slot />
             </div>

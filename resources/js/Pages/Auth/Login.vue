@@ -50,65 +50,66 @@ const googleConnect = () => {
             {{ status }}
         </div>
 
-
-        <div class="p-10">
-
-
-            <h1 class="text-4xl font-extrabold text-gray-600 mb-5">Se connecter</h1>
-            <h2 class="text-2xl font-bold text-gray-500 mb-5">Bienvenue, bon retour</h2>
-
-            <p class="mb-10 text-gray-400">Bienvenue sur H5book, veuillez vous connecter à votre compte.</p>
+      
+            <div class="p-5  max-w-96">
 
 
 
+                <h1 class="text-2xl text-center font-bold text-gray-600 mb-2">Se connecter</h1>
+                <h2 class="text-xl font-bold text-gray-500 mb-2">Bienvenue, bon retour</h2>
 
-            <form @submit.prevent="submit">
-                <div>
-                    <InputLabel for="email" value="Adresse Email" class="text-lg" />
+                <p class="mb-4 text-xs text-gray-400">Bienvenue sur H5book, veuillez vous connecter à votre compte.</p>
 
-                    <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
-                        autocomplete="username" />
 
-                    <InputError class="mt-2" :message="form.errors.email" />
-                </div>
 
-                <div class="mt-4">
-                    <InputLabel for="password" value="Mot de passe" class="text-lg" />
 
-                    <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
-                        autocomplete="current-password" />
+                <form @submit.prevent="submit">
+                    <div>
+                        <InputLabel for="email" value="Adresse Email" class="text-lg" />
 
-                    <InputError class="mt-2" :message="form.errors.password" />
-                </div>
+                        <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus
+                            autocomplete="username" />
 
-                <div class="block mt-4">
-                    <label class="flex items-center">
-                        <Checkbox name="remember" v-model:checked="form.remember" />
-                        <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
-                    </label>
-                </div>
+                        <InputError class="mt-2" :message="form.errors.email" />
+                    </div>
 
-                <div class="flex flex-col md:flex-row items-center gap-5 justify-between mt-4">
-                    <Link v-if="canResetPassword" :href="route('register')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Vous n'avez pas de compte?
-                    </Link>
-                    <Link v-if="canResetPassword" :href="route('password.request')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Mot de passe oublié?
-                    </Link>
+                    <div class="mt-1">
+                        <InputLabel for="password" value="Mot de passe" class="text-lg" />
 
-                    <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Connexion
-                    </PrimaryButton>
-                </div>
-                <div class="text-center mt-10">
-                    <button @click="googleConnect" type="button" class="login-with-google-btn ">
-                        Connectez-vous avec Google
-                    </button>
-                </div>
-            </form>
-        </div>
+                        <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
+                            autocomplete="current-password" />
+
+                        <InputError class="mt-2" :message="form.errors.password" />
+                    </div>
+
+                    <div class="block mt-1">
+                        <label class="flex items-center">
+                            <Checkbox name="remember" v-model:checked="form.remember" />
+                            <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
+                        </label>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center gap-5 justify-between mt-1">
+                        <Link v-if="canResetPassword" :href="route('register')"
+                            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Vous n'avez pas de compte?
+                        </Link>
+                        <Link v-if="canResetPassword" :href="route('password.request')"
+                            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Mot de passe oublié?
+                        </Link>
+
+                        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Se Connecter
+                        </PrimaryButton>
+                    </div>
+                    <div class="text-center mt-5 ">
+                        <button @click="googleConnect" type="button" class="login-with-google-btn ">
+                            Connectez-vous avec Google
+                        </button>
+                    </div>
+                </form>
+            </div>
     </GuestLayout>
 </template>
 <style scope>

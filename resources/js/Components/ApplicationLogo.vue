@@ -1,4 +1,6 @@
+<script setup>
+import Icon from "@/Components/Icons/Icon.vue";
+</script>
 <template>
-  <!-- <span class="text-2xl font-bold text-white">H5book</span> -->
-  <img src="/storage/logos/logofinal2.svg" alt="">
+  <Icon name="logo_bleu" />
 </template>
