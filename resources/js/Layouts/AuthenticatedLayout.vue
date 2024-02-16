@@ -7,9 +7,9 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 <template>
     <Navbar />
     
-    <DropdownLink :href="route('logout')" method="post" as="button">
+    <!-- <DropdownLink :href="route('logout')" method="post" as="button">
         Deconnexion
-    </DropdownLink>
+    </DropdownLink> -->
     <div class="mt-5">
         <!-- Page Content -->
         <main class="bg-[#ecf6fa]">
