@@ -43,29 +43,29 @@ import DropdownLink from '@/Components/DropdownLink.vue';
             </span>
         </div>
     </footer>
+    <div v-if="boolModal" class="fixed inset-0 flex items-center justify-end z-50">
+        
+        <div class="bg-sky-50 w-2/3 h-full shadow-md overflow-hidden">
+            <div class="absolute top-4 right-3 bg-[#0389c9]  w-6 h-6 flex justify-center items-center rounded-sm" v-if="boolModal" @click="closeModal">
+                                <svg  data-slot="icon" width="25" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true">
+                                <path
+                                    d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z">
+                                </path>
+                            </svg>
+                            </div>
     
-    <div v-if="boolModal" class="relative flex justify-center items-center z-50">
-        <div class="fixed bottom-0 bg-sky-100 left-0 right-0 z-50">
-            <ul class="flex gap-4 p-4 flex-wrap">
-                <Link :href="route('myActivity', $page.props.auth.user.id)" class="bg-sky-200 p-2 basis-[10%] border-sky-700 border-2 rounded flex justify-center items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-                </Link>
-                <DropdownLink :href="route('logout')"  method="post" as="button" class="bg-sky-200 p-1 basis-[5%] border-sky-700 border-2 rounded flex justify-center items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-                    </svg>
+
+            <ul class="flex gap-4 p-4 flex-col mt-12">
+                <DropdownLink :href="route('myActivity', $page.props.auth.user.id)" class="bg-sky-200 p-1  border-sky-100 border rounded ">
+               Profile
+                </DropdownLink>
+                <DropdownLink :href="route('logout')"  method="post" as="button" class="bg-sky-200 p-1 border-sky-100 border rounded ">
+                    Déconnexion
                 </DropdownLink>
                 <li></li>
             </ul>
         </div>
-            <div id="menu" class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0"  v-if="boolModal" @click="closeModal">
-            </div>
         </div>
 </template>
 
@@ -96,7 +96,20 @@ export default
     color: #f8f9fa;
 }
 
-.headerBg {
-    background-color: #0389c9;
+
+/* Ajustez ces styles pour la transition du menu */
+.transition-transform {
+    transition: transform 0.3s ease-in-out;
 }
+
+.transform-open {
+    transform: translateX(0);
+}
+
+.transform-closed {
+    transform: translateX(100%);
+}
+
 </style>
+
+
