@@ -9,16 +9,18 @@ import { Head, Link } from "@inertiajs/vue3";
   <AuthenticatedLayout>
     <main class="mt-[-20px] mb-14">
       <ComposantUser :filesProfil="imageProfil" :covers="couverture" :lastImage="thisImage" :niveau="'activity'"
-        :followin="userfollow" :followe="followers" :usersIdentifiant="users" :numberLik="numberLike" :allImg="getLastImgProfil" />
+        :followin="userfollow" :followe="followers" :usersIdentifiant="users" :numberLik="numberLike"
+        :allImg="getLastImgProfil" :lier="liaison" />
 
       <section class="mt-2 bg-white mb-3" v-if="exist">
         <div class="w-full p-4 flex flex-col gap-2">
           <div class="flex items-center gap-2">
             <div class="aspect-square rounded-full">
-              <img v-if="$page.props.auth.user.id === users.id" class="rounded-full aspect-square w-[35px] object-cover" :src="imageProfil !== null
-                ? `/storage/profilImage/${imageProfil}`
-                : `/storage/images/account.png`
-                " alt="" />
+              <img v-if="$page.props.auth.user.id === users.id" class="rounded-full aspect-square w-[35px] object-cover"
+                :src="imageProfil !== null
+                  ? `/storage/profilImage/${imageProfil}`
+                  : `/storage/images/account.png`
+                  " alt="" />
               <img v-else class="rounded-full aspect-square w-[35px] object-cover" :src="lastImgConnect !== null
                 ? `/storage/profilImage/${lastImgConnect.file_profile}`
                 : `/storage/images/account.png`
@@ -30,7 +32,7 @@ import { Head, Link } from "@inertiajs/vue3";
               A quoi vous pensez ?
             </h3>
             <h3 v-else
-              class="text-[11px] font-extrabold text-gray-600 py-1.5 px-1 rounded-full border basis-[85%] bg-gray-100"
+              class="text-[11px] font-extrabold text-gray-600 py-1.5 px-2 rounded-full border basis-[85%] bg-gray-100"
               @click="showModalPublication">
               Ecrire sur le journal de <span>{{ users.name }}</span>
             </h3>
@@ -50,11 +52,12 @@ import { Head, Link } from "@inertiajs/vue3";
                 </span>
                 <h4 class="text-[13px]">Créer un post</h4>
               </div>
-              <button class="text-sky-500 font-bold text-[13px]" id="button-3" v-if="$page.props.auth.user.id === users.id"
-                @click="publishPost('button-3')">
+              <button class="text-sky-500 font-bold text-[13px]" id="button-3"
+                v-if="$page.props.auth.user.id === users.id" @click="publishPost('button-3')">
                 Publier
               </button>
-              <button v-else class="text-sky-500 font-bold text-[13px]" id="button-4" @click="publishPost('button-4', user.id)">
+              <button v-else class="text-sky-500 font-bold text-[13px]" id="button-4"
+                @click="publishPost('button-4', user.id)">
                 Publier
               </button>
             </div>
@@ -63,14 +66,16 @@ import { Head, Link } from "@inertiajs/vue3";
             <div class="w-full p-1 relative">
               <template v-if="selectedColorIndex !== null">
                 <div class="h-64 flex items-center p-5" :class="`${colorArray[selectedColorIndex]}`">
-              <ul class='absolute right-2 top-2'>
-                <li @click="closeTextarea"
-                  class="cursor-pointer flex item-center justify-center bg-white border shadow rounded-full w-[23px] aspect-radio">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-</svg>
-                </li>
-              </ul>
+                  <ul class='absolute right-2 top-2'>
+                    <li @click="closeTextarea"
+                      class="cursor-pointer flex item-center justify-center bg-white border shadow rounded-full w-[23px] aspect-radio">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                      </svg>
+                    </li>
+                  </ul>
                   <textarea
                     class="min-w-full text-white overflow-hidden focus:ring focus:ring-transparent cursor:text border-none outline-none rounded-md text-center bg-transparent resize-none placeholder:text-white placeholder:text-[13px] text-[13px] placeholder:font-bold"
                     placeholder="Ecrivez quelque chose..." v-model="publish"></textarea>
@@ -121,12 +126,12 @@ import { Head, Link } from "@inertiajs/vue3";
             <p id="paragraph" class="my-2 hidden bg-red-200 text-red-600 font-bold p-1 rounded"></p>
 
             <button v-if="$page.props.auth.user.id === users.id"
-              class="mt-4 w-full bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-lg" id="button-1" type="button"
-              @click="publishPost('button-1')">
+              class="mt-4 w-full bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-lg" id="button-1"
+              type="button" @click="publishPost('button-1')">
               PUBLIER
             </button>
-            <button v-else class="mt-4 w-full bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-lg" id="button-2"
-              type="button" @click="publishPost('button-2', user.id)">
+            <button v-else class="mt-4 w-full bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-lg"
+              id="button-2" type="button" @click="publishPost('button-2', user.id)">
               PUBLIER
             </button>
           </div>
@@ -153,19 +158,21 @@ import { Head, Link } from "@inertiajs/vue3";
                             stroke="currentColor" class="w-3 h-3">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                           </svg>
-                          <Link :href="route('myActivity', el.tagged_names.split('-')[0])">{{ el.tagged_names.split('-')[1]
+                          <Link :href="route('myActivity', el.tagged_names.split('-')[0])">{{
+                            el.tagged_names.split('-')[1]
                           }}</Link>
                         </p>
                       </h3>
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700" v-else>
                         <Link :href="route('myActivity', el.user_id)">{{ el.creator_name }}</Link>
-                        
+
                         <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="el.tagged_names !== null"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-3 h-3">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                           </svg>
-                          <Link :href="route('myActivity', el.tagged_names.split('-')[0])">{{ el.tagged_names.split('-')[1]
+                          <Link :href="route('myActivity', el.tagged_names.split('-')[0])">{{
+                            el.tagged_names.split('-')[1]
                           }}</Link>
                         </p>
                       </h3>
@@ -173,14 +180,16 @@ import { Head, Link } from "@inertiajs/vue3";
                   </div>
 
                   <div class="relative basis-[2%] mr-2">
-                    <span class="cursor-pointer" v-if="el.video !== null || el.image !== null" @click="transitionFunction(index)">
+                    <span class="cursor-pointer" v-if="el.video !== null || el.image !== null"
+                      @click="transitionFunction(index)">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                       </svg>
                     </span>
-                    <span v-else-if="el.user_id === $page.props.auth.user.id" class="cursor-pointer" @click="transitionFunction(index)">
+                    <span v-else-if="el.user_id === $page.props.auth.user.id" class="cursor-pointer"
+                      @click="transitionFunction(index)">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -215,7 +224,8 @@ import { Head, Link } from "@inertiajs/vue3";
                       <div :id="'posts-' + index" v-else-if="el.user_id === $page.props.auth.user.id"
                         class="allPosts hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(el, index)">
                             Supprimer le post
                           </li>
                         </ul>
@@ -228,48 +238,52 @@ import { Head, Link } from "@inertiajs/vue3";
                   <p v-if="el.bgc !== null && el.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
                     :class="el.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
                     v-html="el.body"></p>
-                  <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto"
-                    v-html="el.body"></p>
-                  <Link :href="route('postUser', [el.id, el.user_id])"><img v-if="el.image !== null" :src="`/storage/post_images_videos/${el.image}`" alt="image_de_profil"
+                  <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="el.body"></p>
+                  <Link :href="route('postUser', [el.id, el.user_id])"><img v-if="el.image !== null"
+                    :src="`/storage/post_images_videos/${el.image}`" alt="image_de_profil"
                     class="w-full h-[380px] object-cover" /></Link>
-                    <div class="mt-2" v-if="el.video">
+                  <div class="mt-2" v-if="el.video">
                     <video controls :src="`/storage/post_images_videos/${el.video}`"
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
                   </div>
                 </div>
 
-                <div :class="el.likes > 0 ? '' : 'hidden'" class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
-                <span :id="'likePost-' + index" v-if="el.trueVariable && el.likes > 1" class="text-gray-600 text-[12px]">Vous et {{ el.likes - 1 }}
-                  autre(s) personne(s) ont aimé cette
-                  publication.</span>
-                <span :id="'likePost-' + index" v-else-if="el.trueVariable && el.likes == 1" class="text-gray-600 text-[12px]">Vous avez aimé cette
-                  publication.</span>
-                <span :id="'likePost-' + index" v-else-if="el.likes == 1" class="text-gray-600 text-[12px]">{{ el.likes }} personne a aimé cette
-                  publication.</span>
-                <span :id="'likePost-' + index" v-else class="text-gray-600 text-[12px]">{{ el.likes }} personne(s) ont aimé cette publication.</span>
-              </div>
+                <div :class="el.likes > 0 ? '' : 'hidden'"
+                  class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
+                  <span :id="'likePost-' + index" v-if="el.trueVariable && el.likes > 1"
+                    class="text-gray-600 text-[12px]">Vous et {{ el.likes - 1 }}
+                    autre(s) personne(s) ont aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else-if="el.trueVariable && el.likes == 1"
+                    class="text-gray-600 text-[12px]">Vous avez aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else-if="el.likes == 1" class="text-gray-600 text-[12px]">{{ el.likes
+                  }} personne a aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else class="text-gray-600 text-[12px]">{{ el.likes }} personne(s) ont
+                    aimé cette publication.</span>
+                </div>
 
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
-                <span
-                  class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                  @click="clickLikePost(el, `${'likePost-' + index}`)">
-                  <span v-if="el.trueVariable === false" class="flex gap-2 items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="gray" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                    </svg>
-                    <span class="text-gray-600 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="clickLikePost(el, `${'likePost-' + index}`)">
+                    <span v-if="el.trueVariable === false" class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="gray" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-gray-600 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
+                    </span>
+                    <span v-else class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#0080FF" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-sky-500 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
+                    </span>
                   </span>
-                  <span v-else class="flex gap-2 items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="#0080FF" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                    </svg>
-                    <span class="text-sky-500 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
-                  </span>
-                </span>
 
                   <Link :href="route('postUser', [el.id, el.user_id])"
                     class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center">
@@ -285,91 +299,104 @@ import { Head, Link } from "@inertiajs/vue3";
 
               <div v-else-if="el.file_profile">
                 <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2 px-2">
-                  <img :src="`/storage/profilImage/${getLastImgProfil.file_profile}`" alt="image_de_profil"
-                    class="rounded-full w-[35px] h-[35px] object-cover" />
-                  <div>
-                    <h3 class="font-bold text-gray-700 text-[12px]">{{ el.name }}</h3>
+                  <div class="flex items-center gap-2 px-2">
+                    <img :src="`/storage/profilImage/${getLastImgProfil.file_profile}`" alt="image_de_profil"
+                      class="rounded-full w-[35px] h-[35px] object-cover" />
+                    <div>
+                      <h3 class="font-bold text-gray-700 text-[12px]">{{ el.name }}</h3>
+                    </div>
+                  </div>
+                  <div class="relative basis-[2%] mr-2">
+                    <span class="cursor-pointer" @click="transitionFunctionOne(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <transition>
+                      <div :id="'index-' + index"
+                        class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
+                            Enrégistrer cette image
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
+                            v-if="users.id === $page.props.auth.user.id">
+                            Supprimer l'image
+                          </li>
+                        </ul>
+                      </div>
+                    </transition>
                   </div>
                 </div>
-                <div class="relative basis-[2%] mr-2">
-                  <span class="cursor-pointer" @click="transitionFunctionOne(index)">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                    </svg>
-                  </span>
-                  <transition>
-                    <div :id="'index-' + index"
-                      class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
-                      <ul class="cursor-pointer">
-                        <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
-                          Enrégistrer cette image
-                        </li>
-                        <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
-                          v-if="users.id === $page.props.auth.user.id">
-                          Supprimer l'image
-                        </li>
-                      </ul>
-                    </div>
-                  </transition>
+
+                <div class="mt-[10px]" @click="viewPostProfil(getLastImgProfil.user_id, el.id)">
+                  <img :src="`/storage/profilImage/${el.file_profile}`" alt="image_de_profil"
+                    class="w-full h-[380px] object-cover" />
                 </div>
-              </div>
 
-              <div class="mt-[10px]" @click="viewPostProfil(getLastImgProfil.user_id, el.id)">
-                <img :src="`/storage/profilImage/${el.file_profile}`" alt="image_de_profil" class="w-full h-[380px] object-cover" />
-              </div>
-              
-              <div :class="el.likes > 0 ? '' : 'hidden'" class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
-                <span :id="'like-' + index" v-if="el.trueVariable && el.likes > 1" class="text-gray-600 text-[12px]">Vous et {{ el.likes - 1 }}
-                  autre(s) personne(s) ont aimé cette
-                  photo.</span>
-                <span :id="'like-' + index" v-else-if="el.trueVariable && el.likes == 1" class="text-gray-600 text-[12px]">Vous avez aimé cette
-                  photo.</span>
-                <span :id="'like-' + index" v-else-if="el.likes == 1" class="text-gray-600 text-[12px]">{{ el.likes }} personne a aimé cette
-                  photo.</span>
-                <span :id="'like-' + index" v-else class="text-gray-600 text-[12px]">{{ el.likes }} personne(s) ont aimé cette photo.</span>
-              </div>
+                <div :class="el.likes > 0 ? '' : 'hidden'"
+                  class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
+                  <span :id="'like-' + index" v-if="el.trueVariable && el.likes > 1"
+                    class="text-gray-600 text-[12px]">Vous et {{ el.likes - 1 }}
+                    autre(s) personne(s) ont aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else-if="el.trueVariable && el.likes == 1"
+                    class="text-gray-600 text-[12px]">Vous avez aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else-if="el.likes == 1" class="text-gray-600 text-[12px]">{{ el.likes }}
+                    personne a aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else class="text-gray-600 text-[12px]">{{ el.likes }} personne(s) ont aimé
+                    cette photo.</span>
+                </div>
 
-              <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
-                <span
-                  class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                  @click="clickLike(el, `${'like-' + index}`)">
-                  <span v-if="el.trueVariable === false" class="flex gap-2 items-center">
+                <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="clickLike(el, `${'like-' + index}`)">
+                    <span v-if="el.trueVariable === false" class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="gray" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-gray-600 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
+                    </span>
+                    <span v-else class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#0080FF" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-sky-500 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
+                    </span>
+                  </span>
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="viewPostProfil(getLastImgProfil.user_id, el.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                       stroke="gray" class="w-4 h-4">
                       <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                        d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                     </svg>
-                    <span class="text-gray-600 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
+                    <span class="text-gray-600 text-[12px] font-bold">{{ el.comments }} commentaire(s)</span>
                   </span>
-                  <span v-else class="flex gap-2 items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="#0080FF" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                    </svg>
-                    <span class="text-sky-500 text-[12px] font-bold">{{ el.likes }} j'aime(s)</span>
-                  </span>
-                </span>
-                <span
-                  class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                  @click="viewPostProfil(getLastImgProfil.user_id, el.id)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
-                    class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                  </svg>
-                  <span class="text-gray-600 text-[12px] font-bold">{{ el.comments }} commentaire(s)</span>
-                </span>
-              </div>
+                </div>
 
               </div>
             </div>
           </div>
         </section>
 
+      </div>
+      <div v-else class="bg-white mt-3 flex flex-col gap-y-4 items-center py-8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+          class="w-10 h-10">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+        </svg>
+        <p class="basis-full text-[12px] font-bold text-gray-700" v-if="$page.props.auth.user.id === users.id">Vous n'avez pas de contenu !</p>
+        <p class="basis-full text-[12px] font-bold text-gray-700" v-else>Pas de contenu sur ce journal !</p>
       </div>
     </main>
   </AuthenticatedLayout>
@@ -413,6 +440,7 @@ export default {
     user: Array,
     posts: Array,
     mergesTab: Array,
+    liaison: Array,
     exist: Boolean,
   },
 
@@ -465,19 +493,16 @@ export default {
   },
 
   watch: {
-    publish(newValue, oldValue) { 
-      if(newValue !== null)
-      {
-        if(newValue.trim().split(/\s+/).length >= 30)
-        {
+    publish(newValue, oldValue) {
+      if (newValue !== null) {
+        if (newValue.trim().split(/\s+/).length >= 30) {
           this.selectedColorIndex = null;
           this.imageInput = true;
-        } else if(this.nameImg !== null || photos.value !== '')
-        {
+        } else if (this.nameImg !== null || photos.value !== '') {
           this.imageInput = true;
           this.selectedColorIndex = null;
         }
-         else {
+        else {
           this.imageInput = false;
         }
       }
@@ -614,7 +639,7 @@ export default {
       this.imageInput = true;
       let myDataFile = photos.files[0];
       let formData = new FormData();
-        this.selectedColorIndex = null;
+      this.selectedColorIndex = null;
       loader.classList.remove("hidden");
       formData.append("myCover", myDataFile);
       axios
@@ -708,8 +733,7 @@ export default {
       this.imageInput = false;
       this.selectedColorIndex = null;
       divPost.classList.add("hidden");
-      if(this.nameImg !== null)
-      {
+      if (this.nameImg !== null) {
         axios
           .delete(
             route("post.deleteImgDeo", {
@@ -788,17 +812,14 @@ export default {
           table: el,
         })
         .then((response) => {
-          if(response.data.success)
-          {
-            if(response.data.countLike > 0)
-            {
+          if (response.data.success) {
+            if (response.data.countLike > 0) {
               document.getElementById(`${element}`).parentElement.classList.remove("hidden");
             } else {
               document.getElementById(`${element}`).parentElement.classList.add("hidden");
             }
             document.getElementById(`${element}`).innerHTML = response.data.success;
-            if(response.data.variableTrue)
-            {
+            if (response.data.variableTrue) {
               document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
                   <span class="flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
@@ -808,7 +829,7 @@ export default {
                     </svg>
                     <span class="text-sky-500 font-bold text-[12px]">${response.data.countLike} j'aime(s)</span>
                   </span>`
-                } else {
+            } else {
               document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
                   <span class="flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -818,7 +839,7 @@ export default {
                     </svg>
                     <span class="text-gray-600 text-[12px]">${response.data.countLike} j'aime(s)</span>
                   </span>`
-              
+
             }
           }
         });
@@ -831,17 +852,14 @@ export default {
           table: el,
         })
         .then((response) => {
-          if(response.data.success)
-          {
-            if(response.data.countLike > 0)
-            {
+          if (response.data.success) {
+            if (response.data.countLike > 0) {
               document.getElementById(`${element}`).parentElement.classList.remove("hidden");
             } else {
               document.getElementById(`${element}`).parentElement.classList.add("hidden");
             }
             document.getElementById(`${element}`).innerHTML = response.data.success;
-            if(response.data.variableTrue)
-            {
+            if (response.data.variableTrue) {
               document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
                   <span class="flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
@@ -851,7 +869,7 @@ export default {
                     </svg>
                     <span class="text-sky-500 font-bold text-[12px]">${response.data.countLike} j'aime(s)</span>
                   </span>`
-                } else {
+            } else {
               document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
                   <span class="flex gap-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -861,7 +879,7 @@ export default {
                     </svg>
                     <span class="text-gray-600 text-[12px]">${response.data.countLike} j'aime(s)</span>
                   </span>`
-              
+
             }
           }
         });

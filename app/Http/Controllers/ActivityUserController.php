@@ -106,6 +106,7 @@ class ActivityUserController extends Controller
     
                     $link = followers::where("user_id", intval($getFol[$i]["id"]))->where("user_id_connect", $id)->get()->toArray();
 
+                    // Je vérifie si l'utilisateur connecté est déjà abonné à la personne qui le suit
                     $link1 = followers::where("user_id_connect", $id)->where("user_id", intval($getFol[$i]["id"]))->get()->toArray();
                     
                     if ($getLast !== null) {

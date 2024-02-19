@@ -62,15 +62,16 @@ import { Link } from '@inertiajs/vue3';
                 <h2 class="font-bold text-gray-600 text-[14px]">{{ usersIdentifiant.name }}</h2>
                 <p class="text-[12px] text-gray-600">{{ usersIdentifiant.email }}</p>
             </div>
-            <div class="flex gap-8 mt-[-10px]">
-                <div class="flex items-center gap-2 px-4">
+            <div class="flex gap-4 mt-[-10px]">
+                <div class="flex items-center gap-1 px-4">
                     <p class="font-bold">{{ followin }}</p>
-                    <Link :href="route('abonnements', usersIdentifiant.uuid)" class="text-[13px] text-gray-500">
+                    <Link :href="route('abonnements', usersIdentifiant.uuid)" class="mt-[1px] text-[13px] text-gray-500">
                     Abonnement(s)</Link>
                 </div>
-                <div class="flex items-center gap-2 px-4">
+                <div class="flex items-center gap-1 px-4">
                     <p class="font-bold">{{ followe }}</p>
-                    <Link :href="route('abonnees', usersIdentifiant.uuid)" class="text-[13px] text-gray-500">Abonné(s)
+                    <Link :href="route('abonnees', usersIdentifiant.uuid)" class="mt-[1px] text-[13px] text-gray-500">
+                    Abonné(s)
                     </Link>
                 </div>
             </div>
@@ -78,6 +79,21 @@ import { Link } from '@inertiajs/vue3';
                 <button @click="openModal" v-if="$page.props.auth.user.id === usersIdentifiant.id"
                     class="headerBg rounded-lg color py-1.5 px-3 hover:bg-[#f8f9fa] hover:text-sky-500 font-bold hover:border-sky-500 border-[1px] text-[12px]">Modifier
                     votre profil</button>
+            </div>
+            <div class="mt-[-10px] flex flex-start w-[90%] mx-auto gap-2"
+                v-if="$page.props.auth.user.id !== usersIdentifiant.id">
+                <button v-if="liee.length === 0" @click="followPerson(usersIdentifiant.id)"
+                    class="headerBg rounded-lg w-[35%] color py-1.5 px-3 hover:bg-[#f8f9fa] hover:text-sky-500 font-bold hover:border-sky-500 border-[1px] text-[12px]">Suivre</button>
+                <button v-else-if="liee.length > 0" @click="unFollowPerson(liee[0].user_id)"
+                    class="bg-[#fc6949] rounded-lg w-[35%] color py-1.5 px-3 hover:bg-[#f8f9fa] hover:text-sky-500 font-bold hover:border-sky-500 border-[1px] text-[12px]">Ne
+                    plus suivre</button>
+                <button class="bg-sky-200 text-gray-700 rounded-lg w-[62%] py-1.5 px-3  border-[1px] text-[12px] flex items-center justify-center gap-x-1"><svg
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                    </svg>
+                    <span>Envoyer un message</span></button>
             </div>
         </div>
     </section>
@@ -250,6 +266,7 @@ export default {
         lastImage: Array,
         usersIdentifiant: Array,
         allImg: Array,
+        lier: Array,
     },
     data() {
         return {
@@ -261,10 +278,35 @@ export default {
             nameImg: null,
             fileProfil: this.filesProfil,
             allImgs: this.allImg,
+            liee: this.lier,
         }
     },
 
     methods: {
+        // Fonction pour suivre un utilisateur
+        // By KolaDev
+        followPerson(id) {
+            axios.post(route("followingUser"), {
+                id: id
+            }).then(response => {
+                if (response.data.success) {
+                    window.location.href = window.location.href;
+                }
+            })
+        },
+
+        // Fonction pour se désabonner d'un utilisateur
+        // By KolaDev
+        unFollowPerson(id) {
+            axios.delete(route("unsubscribe", {
+                id: id
+            })).then(response => {
+                if (response.data.success) {
+                    window.location.href = window.location.href;
+                }
+            })
+        },
+
         // Fonction pour afficher toutes les actions que l'utilisateur peut mener sur l'image de sa couverture
         action() {
             this.varBool1 = !this.varBool1;
@@ -435,5 +477,4 @@ body {
 .v-leave-to {
     transform: translateY(-10px);
     opacity: 0;
-}
-</style>
+}</style>

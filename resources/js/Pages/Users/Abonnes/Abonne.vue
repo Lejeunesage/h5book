@@ -5,12 +5,12 @@ import { Head, Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Abonnements" />
+    <Head title="Abonnées" />
     <AuthenticatedLayout>
         <main class="mt-[-20px] mb-14">
             <ComposantUser :filesProfil="profil" :covers="cover" :lastImage="lImg" :niveau="'friends'"
                 :followin="userfollow" :followe="followers" :usersIdentifiant="user" :numberLik="numberLike"
-                :allImg="getLastImgProfil" />
+                :allImg="getLastImgProfil" :lier="liaison" />
             <section class="bg-white mt-[13px] mb-8 pb-8">
                 <div class="border-[#e4e7e9e5] border-b-[1px]">
                     <div class="px-2 py-4 flex justify-between items-center mx-auto w-[90%]">
@@ -24,12 +24,18 @@ import { Head, Link } from '@inertiajs/vue3';
                 <div class="w-[90%] m-auto mt-2">
                     <form class="basis-[45%] bg-[#e4e7e9e5] pr-2 flex items-center gap-2 rounded-lg border">
                         <input type="text" placeholder="Recherchez un proche..."
-                            class="text-sm w-full focus:ring-0 focus:ring-transparent py-1 bg-[#e4e7e9e5] border-none outline-none rounded placeholder:text-[12px]"
-                            @keyup="searchInputFriend()" v-model="search">
-                        <span class="cursor-pointer" @click="resetSearch(user.uuid)">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            class="text-sm w-full focus:ring-0 focus:ring-transparent py-1 bg-[#e4e7e9e5] border-none outline-none rounded placeholder:text-[12px] text-[12px]" v-model="search">
+                            <span class="cursor-pointer" @click="resetSearch(user.uuid)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-4 h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </span>
+                        <span class="cursor-pointer bg-sky-600 rounded-full p-1 text-white" @click="searchInputFriend(user.uuid)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-3 h-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                             </svg>
                         </span>
                     </form>
@@ -60,9 +66,9 @@ import { Head, Link } from '@inertiajs/vue3';
                         </div>
                         <div class="basis-[30%]" v-if="$page.props.auth.user.id === user.id">
                             <div class="flex justify-end gap-2 basis-full" v-if="el.lier !== null">
-                                <button
-                                    class="basis-full rounded-lg py-1.5 px-1 bg-white border-sky-500 border-[1px] text-sky-500 hover:bg-white font-bold text-[9px]">Vous
-                                    êtes abonnés</button>
+                                <button @click="unsubscribe(el.id, user.uuid)"
+                                    class="basis-full rounded-lg text-white font-bold border-gray-500 px-1 py-1.5 bg-[#fc6949] text-[9px]">Ne
+                                    plus suivre</button>
                             </div>
                             <div class="flex justify-end gap-2 basis-full" v-else>
                                 <button @click="followingAction(el.id, user.uuid)"
@@ -75,6 +81,7 @@ import { Head, Link } from '@inertiajs/vue3';
                 <div id="divAmis" class="flex justify-center" v-else>
                     <p class="text-[14px] text-gray-600 mt-4" v-if="$page.props.auth.user.id === user.id">Vous n'avez pas
                         d'abonné(s)</p>
+                    <p class="text-[14px] text-gray-600 mt-4" v-else>Pas d'abonnées trouvés 😢!</p>
                 </div>
             </section>
         </main>
@@ -101,6 +108,7 @@ export default {
         profil: String,
         getLastImgProfil: Array,
         user: Array,
+        liaison: Array,
     },
 
     data() {
@@ -110,7 +118,7 @@ export default {
             userfollow: this.following,
             userfollowing: this.userFollowing,
             followers: this.follower,
-            search: null,
+            search: '',
             numberLike: this.countLike,
         }
     },
@@ -127,14 +135,26 @@ export default {
                 this.userfollow = response.data.following;
                 this.followers = response.data.follower;
                 this.numberLike = response.data.countLike;
-                this.search = null;
+                this.search = '';
             })
         },
 
         // Fonction pour suivre un utilisateur
         // By KolaDev
         followingAction(id, uuid) {
-            axios.post(route("followingUser", {
+            axios.post(route("followingUser"), {
+                id: id
+            }).then(response => {
+                if (response.data.success) {
+                    this.getAbonnees(uuid);
+                }
+            })
+        },
+
+        // Fonction pour suivre un utilisateur
+        // By KolaDev
+        unsubscribe(id, uuid) {
+            axios.delete(route("unsubscribe", {
                 id: id
             })).then(response => {
                 if (response.data.success) {
@@ -145,26 +165,15 @@ export default {
 
         // Fonction pour rechercher des amis
         // By KolaDev
-        searchInputFriend() {
-            // Déclararation des variables
-            let input, filter, txtValue, linkAll;
-            input = this.search;
-            filter = input.toUpperCase();
-
-            linkAll = document.querySelectorAll(".nameAbonne");
-
-            for (let i = 0; i < linkAll.length; i++) {
-                txtValue = linkAll[i].textContent || linkAll[i].innerText;
-                let parent = linkAll[i].parentElement.parentElement.parentElement;
-                if (this.search !== '') {
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        parent.style.display = "";
-                    } else {
-                        parent.style.display = "none";
-                    }
-                } else {
-                    parent.style.display = "";
-                }
+        searchInputFriend(uuid) {
+            if(this.search.trim() !== '')
+            {
+                axios.post(route("searchInputFriendAbonnees"), {
+                    search: this.search,
+                    uuid: uuid
+                }).then(response => {
+                this.userfollowing = response.data;
+                })
             }
         },
 
@@ -172,7 +181,7 @@ export default {
         // By KolaDev
         resetSearch(uuid) {
             this.search = null;
-            
+
             let linkAll = document.querySelectorAll(".nameAbonne");
 
             for (let i = 0; i < linkAll.length; i++) {

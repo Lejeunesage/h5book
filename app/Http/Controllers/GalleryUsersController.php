@@ -247,7 +247,10 @@ class GalleryUsersController extends Controller
 
         $getFollowers = followers::where("user_id", $id)->get()->toArray();
 
-        return ["lImg" => $getLastImg, "following" => count($getFollowing), "follower" => count($getFollowers), "cover" => $cover, "profil" => $profil, "getLastImgProfil" => $getLastImgProfil, "user" => $user, "countLike" => $countLike];
+        // Je vérifie si l'utilisateur connecté est déjà abonné à la personne qui le suit
+        $liaison = followers::where("user_id_connect", intval(Auth::user()->id))->where("user_id",  $id)->get()->toArray();
+
+        return ["liaison" => $liaison, "lImg" => $getLastImg, "following" => count($getFollowing), "follower" => count($getFollowers), "cover" => $cover, "profil" => $profil, "getLastImgProfil" => $getLastImgProfil, "user" => $user, "countLike" => $countLike];
     }
 
     /**
