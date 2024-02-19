@@ -12,7 +12,8 @@ import DropdownLink from '@/Components/DropdownLink.vue';
     </DropdownLink> -->
     <div class="mt-5">
         <!-- Page Content -->
-        <main class="bg-[#ecf6fa]">
+        <!-- <main class="bg-[#ecf6fa]"> -->
+        <main>
             <slot />
         </main>
         

@@ -510,10 +510,18 @@ class ActivityUserController extends Controller
     }
     public function about($id)
     {
+        // Les données de l'utilisateur
+        $us = User::where("uuid", $id)->first();
+        if($us !== null)
+        {
+            // Récupérons l'identifiant de l'utilisateur
+            $identifiant = $us->id;
+
         // Récupérons toutes les données de la personne
         $gallery = new GalleryUsersController();
-        $tableau = $gallery::essentialData($id);
+        $tableau = $gallery::essentialData($identifiant);
 
         return Inertia::render("Users/About", $tableau);
+        }
     }
 }

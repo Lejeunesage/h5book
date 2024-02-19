@@ -10,7 +10,7 @@ import { Head, Link } from '@inertiajs/vue3';
         <main class="mt-[-20px] mb-14">
             <ComposantUser :filesProfil="profil" :covers="cover" :lastImage="lImg" :niveau="'friends'"
                 :followin="userfollow" :followe="followers" :usersIdentifiant="user" :numberLik="numberLike"
-                :allImg="getLastImgProfil" :lier="liaison" />
+                :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" />
             <section class="bg-white mt-[13px] mb-8 pb-8">
                 <div class="border-[#e4e7e9e5] border-b-[1px]">
                     <div class="px-2 py-4 flex justify-between items-center mx-auto w-[90%]">
@@ -109,6 +109,7 @@ export default {
         getLastImgProfil: Array,
         user: Array,
         liaison: Array,
+        informationPerson: Array,
     },
 
     data() {

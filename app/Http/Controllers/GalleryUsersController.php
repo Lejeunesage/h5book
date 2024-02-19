@@ -250,7 +250,12 @@ class GalleryUsersController extends Controller
         // Je vérifie si l'utilisateur connecté est déjà abonné à la personne qui le suit
         $liaison = followers::where("user_id_connect", intval(Auth::user()->id))->where("user_id",  $id)->get()->toArray();
 
-        return ["liaison" => $liaison, "lImg" => $getLastImg, "following" => count($getFollowing), "follower" => count($getFollowers), "cover" => $cover, "profil" => $profil, "getLastImgProfil" => $getLastImgProfil, "user" => $user, "countLike" => $countLike];
+        // Récupérons les informations de la personne
+        $informationPerson = User::select("users.name", "users.bibliography", "users.gender", "users.email", "users.phone_number", "users.uuid", "countries.name_pays", "countries.country_code", "countries.country_iso")
+        ->leftJoin("countries", "countries.id", "=", "users.id_country")
+        ->where("users.id", $id)->first();
+
+        return ["informationPerson" => $informationPerson, "liaison" => $liaison, "lImg" => $getLastImg, "following" => count($getFollowing), "follower" => count($getFollowers), "cover" => $cover, "profil" => $profil, "getLastImgProfil" => $getLastImgProfil, "user" => $user, "countLike" => $countLike];
     }
 
     /**

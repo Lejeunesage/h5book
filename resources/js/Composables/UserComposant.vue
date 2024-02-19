@@ -87,7 +87,8 @@ import { Link } from '@inertiajs/vue3';
                 <button v-else-if="liee.length > 0" @click="unFollowPerson(liee[0].user_id)"
                     class="bg-[#fc6949] rounded-lg w-[35%] color py-1.5 px-3 hover:bg-[#f8f9fa] hover:text-sky-500 font-bold hover:border-sky-500 border-[1px] text-[12px]">Ne
                     plus suivre</button>
-                <button class="bg-sky-200 text-gray-700 rounded-lg w-[62%] py-1.5 px-3  border-[1px] text-[12px] flex items-center justify-center gap-x-1"><svg
+                <button
+                    class="bg-sky-200 text-gray-700 rounded-lg w-[62%] py-1.5 px-3  border-[1px] text-[12px] flex items-center justify-center gap-x-1"><svg
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -99,7 +100,7 @@ import { Link } from '@inertiajs/vue3';
     </section>
     <div class="bg-white px-2 py-4 mt-[13px]">
         <div class="flex gap-1 items-center mx-auto w-[97%] flex-wrap">
-            <Link :href="route('about', usersIdentifiant.id)"
+            <Link :href="route('about', usersIdentifiant.uuid)"
                 :class="niveau === 'about' ? 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px] text-sky-800' : 'basis-[30%] flex justify-center items-center gap-2 bg-sky-100 py-1 px-2 rounded text-[12px]'">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -176,6 +177,59 @@ import { Link } from '@inertiajs/vue3';
                     <img :src="fileProfil === null ? `/storage/images/account.png` : `/storage/profilImage/${fileProfil}`"
                         class="object-cover h-[40px] w-[40px] rounded-lg" alt="image_de_profil">
                     <p class="text-[12px] text-sky-600 cursor-pointer font-bold" @click="chooseFile">Modifier la photo</p>
+                </div>
+            </section>
+            
+            <section class="w-[90%] mx-auto mt-4 flex flex-col gap-y-6">
+                <div class="flex flex-col gap-y-2">
+                    <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Ma bibliographie
+                    </h4>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="bg-sky-100 p-2.5 rounded">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-user iw-18 ih-18 w-4 h-4">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="basis-[85%]">
+                            <textarea v-model="bibliography" class="text-[12px] max-h-[55px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1" placeholder="Ma bibliographie">{{ information.bibliography }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-y-2">
+                    <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon adresse électronique
+                    </h4>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="bg-sky-100 p-2.5 rounded">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="gray" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                            </svg>
+                        </div>
+                        <div class="basis-[85%]">
+                            <input class="text-[12px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1" placeholder="Mon adresse électronique" v-model="email" >
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-y-2">
+                    <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon adresse électronique
+                    </h4>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="bg-sky-100 p-2.5 rounded">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="gray" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                            </svg>
+                        </div>
+                        <div class="basis-[85%]">
+                            <label for="masculin">Masculin : <input type="radio" id="masculin" name="sexe"></label>
+                            <label for="feminin">Féminin : <input type="radio" id="feminin" name="sexe"></label>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
@@ -267,6 +321,7 @@ export default {
         usersIdentifiant: Array,
         allImg: Array,
         lier: Array,
+        information: Array,
     },
     data() {
         return {
@@ -279,6 +334,8 @@ export default {
             fileProfil: this.filesProfil,
             allImgs: this.allImg,
             liee: this.lier,
+            email: this.information.email,
+            bibliography: this.information.bibliography
         }
     },
 
@@ -363,8 +420,6 @@ export default {
         // By KolaDev
         closeModal() {
             this.variable = !this.variable;
-            paragraphs.classList.remove("hidden");
-            paragraphs.innerHTML = '';
         },
 
         // Fonction pour afficher le modal de chargement d'image
@@ -377,6 +432,8 @@ export default {
         // Fonction pour fermer le modal de chargement d'image
         // By KolaDev
         closeModal1() {
+            paragraphs.classList.remove("hidden");
+            paragraphs.innerHTML = '';
             this.variable1 = !this.variable1;
             if (this.nameImg) {
                 this.closeVisual();
@@ -477,4 +534,5 @@ body {
 .v-leave-to {
     transform: translateY(-10px);
     opacity: 0;
-}</style>
+}
+</style>
