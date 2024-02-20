@@ -10,7 +10,7 @@ import { Head, Link } from '@inertiajs/vue3';
         <main class="mt-[-20px]">
             <ComposantUser :niveau="'about'" :filesProfil="imageProfil" :covers="couverture" :lastImage="thisImage"
                 :followin="userfollow" :followe="followers" :usersIdentifiant="users" :numberLik="numberLike"
-                :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" />
+                :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" :pays="allPays" />
 
             <section class="mt-4 mb-16 bg-white max-w-[90%] m-auto rounded">
                 <div class="flex items-center justify-between py-3.5 px-5 border-b-[1px]">
@@ -22,7 +22,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     </h2>
                 </div>
                 <div class="flex flex-col">
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -35,12 +35,12 @@ import { Head, Link } from '@inertiajs/vue3';
                             <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Ma bibliographie
                             </h4>
                             <h4 class="font-bold text-[13px]" v-else>Sa bibliographie</h4>
-                            <p class="text-[12px] max-h-[250px] overflow-y-auto" v-if="users.bibliography !== null"
-                                :v-html="users.bibliography"></p>
+                            <p class="text-[12px] max-h-[50px] overflow-y-auto" v-if="users.bibliography !== null"
+                                v-html="users.bibliography"></p>
                             <p class="text-[12px] max-h-[250px] overflow-y-auto" v-else>Pas disponible !</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="gray" class="w-4 h-4">
@@ -56,7 +56,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             <p class="text-[12px]" v-else>Pas disponible !</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="gray" class="w-4 h-4">
@@ -67,11 +67,11 @@ import { Head, Link } from '@inertiajs/vue3';
                         <div class="basis-[85%]">
                             <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre pays</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son pays</h4>
-                            <p class="text-[12px]" v-if="informationPerson.name_pays !== null">Le {{ informationPerson.name_pays }}</p>
+                            <p class="text-[12px]" v-if="informationPerson.name_pays !== null">{{ informationPerson.name_pays }}</p>
                             <p class="text-[12px]" v-else>Pas disponible !</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="gray" class="w-4 h-4">
@@ -83,11 +83,11 @@ import { Head, Link } from '@inertiajs/vue3';
                             <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre numéro de
                                 téléphone</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son numéro de téléphone</h4>
-                            <p class="text-[12px]" v-if="users.phone_number !== null">Le +{{ informationPerson.country_code }} {{ users.phone_number }}</p>
+                            <p class="text-[12px]" v-if="users.phone_number !== null">{{ informationPerson.country_code }} {{ users.phone_number }}</p>
                             <p class="text-[12px]" v-else>Pas disponible !</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -106,7 +106,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             <p class="text-[12px]" v-else>Pas disponible !</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="gray" class="w-4 h-4">
@@ -124,7 +124,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             <p class="text-[12px]" v-else>Pas disponible !</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between gap-6 px-5 py-3">
+                    <div class="flex items-center justify-between gap-6 px-5 py-4">
                         <div class="bg-sky-100 p-2.5 rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="gray" class="w-4 h-4">
@@ -158,6 +158,7 @@ export default {
         user: Array,
         liaison: Array,
         informationPerson: Array,
+        allPays: Array,
     },
 
     data() {

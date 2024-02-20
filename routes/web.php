@@ -94,6 +94,7 @@ Route::post('/editCommentFilePost', [CommentUserPostController::class, 'edit'])-
 Route::post('/sendUpdatePost', [CommentUserPostController::class, 'update'])->name('sendUpdatePost')->middleware(['auth', 'verified']);
 Route::delete('/deleteCommentPost', [CommentUserPostController::class, 'destroy'])->name('deleteCommentPost')->middleware(['auth', 'verified']);
 Route::post('/allFilProPost', [ActivityUserController::class, 'allFilProPost'])->middleware(['auth', 'verified'])->name('allFilProPost');
+Route::post('/saveInfoUser', [ActivityUserController::class, 'saveInfoUser'])->middleware(['auth', 'verified'])->name('saveInfoUser');
 
 
 

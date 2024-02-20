@@ -10,7 +10,7 @@ import { Head, Link } from "@inertiajs/vue3";
     <main class="mt-[-20px] mb-14">
       <ComposantUser :filesProfil="imageProfil" :covers="couverture" :lastImage="thisImage" :niveau="'activity'"
         :followin="userfollow" :followe="followers" :usersIdentifiant="users" :numberLik="numberLike"
-        :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" />
+        :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" :pays="allPays" />
 
       <section class="mt-2 bg-white mb-3" v-if="exist">
         <div class="w-full p-4 flex flex-col gap-2">
@@ -443,6 +443,7 @@ export default {
     liaison: Array,
     informationPerson: Array,
     exist: Boolean,
+    allPays: Array,
   },
 
   data() {

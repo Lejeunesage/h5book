@@ -147,7 +147,7 @@ import { Link } from '@inertiajs/vue3';
     <div v-if="variable" class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0 z-50" @click="closeModal">
     </div>
     <transition>
-        <div v-if="variable" class="fixed top-0 bg-white h-full w-full z-50">
+        <div v-if="variable" class="fixed top-0 bg-white h-full overflow-y-auto w-full z-50">
             <div class="relative">
                 <h4 class="border-gray-300 border-b-[1px] text-gray-600 text-[13px] font-bold py-6 px-3.5">Modifier vos
                     informations
@@ -179,58 +179,137 @@ import { Link } from '@inertiajs/vue3';
                     <p class="text-[12px] text-sky-600 cursor-pointer font-bold" @click="chooseFile">Modifier la photo</p>
                 </div>
             </section>
-            
-            <section class="w-[90%] mx-auto mt-4 flex flex-col gap-y-6">
-                <div class="flex flex-col gap-y-2">
-                    <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Ma bibliographie
-                    </h4>
-                    <div class="flex items-center justify-between gap-1">
-                        <div class="bg-sky-100 p-2.5 rounded">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-user iw-18 ih-18 w-4 h-4">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="basis-[85%]">
-                            <textarea v-model="bibliography" class="text-[12px] max-h-[55px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1" placeholder="Ma bibliographie">{{ information.bibliography }}</textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon adresse électronique
-                    </h4>
-                    <div class="flex items-center justify-between gap-1">
-                        <div class="bg-sky-100 p-2.5 rounded">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="gray" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                            </svg>
-                        </div>
-                        <div class="basis-[85%]">
-                            <input class="text-[12px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1" placeholder="Mon adresse électronique" v-model="email" >
+
+            <section class="mb-20">
+                <form class="w-[90%] mx-auto mt-4 flex flex-col gap-y-6" @submit.prevent="saveInformation">
+                    <div class="flex flex-col gap-y-2">
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Ma bibliographie
+                        </h4>
+                        <div class="flex items-center justify-between gap-1">
+                            <div class="bg-sky-100 p-2.5 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-user iw-18 ih-18 w-4 h-4">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="basis-[85%]">
+                                <textarea v-model="bibliography"
+                                    class="text-[12px] max-h-[55px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1"
+                                    placeholder="Ma bibliographie">{{ information.bibliography }}</textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex flex-col gap-y-2">
-                    <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon adresse électronique
-                    </h4>
-                    <div class="flex items-center justify-between gap-1">
-                        <div class="bg-sky-100 p-2.5 rounded">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="gray" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                            </svg>
-                        </div>
-                        <div class="basis-[85%]">
-                            <label for="masculin">Masculin : <input type="radio" id="masculin" name="sexe"></label>
-                            <label for="feminin">Féminin : <input type="radio" id="feminin" name="sexe"></label>
+                    <div class="flex flex-col gap-y-2">
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Ma date de
+                            naissance
+                        </h4>
+                        <div class="flex items-center justify-between gap-1">
+                            <div class="bg-sky-100 p-2.5 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="gray" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75-1.5.75a3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0 3.354 3.354 0 0 0-3 0 3.354 3.354 0 0 1-3 0L3 16.5m15-3.379a48.474 48.474 0 0 0-6-.371c-2.032 0-4.034.126-6 .371m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.169c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 0 1 3 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 0 1 6 13.12M12.265 3.11a.375.375 0 1 1-.53 0L12 2.845l.265.265Zm-3 0a.375.375 0 1 1-.53 0L9 2.845l.265.265Zm6 0a.375.375 0 1 1-.53 0L15 2.845l.265.265Z" />
+                                </svg>
+                            </div>
+                            <div class="basis-[85%]">
+                                <input
+                                    class="text-[12px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1"
+                                    type="date" v-model="date">
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="flex flex-col gap-y-2">
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon adresse
+                            électronique
+                        </h4>
+                        <div class="flex items-center justify-between gap-1">
+                            <div class="bg-sky-100 p-2.5 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="gray" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                </svg>
+                            </div>
+                            <div class="basis-[85%]">
+                                <input type="email" required
+                                    class="text-[12px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1"
+                                    placeholder="Mon adresse électronique" v-model="email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon sexe
+                        </h4>
+                        <div class="flex items-center justify-between gap-1">
+                            <div class="bg-sky-100 p-2.5 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="gray"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-user iw-18 ih-18 w-4 h-4">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="basis-[85%] flex justify-between">
+                                <label for="masculin"
+                                    class="border-gray-200 border-[1px] text-[13px] p-2 flex justify-between items-center rounded bg-sky-100 basis-[45%]">Masculin
+                                    : <input type="radio" id="masculin" name="sexe"
+                                        :checked="sexe === 'M' ? true : false"></label>
+                                <label for="feminin"
+                                    class="border-gray-200 border-[1px] text-[13px] p-2 flex justify-between items-center rounded bg-sky-100 basis-[45%]">Féminin
+                                    : <input type="radio" id="feminin" name="sexe"
+                                        :checked="sexe === 'F' ? true : false"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon pays
+                        </h4>
+                        <div class="flex items-center justify-between gap-1">
+                            <div class="bg-sky-100 p-2.5 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="gray" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                                </svg>
+                            </div>
+                            <div class="basis-[85%]">
+                                <input
+                                    class="text-[12px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1"
+                                    placeholder="Mon pays" v-model="namePays" list="listPays">
+                                <datalist id="listPays">
+                                    <option :value="el.name_pays" v-for="(el, index) in pays">{{ el.name_pays }}</option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Votre numéro de
+                            téléphone
+                        </h4>
+                        <div class="flex items-center justify-between gap-1">
+                            <div class="bg-sky-100 p-2.5 rounded">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="gray" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                                </svg>
+                            </div>
+                            <div class="basis-[85%]">
+                                <input
+                                    class="text-[12px] w-full focus:ring-0 focus:ring-transparent border-x-[0px] border-t-[0px] border-gray-300 border-b-[1px] overflow-y-auto px-1"
+                                    placeholder="Mon numéro de téléphone" v-model="phone" type="number">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="errorMsg" class="flex justify-center items-center hidden">
+                    </div>
+                    <div class="flex justify-end">
+                        <button class="text-[12px] bg-sky-600 text-white font-bold py-2 px-3.5 rounded-lg">Sauvegarder ces
+                            informations</button>
+                    </div>
+                </form>
             </section>
         </div>
     </transition>
@@ -275,7 +354,7 @@ import { Link } from '@inertiajs/vue3';
                 </div>
 
                 <div
-                    class="fixed left-0 bottom-10 right-0 flex justify-end items-center border-gray-300 border-t-[1px] py-4 px-3.5">
+                    class="fixed left-0 bottom-14 right-0 flex justify-end items-center border-gray-300 border-t-[1px] py-4 px-3.5">
                     <button class="bg-sky-600 text-white text-[12px] font-bold py-2 px-3.5 rounded-lg">Charger l'image
                     </button>
                 </div>
@@ -322,6 +401,7 @@ export default {
         allImg: Array,
         lier: Array,
         information: Array,
+        pays: Array,
     },
     data() {
         return {
@@ -335,11 +415,63 @@ export default {
             allImgs: this.allImg,
             liee: this.lier,
             email: this.information.email,
-            bibliography: this.information.bibliography
+            bibliography: this.information.bibliography ?? '',
+            sexe: this.information.gender ?? '',
+            namePays: this.information.name_pays ?? '',
+            phone: this.information.phone_number ?? '',
+            date: this.information.date_of_birth,
         }
     },
 
     methods: {
+        /**
+         * Fonction pour sauvegarder les informations de l'utilisateur
+         * By KolaDev
+         */
+        saveInformation() {
+            errorMsg.classList.add("hidden");
+            let tabPays = {};
+            if (this.phone !== '' && this.namePays.trim() === '') {
+                errorMsg.classList.remove("hidden");
+                errorMsg.innerHTML = `<p class="text-[12px] text-red-500 bg-red-200 font-bold p-1.5 rounded-lg text-center w-full">Vous devez précisez le pays !</p>`;
+            } else {
+                if (masculin.checked) {
+                    this.sexe = 'M';
+                }
+
+                if (feminin.checked) {
+                    this.sexe = 'F';
+                }
+
+                if (this.namePays.trim() !== '') {
+                    this.pays.forEach(el => {
+                        if (el.name_pays === this.namePays) {
+                            tabPays = el;
+                        }
+                    })
+                }
+
+                axios.post(route("saveInfoUser"), {
+                    bibliography: this.bibliography,
+                    tableauPays: tabPays,
+                    sexe: this.sexe,
+                    phone: this.phone,
+                    date: this.date,
+                    email: this.email
+
+                }).then(response => {
+                    if (response.data.success) {
+                        window.location.href = window.location.href;
+                    } else {
+                        errorMsg.classList.remove("hidden");
+                        errorMsg.innerHTML = `<p class="text-[12px] text-red-500 bg-red-200 font-bold p-1.5 rounded-lg text-center w-full">${response.data.error}</p>`;
+                    }
+                })
+            }
+
+
+        },
+
         // Fonction pour suivre un utilisateur
         // By KolaDev
         followPerson(id) {
@@ -534,5 +666,4 @@ body {
 .v-leave-to {
     transform: translateY(-10px);
     opacity: 0;
-}
-</style>
+}</style>

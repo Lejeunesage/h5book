@@ -9,7 +9,7 @@ import { Head, Link } from '@inertiajs/vue3';
     <AuthenticatedLayout>
         <main class="mt-[-20px] mb-14">
             <ComposantUser :filesProfil="profil" :covers="cover" :lastImage="lImg" :niveau="'photos'" :followin="userfollow"
-                :followe="followers" :usersIdentifiant="user" :numberLik="numberLike" :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" />
+                :followe="followers" :usersIdentifiant="user" :numberLik="numberLike" :allImg="getLastImgProfil" :lier="liaison" :information="informationPerson" :pays="allPays" />
             <section class="bg-white mt-[13px] mb-8 pb-8">
                 <div>
                     <div class="border-[#e4e7e9e5] border-b-[1px]">
@@ -208,6 +208,7 @@ export default {
         countProfil: Number,
     liaison: Array,
     informationPerson: Array,
+    allPays: Array,
     },
 
     data() {

@@ -508,6 +508,7 @@ class ActivityUserController extends Controller
                 return response()->json(["error" => "Cette publication de profil n'existe plus !"]);
         }
     }
+
     public function about($id)
     {
         // Les données de l'utilisateur
@@ -522,6 +523,23 @@ class ActivityUserController extends Controller
         $tableau = $gallery::essentialData($identifiant);
 
         return Inertia::render("Users/About", $tableau);
+        }
+    }
+
+    public function saveInfoUser(Request $request)
+    {
+        try {
+            User::where("id", Auth::user()->id)->update([
+                "id_country" => $request->tableauPays["id"] ?? null,
+                "bibliography" => nl2br($request->bibliography),
+                "date_of_birth" => $request->date,
+                "email" => $request->email,
+                "gender" => $request->sexe,
+                "phone_number" => $request->phone,
+            ]);
+            return response()->json(["success" => "Sauvegarde réussie !!!"]);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => "Une erreur est survenue lors de la sauvegarde !!!"]);
         }
     }
 }

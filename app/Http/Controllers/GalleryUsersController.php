@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CommentsUsersProfile;
+use App\Models\countries;
 use App\Models\followers;
 use App\Models\gallery_users;
 use App\Models\LikesUsersProfile;
@@ -251,11 +252,19 @@ class GalleryUsersController extends Controller
         $liaison = followers::where("user_id_connect", intval(Auth::user()->id))->where("user_id",  $id)->get()->toArray();
 
         // Récupérons les informations de la personne
-        $informationPerson = User::select("users.name", "users.bibliography", "users.gender", "users.email", "users.phone_number", "users.uuid", "countries.name_pays", "countries.country_code", "countries.country_iso")
+        $informationPerson = User::select("users.name", "users.bibliography", "users.date_of_birth", "users.gender", "users.email", "users.phone_number", "users.uuid", "countries.name_pays", "countries.country_code", "countries.country_iso")
         ->leftJoin("countries", "countries.id", "=", "users.id_country")
         ->where("users.id", $id)->first();
+        if($informationPerson !== null)
+        {
+            // Remplaçons les sauts de lignes par du vide
+            $informationPerson->bibliography = preg_replace("/<br\s*\/>/i", '', $informationPerson->bibliography);
+        }
 
-        return ["informationPerson" => $informationPerson, "liaison" => $liaison, "lImg" => $getLastImg, "following" => count($getFollowing), "follower" => count($getFollowers), "cover" => $cover, "profil" => $profil, "getLastImgProfil" => $getLastImgProfil, "user" => $user, "countLike" => $countLike];
+        // Récupérons toutes les informations de chaque pays
+        $allPays = countries::all()->toArray();
+
+        return ["allPays" => $allPays, "informationPerson" => $informationPerson, "liaison" => $liaison, "lImg" => $getLastImg, "following" => count($getFollowing), "follower" => count($getFollowers), "cover" => $cover, "profil" => $profil, "getLastImgProfil" => $getLastImgProfil, "user" => $user, "countLike" => $countLike];
     }
 
     /**
