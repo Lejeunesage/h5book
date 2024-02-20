@@ -304,7 +304,7 @@ import { Head, Link } from "@inertiajs/vue3";
           </div>
         </div>
 
-        <div class="bg-white fixed bottom-10 left-0 right-0 border-gray-400 border-t-[1px] py-2 z-4">
+        <div class="bg-white fixed bottom-14 left-0 right-0 border-gray-400 border-t-[1px] py-2 z-4">
           <div class="flex justify-center mx-auto w-[90%]">
             <form @submit.prevent="formComment" class="flex items-center justify-between basis-full">
               <textarea cols="30"

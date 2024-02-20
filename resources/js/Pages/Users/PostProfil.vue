@@ -411,7 +411,7 @@ import { Head, Link } from "@inertiajs/vue3";
         </transition>
 
         <div
-          class="bg-white fixed bottom-11 left-0 right-0 border-gray-400 border-t-[1px] py-1 z-4"
+          class="bg-white fixed bottom-14 left-0 right-0 border-gray-400 border-t-[1px] py-2 z-4"
         >
           <div class="flex justify-center mx-auto w-[90%]">
             <form
