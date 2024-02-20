@@ -285,7 +285,7 @@ import { Link } from '@inertiajs/vue3';
                         </div>
                     </div>
                     <div class="flex flex-col gap-y-2">
-                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Votre numéro de
+                        <h4 class="font-bold text-[13px] border-gray-300 border-b-[1px] text-gray-700 pb-2">Mon numéro de
                             téléphone
                         </h4>
                         <div class="flex items-center justify-between gap-1">

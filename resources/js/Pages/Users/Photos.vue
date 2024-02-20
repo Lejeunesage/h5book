@@ -60,7 +60,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </figure>
                         </div>
 
-                        <div v-if="coImg === null && proImg === null" class="text-gray-700 text-center w-full">
+                        <div v-if="coImg === null && proImg === null" class="text-gray-700 text-center text-[12px] w-full">
                             Pas de photos actuellement !
                         </div>
                     </div>

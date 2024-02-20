@@ -454,7 +454,7 @@ import { Head, Link } from "@inertiajs/vue3";
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </span>
-                <div id="menu" class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0" @click="suivant()" v-if="varClose">
+                <div id="menu" class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0" v-if="varClose">
                     <div  class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-50">
                         <div class="w-[350px] relative flex flex-col justify-center items-center">
                             <div>

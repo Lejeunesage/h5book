@@ -49,7 +49,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre date
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon date
                                 d'anniversaire</h4>
                             <h4 class="font-bold text-[13px]" v-else>Sa date d'anniversaire</h4>
                             <p class="text-[12px]" v-if="users.date_of_birth !== null">Le {{ users.date_of_birth }}</p>
@@ -65,7 +65,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre pays</h4>
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon pays</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son pays</h4>
                             <p class="text-[12px]" v-if="informationPerson.name_pays !== null">{{ informationPerson.name_pays }}</p>
                             <p class="text-[12px]" v-else>Pas disponible !</p>
@@ -80,7 +80,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre numéro de
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Ma numéro de
                                 téléphone</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son numéro de téléphone</h4>
                             <p class="text-[12px]" v-if="users.phone_number !== null && informationPerson.country_code !== null">{{ informationPerson.country_code }} {{ users.phone_number }}</p>
@@ -97,7 +97,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre sexe</h4>
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon sexe</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son sexe</h4>
                             <p class="text-[12px]" v-if="users.gender !== null">
                                 <span v-if="user.gender === 'M'">Masculin</span>
@@ -115,7 +115,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre adresse
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon adresse
                                 électronique</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son adresse électronique</h4>
                             <p class="text-[12px]" v-if="users.email !== null">
