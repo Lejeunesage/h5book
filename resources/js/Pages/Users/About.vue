@@ -83,7 +83,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Votre numéro de
                                 téléphone</h4>
                             <h4 class="font-bold text-[13px]" v-else>Son numéro de téléphone</h4>
-                            <p class="text-[12px]" v-if="users.phone_number !== null">{{ informationPerson.country_code }} {{ users.phone_number }}</p>
+                            <p class="text-[12px]" v-if="users.phone_number !== null && informationPerson.country_code !== null">{{ informationPerson.country_code }} {{ users.phone_number }}</p>
                             <p class="text-[12px]" v-else>Pas disponible !</p>
                         </div>
                     </div>

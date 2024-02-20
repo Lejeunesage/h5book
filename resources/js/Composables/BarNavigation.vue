@@ -43,38 +43,47 @@ import DropdownLink from '@/Components/DropdownLink.vue';
             </span>
         </div>
     </footer>
-    <div v-if="boolModal" class="fixed inset-0 flex items-center justify-end z-50">
-        <div class="bg-sky-50 w-2/3 h-full shadow-md overflow-hidden transform transition-transform"
+    <div v-if="boolModal" class="fixed inset-0 top-[59px] bottom-[59px] flex items-center justify-end bg-gray-900 bg-opacity-80 z-50">
+        <div class="div w-1/2 h-full overflow-hidden transform transition-transform bg-sky-100"
             :class="{ 'translate-x-0': boolModal, 'translate-x-full': !boolModal }">
-            <div class="absolute top-4 right-3 bg-[#0389c9]  w-6 h-6 flex justify-center items-center rounded-sm"
-                v-if="boolModal" @click="closeModal">
-                <svg data-slot="icon" width="25" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true">
-                    <path
-                        d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z">
-                    </path>
-                </svg>
-            </div>
 
-            <ul class="flex gap-4 p-4 flex-col mt-12">
+            <ul class="flex gap-4 p-4 flex-col mt-6">
+                <!-- <DropdownLink :href="route('myActivity', $page.props.auth.user.id)"
+                    class="shadow px-1 border-sky-100 border rounded flex gap-1 items-center bg-[#0389c9] text-white text-[11px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    Accueil
+                </DropdownLink>
                 <DropdownLink :href="route('myActivity', $page.props.auth.user.id)"
-                    class="bg-sky-200 p-1 border-sky-100 border rounded  flex gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    class="shadow px-1 border-sky-100 border rounded flex gap-1 items-center bg-[#0389c9] text-white text-[11px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                     </svg>
                     Profile
                 </DropdownLink>
+                <DropdownLink :href="route('myActivity', $page.props.auth.user.id)"
+                    class="shadow px-1 border-sky-100 border rounded flex gap-1 items-center bg-[#0389c9] text-white text-[11px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    Messageries
+                </DropdownLink> -->
                 <DropdownLink :href="route('logout')" method="post" as="button"
-                    class="bg-sky-200 p-1 border-sky-100 border rounded flex gap-2">
-                    <svg data-slot="icon" fill="none" width="20" stroke-width="1.5" stroke="currentColor"
+                    class="absolute bottom-4 w-[87%] shadow px-1 border-sky-100 border rounded flex gap-1 items-center bg-[#0389c9] text-white">
+                    <svg data-slot="icon" fill="none" width="16" stroke-width="1.5" stroke="currentColor"
                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15">
                         </path>
                     </svg>
-                    Déconnexion
+                    <p class="text-[14px]">Déconnexion</p>
                 </DropdownLink>
                 <li></li>
             </ul>
@@ -105,6 +114,21 @@ export default
 </script>
 
 <style scope>
+ 
+ .div {
+  position: relative;
+  animation-name: example;
+  animation-duration: .3s;
+  right: 0px;
+  animation-timing-function: linear;
+}
+
+@keyframes example {
+  0%   {right: -200px;}
+  50%  {right: -100px;}
+  100% {right: 0px;}
+}
+
 .color {
     color: #f8f9fa;
 }

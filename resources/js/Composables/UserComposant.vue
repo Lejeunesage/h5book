@@ -445,28 +445,35 @@ export default {
 
                 if (this.namePays.trim() !== '') {
                     this.pays.forEach(el => {
-                        if (el.name_pays === this.namePays) {
+                        if (el.name_pays === this.namePays.trim()) {
                             tabPays = el;
                         }
                     })
                 }
 
-                axios.post(route("saveInfoUser"), {
-                    bibliography: this.bibliography,
-                    tableauPays: tabPays,
-                    sexe: this.sexe,
-                    phone: this.phone,
-                    date: this.date,
-                    email: this.email
+                let keys = Object.keys(tabPays);
 
-                }).then(response => {
-                    if (response.data.success) {
-                        window.location.href = window.location.href;
-                    } else {
-                        errorMsg.classList.remove("hidden");
-                        errorMsg.innerHTML = `<p class="text-[12px] text-red-500 bg-red-200 font-bold p-1.5 rounded-lg text-center w-full">${response.data.error}</p>`;
-                    }
-                })
+                if (this.namePays.trim() !== '' && keys.length == 0) {
+                    errorMsg.classList.remove("hidden");
+                    errorMsg.innerHTML = `<p class="text-[12px] text-red-500 bg-red-200 font-bold p-1.5 rounded-lg text-center w-full">Veuillez bien renseigner le pays !</p>`;
+                } else {
+                    axios.post(route("saveInfoUser"), {
+                        bibliography: this.bibliography,
+                        tableauPays: tabPays,
+                        sexe: this.sexe,
+                        phone: this.phone,
+                        date: this.date,
+                        email: this.email
+
+                    }).then(response => {
+                        if (response.data.success) {
+                            window.location.href = window.location.href;
+                        } else {
+                            errorMsg.classList.remove("hidden");
+                            errorMsg.innerHTML = `<p class="text-[12px] text-red-500 bg-red-200 font-bold p-1.5 rounded-lg text-center w-full">${response.data.error}</p>`;
+                        }
+                    })
+                }
             }
 
 
@@ -667,4 +674,5 @@ body {
 .v-leave-to {
     transform: translateY(-10px);
     opacity: 0;
-}</style>
+}
+</style>

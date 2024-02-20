@@ -5,7 +5,7 @@ import { Head, Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-  <Head title="Friends" />
+  <Head :title="users.name" />
   <AuthenticatedLayout>
     <main class="mt-[-20px] mb-24">
       <section>
