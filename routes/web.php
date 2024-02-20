@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\ActivityUserController;
 use App\Http\Controllers\CommentsUsersProfileController;
 use App\Http\Controllers\CommentUserPostController;
@@ -36,11 +37,12 @@ Route::get('/', function () {
 })->middleware(['auth']);
 
 
-Route::get('/accueil', function () {
-    return Inertia::render('Accueil');
-})->middleware(['auth', 'verified'])->name('accueil');
+// Route::get('/accueil', function () {
+//     return Inertia::render('Accueil');
+// })->middleware(['auth', 'verified'])->name('accueil');
+Route::get('/accueil', [AccueilController::class, 'index'])->middleware(['auth', 'verified'])->name('accueil');
 
-Route::get('/friends', [FollowersController::class, 'index'])->middleware(['auth', 'verified'])->name('friends');
+// Route::get('/friends', [FollowersController::class, 'index'])->middleware(['auth', 'verified'])->name('friends');
 Route::post('/followingUser', [FollowersController::class, 'followingUser'])->name('followingUser')->middleware(['auth', 'verified']);
 Route::post('/searchInputFriend', [FollowersController::class, 'searchInputFriend'])->name('searchInputFriend')->middleware(['auth', 'verified']);
 Route::delete('/unsubscribe', [FollowersController::class, 'unsubscribe'])->name('unsubscribe')->middleware(['auth', 'verified']);
