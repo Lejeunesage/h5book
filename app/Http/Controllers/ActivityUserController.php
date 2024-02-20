@@ -531,7 +531,7 @@ class ActivityUserController extends Controller
         try {
             User::where("id", Auth::user()->id)->update([
                 "id_country" => $request->tableauPays["id"] ?? null,
-                "bibliography" => nl2br($request->bibliography),
+                "bibliography" => $request->bibliography !== null ? nl2br($request->bibliography) : null,
                 "date_of_birth" => $request->date,
                 "email" => $request->email,
                 "gender" => $request->sexe,

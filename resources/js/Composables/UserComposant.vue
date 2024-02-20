@@ -551,7 +551,8 @@ export default {
         // Fonction pour cacher le modal
         // By KolaDev
         closeModal() {
-            this.variable = !this.variable;
+            errorMsg.classList.add("hidden");
+            this.variable = false;
         },
 
         // Fonction pour afficher le modal de chargement d'image
@@ -566,7 +567,7 @@ export default {
         closeModal1() {
             paragraphs.classList.remove("hidden");
             paragraphs.innerHTML = '';
-            this.variable1 = !this.variable1;
+            this.variable1 = false;
             if (this.nameImg) {
                 this.closeVisual();
             }
