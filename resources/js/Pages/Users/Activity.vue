@@ -5,7 +5,7 @@ import { Head, Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-  <Head title="Mon journal" />
+  <Head :title="'Journal - ' + users.name" />
   <AuthenticatedLayout>
     <main class="mt-[-20px] mb-14">
       <ComposantUser :filesProfil="imageProfil" :covers="couverture" :lastImage="thisImage" :niveau="'activity'"
@@ -624,6 +624,9 @@ export default {
     },
 
     transitionFunctionOne(index) {
+      document.querySelectorAll(".allPosts").forEach(el => {
+        el.classList.add("hidden");
+      })
       document.querySelectorAll(".allClick").forEach(el => {
         if (el.id === `index-${index}`) {
           if (document.getElementById(`index-${index}`).className.includes("hidden")) {

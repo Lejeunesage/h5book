@@ -61,7 +61,7 @@ const selectOption = (option) => {
     <!-- Creation de post -->
     <section class="bg-white mt-2 mb-20">
       <div class="w-full p-2 flex flex-col gap-2">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 border-gray-300">
           <div class="aspect-square rounded-full">
             <img class="rounded-full aspect-square w-[35px]" :src="img !== null
               ? `/storage/profilImage/${userInformation.file_profile}`
@@ -93,7 +93,7 @@ const selectOption = (option) => {
             </div>
           </div>
 
-          <div class="mx-auto w-[95%] overflow-y-auto h-[600px]">
+          <div class="mx-auto w-[95%] overflow-y-auto h-[500px]">
             <div class="w-full p-1 relative">
               <template v-if="selectedColorIndex !== null">
                 <div class="h-64 flex items-center p-5" :class="`${colorArray[selectedColorIndex]}`">
@@ -165,7 +165,7 @@ const selectOption = (option) => {
       </div>
 
       <div class="bg-white" v-if="myTables.length > 0">
-        <div class="mt-2 bg-white py-1">
+        <div class="bg-white py-1">
           <div class="flex flex-col gap-y-2">
             <div v-for="(item, index) in myTables.slice(0, 4)" :key="index" class="border-b-[1px] pb-2 shadow-sm my-1">
               <div v-if="item.creator_name">
@@ -228,23 +228,25 @@ const selectOption = (option) => {
                       <div :id="'posts-' + index" v-if="item.image !== null"
                         class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="saveImage(item, index)">
                             Enrégistrer cette image
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
-                            v-if="item.user_id === $page.props.auth.user.id">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(item, index)" v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer le post
                           </li>
                         </ul>
                       </div>
                       <div :id="'posts-' + index" v-else-if="item.video !== null"
-                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                        class="allPosts z-50 hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="saveImage(item, index)">
                             Enrégistrer cette vidéo
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
-                            v-if="item.user_id === $page.props.auth.user.id">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(item, index)" v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer le post
                           </li>
                         </ul>
@@ -253,7 +255,7 @@ const selectOption = (option) => {
                         class="allPosts hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
                           <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
-                            @click="deletePost(el, index)">
+                            @click="deletePost(item, index)">
                             Supprimer le post
                           </li>
                         </ul>
@@ -350,10 +352,10 @@ const selectOption = (option) => {
                       <div :id="'index-' + index"
                         class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(item, index)">
                             Enrégistrer cette image
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(item, index)"
                             v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer l'image
                           </li>
@@ -363,10 +365,12 @@ const selectOption = (option) => {
                   </div>
                 </div>
 
-                <Link :href="route('postProfil', [item.idUser, item.id])">
-                <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                  class="w-full h-[380px] mt-2 object-cover" />
-                </Link>
+                <div class="mt-2">
+                  <Link :href="route('postProfil', [item.idUser, item.id])">
+                  <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                    class="w-full h-[380px] object-cover" />
+                  </Link>
+                </div>
 
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
@@ -501,7 +505,7 @@ const selectOption = (option) => {
 
                   <div class="relative basis-[2%] mr-2">
                     <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
-                      @click="transitionFunction(index)">
+                      @click="transitionFunction((index + 4))">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -509,7 +513,7 @@ const selectOption = (option) => {
                       </svg>
                     </span>
                     <span v-else-if="item.user_id === $page.props.auth.user.id" class="cursor-pointer"
-                      @click="transitionFunction(index)">
+                      @click="transitionFunction((index + 4))">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -517,35 +521,37 @@ const selectOption = (option) => {
                       </svg>
                     </span>
                     <transition>
-                      <div :id="'posts-' + index" v-if="item.image !== null"
+                      <div :id="'posts-' + (index + 4)" v-if="item.image !== null"
                         class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="saveImage(item, (index + 4))">
                             Enrégistrer cette image
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
-                            v-if="item.user_id === $page.props.auth.user.id">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(el, (index + 4))" v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer le post
                           </li>
                         </ul>
                       </div>
-                      <div :id="'posts-' + index" v-else-if="item.video !== null"
-                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                      <div :id="'posts-' + (index + 4)" v-else-if="item.video !== null"
+                        class="allPosts z-50 hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="saveImage(item, (index + 4))">
                             Enrégistrer cette vidéo
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
-                            v-if="item.user_id === $page.props.auth.user.id">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(item, (index + 4))" v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer le post
                           </li>
                         </ul>
                       </div>
-                      <div :id="'posts-' + index" v-else-if="item.user_id === $page.props.auth.user.id"
+                      <div :id="'posts-' + (index + 4)" v-else-if="item.user_id === $page.props.auth.user.id"
                         class="allPosts hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
                           <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
-                            @click="deletePost(el, index)">
+                            @click="deletePost(item, (index + 4))">
                             Supprimer le post
                           </li>
                         </ul>
@@ -570,25 +576,25 @@ const selectOption = (option) => {
 
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
-                  <span :id="'likePost-' + index" v-if="item.trueVariable && item.likes > 1"
+                  <span :id="'likePost-' + (index + 4)" v-if="item.trueVariable && item.likes > 1"
                     class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
                     autre(s) personne(s) ont aimé cette
                     publication.</span>
-                  <span :id="'likePost-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                  <span :id="'likePost-' + (index + 4)" v-else-if="item.trueVariable && item.likes == 1"
                     class="text-gray-600 text-[12px]">Vous avez aimé cette
                     publication.</span>
-                  <span :id="'likePost-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
+                  <span :id="'likePost-' + (index + 4)" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
                     item.likes
                   }} personne a aimé cette
                     publication.</span>
-                  <span :id="'likePost-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                  <span :id="'likePost-' + (index + 4)" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
                     personne(s) ont
                     aimé cette publication.</span>
                 </div>
 
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="clickLikePost(item, `${'likePost-' + index}`)">
+                    @click="clickLikePost(item, `${'likePost-' + (index + 4)}`)">
                     <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="gray" class="w-4 h-4">
@@ -631,7 +637,7 @@ const selectOption = (option) => {
                     </div>
                   </div>
                   <div class="relative basis-[2%] mr-2">
-                    <span class="cursor-pointer" @click="transitionFunctionOne(index)">
+                    <span class="cursor-pointer" @click="transitionFunctionOne((index + 4))">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -639,13 +645,14 @@ const selectOption = (option) => {
                       </svg>
                     </span>
                     <transition>
-                      <div :id="'index-' + index"
+                      <div :id="'index-' + (index + 4)"
                         class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]"
+                            @click="enregistrerImage(item, (index + 4))">
                             Enrégistrer cette image
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(item, (index + 4))"
                             v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer l'image
                           </li>
@@ -655,32 +662,35 @@ const selectOption = (option) => {
                   </div>
                 </div>
 
-                <Link :href="route('postProfil', [item.idUser, item.id])">
-                <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                  class="w-full h-[380px] mt-2 object-cover" />
-                </Link>
+                <div class="mt-2">
+                  <Link :href="route('postProfil', [item.idUser, item.id])">
+                  <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                    class="w-full h-[380px] object-cover" />
+                  </Link>
+                </div>
 
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
-                  <span :id="'like-' + index" v-if="item.trueVariable && item.likes > 1"
+                  <span :id="'like-' + (index + 4)" v-if="item.trueVariable && item.likes > 1"
                     class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
                     autre(s) personne(s) ont aimé cette
                     photo.</span>
-                  <span :id="'like-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                  <span :id="'like-' + (index + 4)" v-else-if="item.trueVariable && item.likes == 1"
                     class="text-gray-600 text-[12px]">Vous avez aimé cette
                     photo.</span>
-                  <span :id="'like-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{ item.likes
+                  <span :id="'like-' + (index + 4)" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
+                    item.likes
                   }}
                     personne a aimé cette
                     photo.</span>
-                  <span :id="'like-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                  <span :id="'like-' + (index + 4)" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
                     personne(s) ont aimé
                     cette photo.</span>
                 </div>
 
                 <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="clickLike(item, `${'like-' + index}`)">
+                    @click="clickLike(item, `${'like-' + (index + 4)}`)">
                     <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="gray" class="w-4 h-4">
@@ -795,7 +805,7 @@ const selectOption = (option) => {
 
                   <div class="relative basis-[2%] mr-2">
                     <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
-                      @click="transitionFunction(index)">
+                      @click="transitionFunction((index + 10))">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -803,7 +813,7 @@ const selectOption = (option) => {
                       </svg>
                     </span>
                     <span v-else-if="item.user_id === $page.props.auth.user.id" class="cursor-pointer"
-                      @click="transitionFunction(index)">
+                      @click="transitionFunction((index + 10))">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -811,35 +821,37 @@ const selectOption = (option) => {
                       </svg>
                     </span>
                     <transition>
-                      <div :id="'posts-' + index" v-if="item.image !== null"
+                      <div :id="'posts-' + (index + 10)" v-if="item.image !== null"
                         class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="saveImage(item, (index + 10))">
                             Enrégistrer cette image
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
-                            v-if="item.user_id === $page.props.auth.user.id">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(item, (index + 10))" v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer le post
                           </li>
                         </ul>
                       </div>
-                      <div :id="'posts-' + index" v-else-if="item.video !== null"
-                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                      <div :id="'posts-' + (index + 10)" v-else-if="item.video !== null"
+                        class="allPosts z-50 hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="saveImage(item, (index + 10))">
                             Enrégistrer cette vidéo
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
-                            v-if="item.user_id === $page.props.auth.user.id">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(item, (index + 10))" v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer le post
                           </li>
                         </ul>
                       </div>
-                      <div :id="'posts-' + index" v-else-if="item.user_id === $page.props.auth.user.id"
+                      <div :id="'posts-' + (index + 10)" v-else-if="item.user_id === $page.props.auth.user.id"
                         class="allPosts hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
                           <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
-                            @click="deletePost(el, index)">
+                            @click="deletePost(item, (index + 10))">
                             Supprimer le post
                           </li>
                         </ul>
@@ -864,25 +876,25 @@ const selectOption = (option) => {
 
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
-                  <span :id="'likePost-' + index" v-if="item.trueVariable && item.likes > 1"
+                  <span :id="'likePost-' + (index + 10)" v-if="item.trueVariable && item.likes > 1"
                     class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
                     autre(s) personne(s) ont aimé cette
                     publication.</span>
-                  <span :id="'likePost-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                  <span :id="'likePost-' + (index + 10)" v-else-if="item.trueVariable && item.likes == 1"
                     class="text-gray-600 text-[12px]">Vous avez aimé cette
                     publication.</span>
-                  <span :id="'likePost-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
+                  <span :id="'likePost-' + (index + 10)" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
                     item.likes
                   }} personne a aimé cette
                     publication.</span>
-                  <span :id="'likePost-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                  <span :id="'likePost-' + (index + 10)" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
                     personne(s) ont
                     aimé cette publication.</span>
                 </div>
 
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="clickLikePost(item, `${'likePost-' + index}`)">
+                    @click="clickLikePost(item, `${'likePost-' + (index + 10)}`)">
                     <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="gray" class="w-4 h-4">
@@ -925,7 +937,7 @@ const selectOption = (option) => {
                     </div>
                   </div>
                   <div class="relative basis-[2%] mr-2">
-                    <span class="cursor-pointer" @click="transitionFunctionOne(index)">
+                    <span class="cursor-pointer" @click="transitionFunctionOne((index + 10))">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -933,13 +945,14 @@ const selectOption = (option) => {
                       </svg>
                     </span>
                     <transition>
-                      <div :id="'index-' + index"
+                      <div :id="'index-' + (index + 10)"
                         class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
                         <ul class="cursor-pointer">
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]"
+                            @click="enregistrerImage(item, (index + 10))">
                             Enrégistrer cette image
                           </li>
-                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(item, (index + 10))"
                             v-if="item.user_id === $page.props.auth.user.id">
                             Supprimer l'image
                           </li>
@@ -949,32 +962,34 @@ const selectOption = (option) => {
                   </div>
                 </div>
 
-                <Link :href="route('postProfil', [item.idUser, item.id])">
-                <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                  class="w-full h-[380px] mt-2 object-cover" />
-                </Link>
-
+                <div class="mt-2">
+                  <Link :href="route('postProfil', [item.idUser, item.id])">
+                  <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                    class="w-full h-[380px] object-cover" />
+                  </Link>
+                </div>
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
-                  <span :id="'like-' + index" v-if="item.trueVariable && item.likes > 1"
+                  <span :id="'like-' + (index + 10)" v-if="item.trueVariable && item.likes > 1"
                     class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
                     autre(s) personne(s) ont aimé cette
                     photo.</span>
-                  <span :id="'like-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                  <span :id="'like-' + (index + 10)" v-else-if="item.trueVariable && item.likes == 1"
                     class="text-gray-600 text-[12px]">Vous avez aimé cette
                     photo.</span>
-                  <span :id="'like-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{ item.likes
+                  <span :id="'like-' + (index + 10)" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
+                    item.likes
                   }}
                     personne a aimé cette
                     photo.</span>
-                  <span :id="'like-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                  <span :id="'like-' + (index + 10)" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
                     personne(s) ont aimé
                     cette photo.</span>
                 </div>
 
                 <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="clickLike(item, `${'like-' + index}`)">
+                    @click="clickLike(item, `${'like-' + (index + 10)}`)">
                     <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="gray" class="w-4 h-4">
@@ -1115,6 +1130,135 @@ export default {
   },
 
   methods: {
+    // Fonction pour supprimer une image de profil
+    // By KolaDev
+    deleteImage(el, index) {
+      document.getElementById(`index-${index}`).classList.add("hidden");
+      axios
+        .delete(
+          route("deleteImageUser", {
+            image: el,
+          })
+        )
+        .then((response) => {
+          if (response.data.success) {
+            window.location.href = window.location.href;
+          }
+        });
+    },
+
+    enregistrerImage(el, index) {
+      axios
+        .get(
+          route("enregistrerImage", {
+            image: el,
+          }),
+          {
+            responseType: "blob",
+          }
+        )
+        .then((response) => {
+          let url = window.URL.createObjectURL(
+            new Blob([response.data], { type: "application/octet-stream" })
+          );
+          // Création d'un lien de téléchargement
+          let link = document.createElement("a");
+          link.href = url;
+          // Ajout de l'attribut download avec pour nom de téléchargement el.file_profile
+          link.setAttribute("download", el.file_profile);
+          // Ajout du lien dans le body de la page
+          document.body.appendChild(link);
+          // Clique automatique du lien
+          link.click();
+          // Suppression du lien créé
+          document.body.removeChild(link);
+          document.getElementById(`index-${index}`).classList.add("hidden");
+        });
+    },
+
+    transitionFunctionOne(index) {
+      document.querySelectorAll(".allPosts").forEach(el => {
+        el.classList.add("hidden");
+      })
+      document.querySelectorAll(".allClick").forEach(el => {
+        if (el.id === `index-${index}`) {
+          if (document.getElementById(`index-${index}`).className.includes("hidden")) {
+            document.getElementById(`index-${index}`).classList.remove("hidden");
+          } else {
+            document.getElementById(`index-${index}`).classList.add("hidden");
+          }
+        } else {
+          el.classList.add("hidden")
+        }
+      })
+    },
+
+
+    // Fonction pour supprimer une publication
+    // By KolaDev
+    deletePost(el, index) {
+      document.getElementById(`posts-${index}`).classList.add("hidden");
+      axios
+        .delete(
+          route("deletePost", {
+            image: el,
+          })
+        )
+        .then((response) => {
+          if (response.data.success) {
+            window.location.href = window.location.href;
+          }
+        });
+    },
+
+    // Fonction pour télécharger une image ou une vidéo d'un post
+    // By KolaDev
+    saveImage(el, index) {
+      axios
+        .get(
+          route("enregistrerImage", {
+            image: el,
+          }),
+          {
+            responseType: "blob",
+          }
+        )
+        .then((response) => {
+          let url = window.URL.createObjectURL(
+            new Blob([response.data], { type: "application/octet-stream" })
+          );
+          // Création d'un lien de téléchargement
+          let link = document.createElement("a");
+          link.href = url;
+          // Ajout de l'attribut download avec pour nom de téléchargement nom
+          let nom = el.image !== null ? el.image : el.video;
+          link.setAttribute("download", nom);
+          // Ajout du lien dans le body de la page
+          document.body.appendChild(link);
+          // Clique automatique du lien
+          link.click();
+          // Suppression du lien créé
+          document.body.removeChild(link);
+          document.getElementById(`posts-${index}`).classList.add("hidden");
+        });
+    },
+
+    transitionFunction(index) {
+      document.querySelectorAll(".allClick").forEach(el => {
+        el.classList.add("hidden");
+      })
+      document.querySelectorAll(".allPosts").forEach(el => {
+        if (el.id === `posts-${index}`) {
+          if (document.getElementById(`posts-${index}`).className.includes("hidden")) {
+            document.getElementById(`posts-${index}`).classList.remove("hidden");
+          } else {
+            document.getElementById(`posts-${index}`).classList.add("hidden");
+          }
+        } else {
+          el.classList.add("hidden")
+        }
+      })
+    },
 
     // Fonction pour suivre un utilisateur
     // By KolaDev
