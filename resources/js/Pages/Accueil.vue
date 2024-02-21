@@ -296,7 +296,7 @@ const selectOption = (option) => {
 
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="clickLikePost(el, `${'likePost-' + index}`)">
+                    @click="clickLikePost(item, `${'likePost-' + index}`)">
                     <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="gray" class="w-4 h-4">
@@ -331,7 +331,7 @@ const selectOption = (option) => {
               <div v-else-if="item.file_profile">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2 px-2">
-                    <img :src="`/storage/profilImage/${getLastImgProfil.file_profile}`" alt="image_de_profil"
+                    <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
                       class="rounded-full w-[35px] h-[35px] object-cover" />
                     <div>
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
@@ -363,10 +363,10 @@ const selectOption = (option) => {
                   </div>
                 </div>
 
-                <div class="mt-[10px]" @click="viewPostProfil(getLastImgProfil.user_id, item.id)">
-                  <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" />
-                </div>
+                <Link :href="route('postProfil', [item.idUser, item.id])">
+                <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                  class="w-full h-[380px] mt-2 object-cover" />
+                </Link>
 
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
@@ -388,7 +388,7 @@ const selectOption = (option) => {
 
                 <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="clickLike(el, `${'like-' + index}`)">
+                    @click="clickLike(item, `${'like-' + index}`)">
                     <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="gray" class="w-4 h-4">
@@ -406,40 +406,608 @@ const selectOption = (option) => {
                       <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
                     </span>
                   </span>
-                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
-                    @click="viewPostProfil(getLastImgProfil.user_id, item.id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                      stroke="gray" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                    </svg>
-                    <span class="text-gray-600 text-[12px] font-bold">{{ item.comments }}
-                      commentaire(s)</span>
-                  </span>
+                  <Link class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    :href="route('postProfil', [item.idUser, item.id])">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+                    class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  </svg>
+                  <span class="text-gray-600 text-[12px] font-bold">{{ item.comments }}
+                    commentaire(s)</span>
+                  </Link>
                 </div>
 
               </div>
             </div>
           </div>
         </div>
-        
-        <div v-if="friends.length > 0">
+
+        <div v-if="friends.length > 0" class="border-gray-300 border-y-[1px] py-2">
           <div class="flex flex-start m-auto w-[95%]">
-            <p class="text-[13px] bg-[#0c7fb9] p-1 rounded text-white">Suggestions</p>
+            <Link :href="route('abonnements', $page.props.auth.user.uuid)"
+              class="text-[12px] w-[35%] flex items-center justify-center gap-1 bg-[#0c7fb9] p-1 rounded text-white">
+            Suggestions
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-3 h-3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+            </Link>
           </div>
-          <div class="flex overflow-x-auto gap-4 mt-1 w-[95%] m-auto">
-            <article class="w-[450px] whitespace-nowrap" v-for="(element, index) in friends.slice(0, 10)" :key="index">
-              <Link :href="route('myActivity', element.id)">
-              <img class="aspect-square w-full h-[150px] object-cover rounded" :src="element.image !== null
-                ? `/storage/profilImage/${element.image}`
-                : `/storage/images/account.png`
-                " alt="" />
-              <h3 class="text-[12px]">{{ element.name }}</h3>
-              </Link>
-            </article>
+          <div class="overflow-x-auto whitespace-no-wrap mt-2 w-[95%] m-auto">
+            <div class="flex justify-start gap-4">
+              <div class="flex-shrink-0 w-32 flex flex-col gap-y-1" v-for="(element, index) in friends.slice(0, 10)"
+                :key="index">
+                <Link :href="route('myActivity', element.id)" class="flex flex-col gap-1">
+                <img class="aspect-square w-32 h-[180px] object-cover rounded" :src="element.image !== null
+                  ? `/storage/profilImage/${element.image}`
+                  : `/storage/images/account.png`
+                  " alt="" />
+                <h3 class="text-[12px] text-center">{{ element.name }}</h3>
+                </Link>
+                <div class="basis-full">
+                  <button
+                    class="w-full rounded py-1.5 px-5 bg-[#0389c9] text-white hover:text-sky-500 hover:bg-white font-bold text-[9px]"
+                    @click="followingAction(element.id, index)">Suivre</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
+
+        <div class="mt-2 bg-white py-1">
+          <div class="flex flex-col gap-y-2">
+            <div v-for="(item, index) in myTables.slice(4, 10)" :key="index" class="border-b-[1px] pb-2 shadow-sm my-1">
+              <div v-if="item.creator_name">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 px-2">
+                    <img :src="item.image_user !== null
+                      ? `/storage/profilImage/${item.image_user}`
+                      : `/storage/images/account.png`
+                      " alt="image_de_profil" class="rounded-full w-[35px] h-[35px] object-cover" />
+                    <div>
+                      <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
+                        v-if="item.tagged_names !== null && $page.props.auth.user.id == item.tagged_names.split('-')[0]">
+                        <Link :href="route('myActivity', item.user_id)" class="text-[12px]">{{
+                          item.creator_name }}</Link>
+                        <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-3 h-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                          </svg>
+                          <Link :href="route('myActivity', item.tagged_names.split('-')[0])">{{
+                            item.tagged_names.split('-')[1]
+                          }}</Link>
+                        </p>
+                      </h3>
+                      <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700" v-else>
+                        <Link :href="route('myActivity', item.user_id)">{{ item.creator_name
+                        }}</Link>
+
+                        <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-3 h-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                          </svg>
+                          <Link :href="route('myActivity', item.tagged_names.split('-')[0])">{{
+                            item.tagged_names.split('-')[1]
+                          }}</Link>
+                        </p>
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div class="relative basis-[2%] mr-2">
+                    <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
+                      @click="transitionFunction(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <span v-else-if="item.user_id === $page.props.auth.user.id" class="cursor-pointer"
+                      @click="transitionFunction(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <transition>
+                      <div :id="'posts-' + index" v-if="item.image !== null"
+                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                            Enrégistrer cette image
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
+                            v-if="item.user_id === $page.props.auth.user.id">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                      <div :id="'posts-' + index" v-else-if="item.video !== null"
+                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                            Enrégistrer cette vidéo
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
+                            v-if="item.user_id === $page.props.auth.user.id">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                      <div :id="'posts-' + index" v-else-if="item.user_id === $page.props.auth.user.id"
+                        class="allPosts hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(el, index)">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+
+                <div class="mt-[10px]">
+                  <p v-if="item.bgc !== null && item.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
+                    :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
+                    v-html="item.body"></p>
+                  <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="item.body"></p>
+                  <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
+                    :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
+                    class="w-full h-[380px] object-cover" /></Link>
+                  <div class="mt-2" v-if="item.video">
+                    <video controls :src="`/storage/post_images_videos/${item.video}`"
+                      class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
+                  </div>
+                </div>
+
+                <div :class="item.likes > 0 ? '' : 'hidden'"
+                  class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
+                  <span :id="'likePost-' + index" v-if="item.trueVariable && item.likes > 1"
+                    class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
+                    autre(s) personne(s) ont aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                    class="text-gray-600 text-[12px]">Vous avez aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
+                    item.likes
+                  }} personne a aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                    personne(s) ont
+                    aimé cette publication.</span>
+                </div>
+
+                <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="clickLikePost(item, `${'likePost-' + index}`)">
+                    <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="gray" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-gray-600 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                    <span v-else class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#0080FF" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                  </span>
+
+                  <Link :href="route('postUser', [item.id, item.user_id])"
+                    class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+                    class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  </svg>
+                  <span class="text-gray-600 text-[12px] font-bold">{{ item.comments }}
+                    commentaire(s)</span>
+                  </Link>
+                </div>
+              </div>
+
+              <div v-else-if="item.file_profile">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 px-2">
+                    <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                      class="rounded-full w-[35px] h-[35px] object-cover" />
+                    <div>
+                      <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
+                        item.name }}</Link>
+                    </div>
+                  </div>
+                  <div class="relative basis-[2%] mr-2">
+                    <span class="cursor-pointer" @click="transitionFunctionOne(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <transition>
+                      <div :id="'index-' + index"
+                        class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
+                            Enrégistrer cette image
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
+                            v-if="item.user_id === $page.props.auth.user.id">
+                            Supprimer l'image
+                          </li>
+                        </ul>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+
+                <Link :href="route('postProfil', [item.idUser, item.id])">
+                <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                  class="w-full h-[380px] mt-2 object-cover" />
+                </Link>
+
+                <div :class="item.likes > 0 ? '' : 'hidden'"
+                  class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
+                  <span :id="'like-' + index" v-if="item.trueVariable && item.likes > 1"
+                    class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
+                    autre(s) personne(s) ont aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                    class="text-gray-600 text-[12px]">Vous avez aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{ item.likes
+                  }}
+                    personne a aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                    personne(s) ont aimé
+                    cette photo.</span>
+                </div>
+
+                <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="clickLike(item, `${'like-' + index}`)">
+                    <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="gray" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-gray-600 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                    <span v-else class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#0080FF" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                  </span>
+                  <Link class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    :href="route('postProfil', [item.idUser, item.id])">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+                    class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  </svg>
+                  <span class="text-gray-600 text-[12px] font-bold">{{ item.comments }}
+                    commentaire(s)</span>
+                  </Link>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div v-if="myTables.length > 12 && friends.length > 15" class="border-gray-300 border-y-[1px] py-2">
+          <div class="flex flex-start m-auto w-[95%]">
+            <Link :href="route('abonnements', $page.props.auth.user.uuid)"
+              class="text-[12px] w-[35%] flex items-center justify-center gap-1 bg-[#0c7fb9] p-1 rounded text-white">
+            Suggestions
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-3 h-3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+            </Link>
+          </div>
+          <div class="overflow-x-auto whitespace-no-wrap mt-2 w-[95%] m-auto">
+            <div class="flex justify-start gap-4">
+              <div class="flex-shrink-0 w-32 flex flex-col gap-y-1" v-for="(element, index) in friends.slice(10, 15)"
+                :key="index">
+                <Link :href="route('myActivity', element.id)" class="flex flex-col gap-1">
+                <img class="aspect-square w-32 h-[180px] object-cover rounded" :src="element.image !== null
+                  ? `/storage/profilImage/${element.image}`
+                  : `/storage/images/account.png`
+                  " alt="" />
+                <h3 class="text-[12px] text-center">{{ element.name }}</h3>
+                </Link>
+                <div class="basis-full">
+                  <button
+                    class="w-full rounded py-1.5 px-5 bg-[#0389c9] text-white hover:text-sky-500 hover:bg-white font-bold text-[9px]"
+                    @click="followingAction(element.id, index)">Suivre</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mt-2 bg-white py-1">
+          <div class="flex flex-col gap-y-2">
+            <div v-for="(item, index) in myTables.slice(10, myTables.length)" :key="index"
+              class="border-b-[1px] pb-2 shadow-sm my-1">
+              <div v-if="item.creator_name">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 px-2">
+                    <img :src="item.image_user !== null
+                      ? `/storage/profilImage/${item.image_user}`
+                      : `/storage/images/account.png`
+                      " alt="image_de_profil" class="rounded-full w-[35px] h-[35px] object-cover" />
+                    <div>
+                      <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
+                        v-if="item.tagged_names !== null && $page.props.auth.user.id == item.tagged_names.split('-')[0]">
+                        <Link :href="route('myActivity', item.user_id)" class="text-[12px]">{{
+                          item.creator_name }}</Link>
+                        <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-3 h-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                          </svg>
+                          <Link :href="route('myActivity', item.tagged_names.split('-')[0])">{{
+                            item.tagged_names.split('-')[1]
+                          }}</Link>
+                        </p>
+                      </h3>
+                      <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700" v-else>
+                        <Link :href="route('myActivity', item.user_id)">{{ item.creator_name
+                        }}</Link>
+
+                        <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-3 h-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                          </svg>
+                          <Link :href="route('myActivity', item.tagged_names.split('-')[0])">{{
+                            item.tagged_names.split('-')[1]
+                          }}</Link>
+                        </p>
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div class="relative basis-[2%] mr-2">
+                    <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
+                      @click="transitionFunction(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <span v-else-if="item.user_id === $page.props.auth.user.id" class="cursor-pointer"
+                      @click="transitionFunction(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <transition>
+                      <div :id="'posts-' + index" v-if="item.image !== null"
+                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                            Enrégistrer cette image
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
+                            v-if="item.user_id === $page.props.auth.user.id">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                      <div :id="'posts-' + index" v-else-if="item.video !== null"
+                        class="allPosts hidden w-[150px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="saveImage(el, index)">
+                            Enrégistrer cette vidéo
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center" @click="deletePost(el, index)"
+                            v-if="item.user_id === $page.props.auth.user.id">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                      <div :id="'posts-' + index" v-else-if="item.user_id === $page.props.auth.user.id"
+                        class="allPosts hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px] text-center"
+                            @click="deletePost(el, index)">
+                            Supprimer le post
+                          </li>
+                        </ul>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+
+                <div class="mt-[10px]">
+                  <p v-if="item.bgc !== null && item.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
+                    :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
+                    v-html="item.body"></p>
+                  <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="item.body"></p>
+                  <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
+                    :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
+                    class="w-full h-[380px] object-cover" /></Link>
+                  <div class="mt-2" v-if="item.video">
+                    <video controls :src="`/storage/post_images_videos/${item.video}`"
+                      class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
+                  </div>
+                </div>
+
+                <div :class="item.likes > 0 ? '' : 'hidden'"
+                  class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
+                  <span :id="'likePost-' + index" v-if="item.trueVariable && item.likes > 1"
+                    class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
+                    autre(s) personne(s) ont aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                    class="text-gray-600 text-[12px]">Vous avez aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{
+                    item.likes
+                  }} personne a aimé cette
+                    publication.</span>
+                  <span :id="'likePost-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                    personne(s) ont
+                    aimé cette publication.</span>
+                </div>
+
+                <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="clickLikePost(item, `${'likePost-' + index}`)">
+                    <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="gray" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-gray-600 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                    <span v-else class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#0080FF" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                  </span>
+
+                  <Link :href="route('postUser', [item.id, item.user_id])"
+                    class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+                    class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  </svg>
+                  <span class="text-gray-600 text-[12px] font-bold">{{ item.comments }}
+                    commentaire(s)</span>
+                  </Link>
+                </div>
+              </div>
+
+              <div v-else-if="item.file_profile">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 px-2">
+                    <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                      class="rounded-full w-[35px] h-[35px] object-cover" />
+                    <div>
+                      <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
+                        item.name }}</Link>
+                    </div>
+                  </div>
+                  <div class="relative basis-[2%] mr-2">
+                    <span class="cursor-pointer" @click="transitionFunctionOne(index)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                      </svg>
+                    </span>
+                    <transition>
+                      <div :id="'index-' + index"
+                        class="allClick hidden w-[140px] absolute right-0 top-6 bg-gray-300 rounded">
+                        <ul class="cursor-pointer">
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="enregistrerImage(el, index)">
+                            Enrégistrer cette image
+                          </li>
+                          <li class="py-2 px-1.5 hover:bg-gray-200 text-[12px]" @click="deleteImage(el, index)"
+                            v-if="item.user_id === $page.props.auth.user.id">
+                            Supprimer l'image
+                          </li>
+                        </ul>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+
+                <Link :href="route('postProfil', [item.idUser, item.id])">
+                <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
+                  class="w-full h-[380px] mt-2 object-cover" />
+                </Link>
+
+                <div :class="item.likes > 0 ? '' : 'hidden'"
+                  class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
+                  <span :id="'like-' + index" v-if="item.trueVariable && item.likes > 1"
+                    class="text-gray-600 text-[12px]">Vous et {{ item.likes - 1 }}
+                    autre(s) personne(s) ont aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else-if="item.trueVariable && item.likes == 1"
+                    class="text-gray-600 text-[12px]">Vous avez aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else-if="item.likes == 1" class="text-gray-600 text-[12px]">{{ item.likes
+                  }}
+                    personne a aimé cette
+                    photo.</span>
+                  <span :id="'like-' + index" v-else class="text-gray-600 text-[12px]">{{ item.likes }}
+                    personne(s) ont aimé
+                    cette photo.</span>
+                </div>
+
+                <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
+                  <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    @click="clickLike(item, `${'like-' + index}`)">
+                    <span v-if="item.trueVariable === false" class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="gray" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-gray-600 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                    <span v-else class="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#0080FF" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                      </svg>
+                      <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
+                    </span>
+                  </span>
+                  <Link class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
+                    :href="route('postProfil', [item.idUser, item.id])">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+                    class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  </svg>
+                  <span class="text-gray-600 text-[12px] font-bold">{{ item.comments }}
+                    commentaire(s)</span>
+                  </Link>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
       <div v-else class="bg-white mt-3 flex flex-col gap-y-4 items-center py-8">
@@ -547,9 +1115,125 @@ export default {
   },
 
   methods: {
+
+    // Fonction pour suivre un utilisateur
     // By KolaDev
-    viewPostProfil(user_id, id) {
-      window.location.href = `/postProfil/${user_id}/${id}`;
+    followingAction(id, index) {
+      axios.post(route("followingUser"), {
+        id: id
+      }).then(response => {
+        if (response.data.success) {
+          setTimeout(() => {
+            this.friends.splice(index, 1);
+          }, 1000)
+        }
+      })
+    },
+
+    // By KolaDev
+    clickLike(el, element) {
+      axios
+        .post(route("addLikeFile"), {
+          image: el,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            this.alFil(el, element);
+          }
+        });
+    },
+
+    // By KolaDev
+    alFil(el, element) {
+      axios
+        .post(route("allFilPro"), {
+          table: el,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            if (response.data.countLike > 0) {
+              document.getElementById(`${element}`).parentElement.classList.remove("hidden");
+            } else {
+              document.getElementById(`${element}`).parentElement.classList.add("hidden");
+            }
+            document.getElementById(`${element}`).innerHTML = response.data.success;
+            if (response.data.variableTrue) {
+              document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
+                  <span class="flex gap-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="#0080FF" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                    </svg>
+                    <span class="text-sky-500 font-bold text-[12px]">${response.data.countLike} j'aime(s)</span>
+                  </span>`
+            } else {
+              document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
+                  <span class="flex gap-2 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="gray" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                    </svg>
+                    <span class="text-gray-600 text-[12px]">${response.data.countLike} j'aime(s)</span>
+                  </span>`
+
+            }
+          }
+        });
+    },
+
+    // By KolaDev
+    clickLikePost(el, element) {
+      axios
+        .post(route("addLikePost"), {
+          image: el,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            this.alFilPost(el, element);
+          }
+        });
+    },
+
+    // By KolaDev
+    alFilPost(el, element) {
+      axios
+        .post(route("allFilProPost"), {
+          table: el,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            if (response.data.countLike > 0) {
+              document.getElementById(`${element}`).parentElement.classList.remove("hidden");
+            } else {
+              document.getElementById(`${element}`).parentElement.classList.add("hidden");
+            }
+            document.getElementById(`${element}`).innerHTML = response.data.success;
+            if (response.data.variableTrue) {
+              document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
+              <span class="flex gap-2 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#0080FF" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="#0080FF" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                </svg>
+                <span class="text-sky-500 font-bold text-[12px]">${response.data.countLike} j'aime(s)</span>
+              </span>`
+            } else {
+              document.getElementById(`${element}`).parentElement.nextElementSibling.children[0].children[0].innerHTML = `
+              <span class="flex gap-2 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="gray" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                </svg>
+                <span class="text-gray-600 text-[12px]">${response.data.countLike} j'aime(s)</span>
+              </span>`
+
+            }
+          }
+        });
     },
 
     imageIn() {
@@ -671,7 +1355,8 @@ export default {
 
     // By KolaDev
     viewPostProfil(user_id, id) {
-      window.location.href = `/postProfil/${user_id}/${id}`;
+      // window.location.href = `/postProfil/${user_id}/${id}`;
+      console.log(user_id);
     },
 
     /**
@@ -730,5 +1415,4 @@ export default {
 .v-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}
-</style>
+}</style>

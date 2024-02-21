@@ -27,20 +27,20 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Accueil', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->middleware(['auth']);
+// Route::get('/', function () {
+//     return Inertia::render('Accueil', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// })->middleware(['auth']);
 
 
 // Route::get('/accueil', function () {
 //     return Inertia::render('Accueil');
 // })->middleware(['auth', 'verified'])->name('accueil');
-Route::get('/accueil', [AccueilController::class, 'index'])->middleware(['auth', 'verified'])->name('accueil');
+Route::get('/', [AccueilController::class, 'index'])->middleware(['auth', 'verified'])->name('accueil');
 
 // Route::get('/friends', [FollowersController::class, 'index'])->middleware(['auth', 'verified'])->name('friends');
 Route::post('/followingUser', [FollowersController::class, 'followingUser'])->name('followingUser')->middleware(['auth', 'verified']);
