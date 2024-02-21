@@ -28,31 +28,25 @@ const selectOption = (option) => {
 
   <AuthenticatedLayout>
     <!-- Status -->
-    <section class="flex gap-3 p-2 mt-[-10px] bg-white  overflow-hidden">
-      <div class="p-2 border-2 rouded-md border-blue-200 w-40 h-44 rounded-md shadow-md  justify-center items-center">
-        <div
-          class="p-4 border-b bg-[#0c7fb9] rounded-md shadow-md flex flex-col justify-center items-center h-full gap-3">
-          <span class="w-12 h-12 rounded-full flex items-center justify-center bg-white opacity-50">
-            <Icon name="plus" />
+    <section class="bg-white py-2 mt-[-10px] border-gray-300 border-b-[1px]">
+      <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-[95%] m-auto">
+        <div class="p-2 border-2 rouded-md border-blue-200 flex-shrink-0 w-32 h-44 rounded-md shadow-md  justify-center items-center bg-[#0c7fb9]">
+          <div
+            class="p-4 border-b rounded-md shadow-md flex flex-col justify-between items-center h-full gap-4 bg-no-repeat bg-center" :class="img !== null ? `bg-[url('/storage/profilImage/${userInformation.file_profile}')]` :  `bg-[url('/storage/images/account.png')]`">
+            <span class="w-12 h-12 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-80">
+              <Icon name="plus" />
+            </span>
+            <p class="text-[12px] text-white text-center font-bold">Mettre à jour votre story</p>
+          </div>
+        </div>
+        <div class="p-2 border rounded bg-orange-400 flex-shrink-0 w-32 h-44 flex flex-col gap-y-1 shadow-md relative" v-for="(el, index) in 10">
+          <span>
+            <Icon name="sun" />
           </span>
-          <p class="text-sm text-white">Ajouter</p>
-        </div>
-      </div>
-
-      <div class="p-2 borde bg-orange-400  w-40 h-44 rounded-md shadow-md  justify-center items-center relative">
-        <span>
-          <Icon name="sun" />
-        </span>
-        <div class="absolute bottom-2">
-          <p class="text-sm text-white">Josephile Water</p>
-          <p class="text-sm text-white">Actif</p>
-        </div>
-      </div>
-
-      <div class="p-2 borde bg-red-400  w-40 h-44 rounded-md shadow-md  justify-center items-center relative">
-        <div class="absolute bottom-2">
-          <p class="text-sm text-white">Josephile Water</p>
-          <p class="text-sm text-white">Actif</p>
+          <div class="absolute bottom-2">
+            <p class="text-sm text-white">Josephile Water</p>
+            <p class="text-sm text-white">Actif</p>
+          </div>
         </div>
       </div>
 
