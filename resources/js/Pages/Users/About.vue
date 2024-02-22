@@ -49,7 +49,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon date
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Ma date
                                 d'anniversaire</h4>
                             <h4 class="font-bold text-[13px]" v-else>Sa date d'anniversaire</h4>
                             <p class="text-[12px]" v-if="users.date_of_birth !== null">Le {{ users.date_of_birth }}</p>
@@ -97,8 +97,8 @@ import { Head, Link } from '@inertiajs/vue3';
                             </svg>
                         </div>
                         <div class="basis-[85%]">
-                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon sexe</h4>
-                            <h4 class="font-bold text-[13px]" v-else>Son sexe</h4>
+                            <h4 class="font-bold text-[13px]" v-if="$page.props.auth.user.id === users.id">Mon genre</h4>
+                            <h4 class="font-bold text-[13px]" v-else>Son genre</h4>
                             <p class="text-[12px]" v-if="users.gender !== null">
                                 <span v-if="user.gender === 'M'">Masculin</span>
                                 <span v-else-if="user.gender === 'F'">Féminin</span>
