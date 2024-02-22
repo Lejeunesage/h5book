@@ -241,7 +241,7 @@ import { Head, Link } from "@inertiajs/vue3";
                   <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="el.body"></p>
                   <Link :href="route('postUser', [el.id, el.user_id])"><img v-if="el.image !== null"
                     :src="`/storage/post_images_videos/${el.image}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" /></Link>
+                    class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="el.video">
                     <video controls :src="`/storage/post_images_videos/${el.video}`"
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
@@ -333,7 +333,7 @@ import { Head, Link } from "@inertiajs/vue3";
 
                 <div class="mt-[10px]" @click="viewPostProfil(getLastImgProfil.user_id, el.id)">
                   <img :src="`/storage/profilImage/${el.file_profile}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" />
+                    class="w-full h-96 object-cover" />
                 </div>
 
                 <div :class="el.likes > 0 ? '' : 'hidden'"

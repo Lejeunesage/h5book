@@ -265,7 +265,7 @@ const selectOption = (option) => {
                   <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="item.body"></p>
                   <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
                     :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" /></Link>
+                    class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="item.video">
                     <video controls :src="`/storage/post_images_videos/${item.video}`"
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
@@ -362,7 +362,7 @@ const selectOption = (option) => {
                 <div class="mt-2">
                   <Link :href="route('postProfil', [item.idUser, item.id])">
                   <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" />
+                    class="w-full h-96 object-cover" />
                   </Link>
                 </div>
 
@@ -561,7 +561,7 @@ const selectOption = (option) => {
                   <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="item.body"></p>
                   <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
                     :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" /></Link>
+                    class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="item.video">
                     <video controls :src="`/storage/post_images_videos/${item.video}`"
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
@@ -659,7 +659,7 @@ const selectOption = (option) => {
                 <div class="mt-2">
                   <Link :href="route('postProfil', [item.idUser, item.id])">
                   <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" />
+                    class="w-full h-96 object-cover" />
                   </Link>
                 </div>
 
@@ -861,7 +861,7 @@ const selectOption = (option) => {
                   <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="item.body"></p>
                   <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
                     :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" /></Link>
+                    class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="item.video">
                     <video controls :src="`/storage/post_images_videos/${item.video}`"
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
@@ -959,7 +959,7 @@ const selectOption = (option) => {
                 <div class="mt-2">
                   <Link :href="route('postProfil', [item.idUser, item.id])">
                   <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
-                    class="w-full h-[380px] object-cover" />
+                    class="w-full h-96 object-cover" />
                   </Link>
                 </div>
                 <div :class="item.likes > 0 ? '' : 'hidden'"

@@ -77,7 +77,7 @@ import { Head, Link } from "@inertiajs/vue3";
             <img
               :src="`/storage/profilImage/${image.file_profile}`"
               alt="image_de_profil"
-              class="w-full h-[380px] object-cover"
+              class="w-full h-96 object-cover"
             />
           </div>
 
@@ -459,7 +459,7 @@ import { Head, Link } from "@inertiajs/vue3";
                         <div class="w-[350px] relative flex flex-col justify-center items-center">
                             <div>
                                         <img :src="`/storage/profilImage/${image.file_profile}`" alt="couverture"
-                                            class="object-cover w-full h-[380px] rounded">
+                                            class="object-cover w-full h-96 rounded">
                             </div>
                         </div>
                     </div>

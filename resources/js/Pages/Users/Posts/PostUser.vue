@@ -88,7 +88,7 @@ import { Head, Link } from "@inertiajs/vue3";
               v-html="post.body"></p>
             <Link :href="route('postUser', [post.id, post.user_id])">
               <img v-if="post.image !== null"
-              :src="`/storage/post_images_videos/${post.image}`" alt="image_de_profil" class="w-full h-[380px]" />
+              :src="`/storage/post_images_videos/${post.image}`" alt="image_de_profil" class="w-full h-96 object-cover" />
             
             </Link>
 
