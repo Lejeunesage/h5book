@@ -30,13 +30,20 @@ const selectOption = (option) => {
     <!-- Status -->
     <section class="bg-white py-2 mt-[-10px] border-gray-300 border-b-[1px]">
       <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-[95%] m-auto">
-        <div class="p-2 border-2 rouded-md border-blue-200 flex-shrink-0 w-32 h-44 rounded-md shadow-md  justify-center items-center bg-[#0c7fb9]">
+        <div class="p-2 border-2 rouded-md border-blue-200 flex-shrink-0 w-32 h-44 rounded-md shadow-md justify-center items-center">
           <div
-            class="p-4 border-b rounded-md shadow-md flex flex-col justify-between items-center h-full gap-4 bg-no-repeat bg-center" :class="img !== null ? `bg-[url('/storage/profilImage/${userInformation.file_profile}')]` :  `bg-[url('/storage/images/account.png')]`">
-            <span class="w-12 h-12 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-80">
-              <Icon name="plus" />
-            </span>
-            <p class="text-[12px] text-white text-center font-bold">Mettre à jour votre story</p>
+            class="relative border-b rounded-md shadow-md flex flex-col justify-between items-center h-full gap-4">
+            <img class="h-44 rounded aspect-square w-full object-cover" :src="img !== null
+              ? `/storage/profilImage/${userInformation.file_profile}`
+              : `/storage/images/account.png`
+              " alt="image_de_l'utilisateur" />
+
+            <div class="absolute flex flex-col items-center gap-y-8 p-4">
+              <span class="w-12 h-12 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-80">
+                <Icon name="plus" />
+              </span>
+              <p class="text-[12px] text-white text-center font-bold">Mettre à jour votre story</p>
+            </div>
           </div>
         </div>
         <div class="p-2 border rounded bg-orange-400 flex-shrink-0 w-32 h-44 flex flex-col gap-y-1 shadow-md relative" v-for="(el, index) in 10">
@@ -57,10 +64,10 @@ const selectOption = (option) => {
       <div class="w-full p-2 flex flex-col gap-2">
         <div class="flex items-center gap-2 border-gray-300">
           <div class="aspect-square rounded-full">
-            <img class="rounded-full aspect-square w-[35px]" :src="img !== null
+            <img class="rounded-full aspect-square w-[35px] object-cover" :src="img !== null
               ? `/storage/profilImage/${userInformation.file_profile}`
               : `/storage/images/account.png`
-              " alt="" />
+              " alt="image_de_l'utilisateur" />
           </div>
           <h3 class="text-[12px] font-extrabold text-gray-600 py-1.5 px-2 rounded-full border basis-[85%] bg-gray-100"
             @click="showModalPublication">
