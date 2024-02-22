@@ -30,32 +30,86 @@ const selectOption = (option) => {
     <!-- Status -->
     <section class="bg-white py-2 mt-[-10px] border-gray-300 border-b-[1px]">
       <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-[95%] m-auto">
-        <div class="p-2 border-2 rouded-md border-blue-200 flex-shrink-0 w-32 h-44 rounded-md shadow-md justify-center items-center">
-          <div
-            class="relative border-b rounded-md shadow-md flex flex-col justify-between items-center h-full gap-4">
+        <div class="p-1 border-2 border-blue-200 flex-shrink-0 w-24 h-32 rounded-md shadow-md justify-center items-center"
+          @click="openStatus">
+          <div class="relative border-b rounded-md shadow-md flex flex-col justify-between items-center h-full gap-4">
             <img class="h-44 rounded aspect-square w-full object-cover" :src="img !== null
               ? `/storage/profilImage/${userInformation.file_profile}`
               : `/storage/images/account.png`
               " alt="image_de_l'utilisateur" />
 
-            <div class="absolute flex flex-col items-center gap-y-8 p-4">
-              <span class="w-12 h-12 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-80">
+            <div class="absolute flex flex-col items-center gap-y-3 p-4">
+              <span
+                class="w-8 h-8 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-80">
                 <Icon name="plus" />
               </span>
-              <p class="text-[12px] text-white text-center font-bold">Mettre à jour votre story</p>
+              <p class="text-[10px] text-white text-center font-bold">Mettre à jour votre story</p>
             </div>
           </div>
         </div>
-        <div class="p-2 border rounded bg-orange-400 flex-shrink-0 w-32 h-44 flex flex-col gap-y-1 shadow-md relative" v-for="(el, index) in 10">
+        <div class="p-2 border rounded bg-orange-400 flex-shrink-0 w-24 h-32 flex flex-col gap-y-1 shadow-md relative"
+          v-for="(el, index) in 10">
           <span>
             <Icon name="sun" />
           </span>
           <div class="absolute bottom-2">
-            <p class="text-sm text-white">Josephile Water</p>
-            <p class="text-sm text-white">Actif</p>
+            <p class="text-[12px] text-white">Josephile Water</p>
+            <p class="text-[12px] text-white">Actif</p>
           </div>
         </div>
       </div>
+
+      <transition>
+        <div id="divStatus" class="hidden z-50 bg-white top-0 fixed bottom-0 left-0 right-0">
+          <div class="relative text-gray-600 text-sm font-bold py-3 border-gray-300 border-b-[1px]">
+            <div class="mx-auto w-[90%] flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="cursor-pointer border-white border-[1px] bg-gray-300 rounded-full p-1" @click="closeStatus">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-3 h-3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                  </svg>
+                </span>
+                <h4 class="text-[13px] text-gray-600">Mettre à jour votre story</h4>
+              </div>
+              <button class="text-gray-600 font-bold text-[13px]" id="button-3">
+                Publier
+              </button>
+            </div>
+          </div>
+
+          <div class="relative flex flex-col gap-y-2">
+            <div class="fixed top-11 left-0 right-0 bottom-24 w-full flex flex-col gap-y-3">
+              <div class="h-full flex items-center p-1" :class="colorArrayOne[selectColor]">
+                <textarea
+                  class="min-w-full h-96 border-none text-white overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded-md text-center bg-transparent resize-none placeholder:text-white placeholder:text-[16px] text-[16px] placeholder:font-bold"
+                  placeholder="Ecrivez quelque chose..." v-model="publish"></textarea>
+              </div>
+              <div>
+                <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-[95%] m-auto">
+                  <div
+                    class="p-1 border-[1px] border-gray-400 flex-shrink-0 w-8 h-8 rounded shadow-md justify-center items-center"
+                    v-for="(color, index) in colorArrayOne" :key="index" :class="`${color}`"
+                    @click="selectColorStatus(index)">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="fixed bottom-2 w-full flex flex-col items-end gap-y-2 px-3">
+              <button class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg>
+              </button>
+              <button class="w-24 bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-lg">Publier</button>
+            </div>
+          </div>
+        </div>
+      </transition>
 
     </section>
 
@@ -449,7 +503,7 @@ const selectOption = (option) => {
                   ? `/storage/profilImage/${element.image}`
                   : `/storage/images/account.png`
                   " alt="" />
-                <h3 class="text-[12px] text-center">{{ element.name }}</h3>
+                <h3 class="text-[12px] text-center truncate">{{ element.name }}</h3>
                 </Link>
                 <div class="basis-full">
                   <button
@@ -748,7 +802,7 @@ const selectOption = (option) => {
                   ? `/storage/profilImage/${element.image}`
                   : `/storage/images/account.png`
                   " alt="" />
-                <h3 class="text-[12px] text-center">{{ element.name }}</h3>
+                <h3 class="text-[12px] text-center truncate">{{ element.name }}</h3>
                 </Link>
                 <div class="basis-full">
                   <button
@@ -1089,6 +1143,30 @@ export default {
         "text-red-900",
         "text-lime-50"
       ],
+      selectColor: 0,
+      colorArrayOne: [
+        "bg-gradient-to-r from-cyan-500 to-blue-500",
+        "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500",
+        "bg-green-500",
+        "bg-gradient-to-t from-gray-700 to-lime-700",
+        "bg-blue-500",
+        "bg-red-500",
+        "bg-gradient-to-r from-gray-700 to-lime-700",
+        "bg-gradient-to-t from-gray-700 to-rose-400",
+        "bg-gradient-to-t from-gray-700 to-rose-700",
+        "bg-gradient-to-br from-gray-700 to-pink-400",
+        "bg-sky-500",
+        "bg-orange-500",
+        "bg-orange-600",
+        "bg-gradient-to-br from-gray-700 to-slate-400",
+        "bg-gradient-to-br from-gray-700 to-sky-800",
+        "bg-gradient-to-br from-gray-700 to-sky-400",
+        "bg-gradient-to-br from-gray-700 to-fuchsia-400",
+        "bg-gradient-to-br from-gray-700 to-rose-200",
+        "bg-yellow-600",
+        "bg-amber-600",
+        "bg-pink-600",
+      ], // TAbleau de couleur
       colorArray: [
         "bg-gradient-to-r from-cyan-500 to-blue-500",
         "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500",
@@ -1131,6 +1209,19 @@ export default {
   },
 
   methods: {
+    selectColorStatus(index) {
+      this.selectColor = index;
+    },
+
+    closeStatus() {
+      this.selectColor = 0;
+      divStatus.classList.add("hidden");
+    },
+
+    openStatus() {
+      divStatus.classList.remove("hidden");
+    },
+
     // Fonction pour supprimer une image de profil
     // By KolaDev
     deleteImage(el, index) {
@@ -1560,4 +1651,5 @@ export default {
 .v-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}</style>
+}
+</style>

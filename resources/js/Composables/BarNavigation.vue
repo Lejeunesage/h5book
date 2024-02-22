@@ -4,7 +4,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 </script>
  
 <template>
-    <footer class="headerBg py-4 fixed bottom-0 right-0 left-0 z-50">
+    <footer class="headerBg py-4 fixed bottom-0 right-0 left-0 z-40">
         <div class="w-[75%] mx-auto flex justify-between">
             <Link :href="route('accueil')">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
