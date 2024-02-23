@@ -38,12 +38,12 @@ const selectOption = (option) => {
               : `/storage/images/account.png`
               " alt="image_de_l'utilisateur" />
 
-            <div class="absolute flex flex-col items-center gap-y-3 p-4">
+            <div class="absolute top-16 bottom-0 flex flex-col items-center p-4 bg-[#0389c9] rounded-b">
               <span
-                class="w-8 h-8 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-80">
+                class="absolute top-[-18px] w-8 h-8 rounded-full flex items-center justify-center border-sky-600 border-2 bg-white opacity-90">
                 <Icon name="plus" />
               </span>
-              <p class="text-[10px] text-white text-center font-bold">Mettre à jour votre story</p>
+              <p class="text-[9px] mt-[-5px] text-white text-center font-bold">Mettre à jour votre story</p>
             </div>
           </div>
         </div>
@@ -53,8 +53,8 @@ const selectOption = (option) => {
             <Icon name="sun" />
           </span>
           <div class="absolute bottom-2">
-            <p class="text-[12px] text-white">Josephile Water</p>
-            <p class="text-[12px] text-white">Actif</p>
+            <p class="text-[10px] text-white">Josephile Water</p>
+            <p class="text-[10px] text-white">Actif</p>
           </div>
         </div>
       </div>
@@ -79,33 +79,35 @@ const selectOption = (option) => {
           </div>
 
           <div class="relative flex flex-col gap-y-2">
-            <div class="fixed top-11 left-0 right-0 bottom-24 w-full flex flex-col gap-y-3">
+            <div class="fixed top-11 left-0 right-0 bottom-32 w-full flex flex-col gap-y-3">
               <div class="h-full flex items-center p-1" :class="colorArrayOne[selectColor]">
                 <textarea
                   class="min-w-full h-96 border-none text-white overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded-md text-center bg-transparent resize-none placeholder:text-white placeholder:text-[16px] text-[16px] placeholder:font-bold"
-                  placeholder="Ecrivez quelque chose..." v-model="publish"></textarea>
-              </div>
-              <div>
-                <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-[95%] m-auto">
-                  <div
-                    class="p-1 border-[1px] border-gray-400 flex-shrink-0 w-8 h-8 rounded shadow-md justify-center items-center"
-                    v-for="(color, index) in colorArrayOne" :key="index" :class="`${color}`"
-                    @click="selectColorStatus(index)">
-                  </div>
-                </div>
+                  placeholder="Ecrivez quelque chose..." v-model="status"></textarea>
               </div>
 
             </div>
 
             <div class="fixed bottom-2 w-full flex flex-col items-end gap-y-2 px-3">
-              <button class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
+              <button @click="selectColorStatus()"
+                class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="w-4 h-4">
+                  stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                    d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                 </svg>
               </button>
-              <button class="w-24 bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-lg">Publier</button>
+              <button
+                class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                </svg>
+              </button>
+              <button class="w-24 bg-[#0c7fb9] text-white text-center text-[13px] p-1.5 rounded">Publier</button>
             </div>
           </div>
         </div>
@@ -192,12 +194,12 @@ const selectOption = (option) => {
 
             <div class="relative" v-if="nameImg">
               <div v-if="nameImg !== null && valeur === 'image'" class="mt-2">
-                <img :src="`/storage/post_images_videos/${nameImg}`" class="object-cover h-[400px] w-full rounded-lg"
+                <img :src="`/storage/post_images_videos/${nameImg}`" class="object-cover h-48 w-full rounded-lg"
                   alt="image_post" />
               </div>
               <div v-if="nameImg !== null && valeur === 'video'" class="mt-2">
                 <video preload="auto" controls autoplay :src="`/storage/post_images_videos/${nameImg}`"
-                  class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
+                  class="object-cover h-48 w-full rounded-lg" alt="video_post"></video>
               </div>
               <span
                 class="cursor-pointer absolute top-[5px] right-[5px] border-gray-300 border-[1px] bg-gray-300 rounded-full p-1"
@@ -1187,6 +1189,7 @@ export default {
       imageInput: false,
       nameImg: null,
       valeur: null,
+      status: '',
 
     }
   },
@@ -1210,11 +1213,17 @@ export default {
 
   methods: {
     selectColorStatus(index) {
-      this.selectColor = index;
+      this.selectColor += 1;
+      
+      if(this.selectColor > (this.colorArrayOne.length - 1))
+      {
+        this.selectColor = 0;
+      }
     },
 
     closeStatus() {
       this.selectColor = 0;
+      this.status = '';
       divStatus.classList.add("hidden");
     },
 
@@ -1651,5 +1660,4 @@ export default {
 .v-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}
-</style>
+}</style>

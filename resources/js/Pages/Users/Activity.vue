@@ -62,7 +62,7 @@ import { Head, Link } from "@inertiajs/vue3";
               </button>
             </div>
           </div>
-          <div class="mx-auto w-[95%] overflow-y-auto h-[600px]">
+          <div class="mx-auto w-[95%] mb-20 overflow-y-auto max-h-[500px]">
             <div class="w-full p-1 relative">
               <template v-if="selectedColorIndex !== null">
                 <div class="h-64 flex items-center p-5" :class="`${colorArray[selectedColorIndex]}`">
@@ -106,12 +106,12 @@ import { Head, Link } from "@inertiajs/vue3";
 
             <div class="relative" v-if="nameImg">
               <div v-if="nameImg !== null && valeur === 'image'" class="mt-2">
-                <img :src="`/storage/post_images_videos/${nameImg}`" class="object-cover h-[400px] w-full rounded-lg"
+                <img :src="`/storage/post_images_videos/${nameImg}`" class="object-cover h-48 w-full rounded-lg"
                   alt="image_post" />
               </div>
               <div v-if="nameImg !== null && valeur === 'video'" class="mt-2">
                 <video preload="auto" controls autoplay :src="`/storage/post_images_videos/${nameImg}`"
-                  class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
+                  class="object-cover h-48 w-full rounded-lg" alt="video_post"></video>
               </div>
               <span
                 class="cursor-pointer absolute top-[5px] right-[5px] border-gray-300 border-[1px] bg-gray-300 rounded-full p-1"
