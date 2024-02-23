@@ -43,7 +43,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
             </span>
         </div>
     </footer>
-    <div v-if="boolModal" class="fixed inset-0 top-[59px] bottom-[59px] flex items-center justify-end bg-gray-900 bg-opacity-80 z-50">
+    <div v-if="boolModal" class="fixed inset-0 top-[48px] bottom-[59px] flex items-center justify-end bg-gray-900 bg-opacity-80 z-50">
         <div class="div w-1/2 h-full overflow-hidden transform transition-transform bg-sky-100"
             :class="{ 'translate-x-0': boolModal, 'translate-x-full': !boolModal }">
 
