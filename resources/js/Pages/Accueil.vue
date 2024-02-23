@@ -123,7 +123,7 @@ const selectOption = (option) => {
     </section>
 
     <!-- Creation de post -->
-    <section class="bg-white mt-2 mb-20">
+    <section class="bg-white mt-2 mb-3">
       <div class="w-full p-2 flex flex-col gap-2">
         <div class="flex items-center gap-2 border-gray-300">
           <div class="aspect-square rounded-full">
@@ -227,7 +227,11 @@ const selectOption = (option) => {
           </div>
         </div>
       </div>
+      
+    </section>
 
+    <!-- Contenu principal de la page -->
+    <section class="mb-20">
       <div class="bg-white" v-if="myTables.length > 0">
         <div class="bg-white py-1">
           <div class="flex flex-col gap-y-2">
@@ -239,7 +243,7 @@ const selectOption = (option) => {
                       ? `/storage/profilImage/${item.image_user}`
                       : `/storage/images/account.png`
                       " alt="image_de_profil" class="rounded-full w-[35px] h-[35px] object-cover" />
-                    <div>
+                    <div class="flex flex-col">
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
                         v-if="item.tagged_names !== null && $page.props.auth.user.id == item.tagged_names.split('-')[0]">
                         <Link :href="route('myActivity', item.user_id)" class="text-[12px]">{{
@@ -257,7 +261,6 @@ const selectOption = (option) => {
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700" v-else>
                         <Link :href="route('myActivity', item.user_id)">{{ item.creator_name
                         }}</Link>
-
                         <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-3 h-3">
@@ -268,9 +271,34 @@ const selectOption = (option) => {
                           }}</Link>
                         </p>
                       </h3>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
+                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
+                        il y'a {{ item.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
+                        il y'a {{ item.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        il y'a {{ item.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
+                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
+                        il y'a {{ item.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
+                        il y'a {{ item.diff_in_years }} an(s)
+                      </p>
                     </div>
                   </div>
-
                   <div class="relative basis-[2%] mr-2">
                     <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
                       @click="transitionFunction(index)">
@@ -327,7 +355,6 @@ const selectOption = (option) => {
                     </transition>
                   </div>
                 </div>
-
                 <div class="mt-[10px]">
                   <p v-if="item.bgc !== null && item.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
                     :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
@@ -341,7 +368,6 @@ const selectOption = (option) => {
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
                   </div>
                 </div>
-
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
                   <span :id="'likePost-' + index" v-if="item.trueVariable && item.likes > 1"
@@ -359,7 +385,6 @@ const selectOption = (option) => {
                     personne(s) ont
                     aimé cette publication.</span>
                 </div>
-
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
                     @click="clickLikePost(item, `${'likePost-' + index}`)">
@@ -380,7 +405,6 @@ const selectOption = (option) => {
                       <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
                     </span>
                   </span>
-
                   <Link :href="route('postUser', [item.id, item.user_id])"
                     class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
@@ -393,15 +417,40 @@ const selectOption = (option) => {
                   </Link>
                 </div>
               </div>
-
               <div v-else-if="item.file_profile">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2 px-2">
                     <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
                       class="rounded-full w-[35px] h-[35px] object-cover" />
-                    <div>
+                    <div class="flex flex-col">
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
                         item.name }}</Link>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
+                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
+                        il y'a {{ item.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
+                        il y'a {{ item.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        il y'a {{ item.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
+                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
+                        il y'a {{ item.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
+                        il y'a {{ item.diff_in_years }} an(s)
+                      </p>
                     </div>
                   </div>
                   <div class="relative basis-[2%] mr-2">
@@ -428,14 +477,12 @@ const selectOption = (option) => {
                     </transition>
                   </div>
                 </div>
-
                 <div class="mt-2">
                   <Link :href="route('postProfil', [item.idUser, item.id])">
                   <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
                     class="w-full h-96 object-cover" />
                   </Link>
                 </div>
-
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
                   <span :id="'like-' + index" v-if="item.trueVariable && item.likes > 1"
@@ -453,7 +500,6 @@ const selectOption = (option) => {
                     personne(s) ont aimé
                     cette photo.</span>
                 </div>
-
                 <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
                     @click="clickLike(item, `${'like-' + index}`)">
@@ -485,18 +531,15 @@ const selectOption = (option) => {
                     commentaire(s)</span>
                   </Link>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
-
         <div v-if="friends.length > 0" class="border-gray-300 border-y-[1px] py-2">
           <div class="flex flex-start m-auto w-[95%]">
             <Link :href="route('abonnements', $page.props.auth.user.uuid)"
               class="text-[12px] w-[35%] flex items-center justify-center gap-1 bg-[#0c7fb9] p-1 rounded text-white">
             Suggestions
-
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-3 h-3">
               <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -523,8 +566,6 @@ const selectOption = (option) => {
             </div>
           </div>
         </div>
-
-
         <div class="mt-2 bg-white py-1">
           <div class="flex flex-col gap-y-2">
             <div v-for="(item, index) in myTables.slice(4, 10)" :key="index" class="border-b-[1px] pb-2 shadow-sm my-1">
@@ -535,7 +576,7 @@ const selectOption = (option) => {
                       ? `/storage/profilImage/${item.image_user}`
                       : `/storage/images/account.png`
                       " alt="image_de_profil" class="rounded-full w-[35px] h-[35px] object-cover" />
-                    <div>
+                    <div class="flex flex-col">
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
                         v-if="item.tagged_names !== null && $page.props.auth.user.id == item.tagged_names.split('-')[0]">
                         <Link :href="route('myActivity', item.user_id)" class="text-[12px]">{{
@@ -553,7 +594,6 @@ const selectOption = (option) => {
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700" v-else>
                         <Link :href="route('myActivity', item.user_id)">{{ item.creator_name
                         }}</Link>
-
                         <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-3 h-3">
@@ -564,9 +604,34 @@ const selectOption = (option) => {
                           }}</Link>
                         </p>
                       </h3>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
+                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
+                        il y'a {{ item.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
+                        il y'a {{ item.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        il y'a {{ item.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
+                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
+                        il y'a {{ item.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
+                        il y'a {{ item.diff_in_years }} an(s)
+                      </p>
                     </div>
                   </div>
-
                   <div class="relative basis-[2%] mr-2">
                     <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
                       @click="transitionFunction((index + 4))">
@@ -623,7 +688,6 @@ const selectOption = (option) => {
                     </transition>
                   </div>
                 </div>
-
                 <div class="mt-[10px]">
                   <p v-if="item.bgc !== null && item.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
                     :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
@@ -637,7 +701,6 @@ const selectOption = (option) => {
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
                   </div>
                 </div>
-
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
                   <span :id="'likePost-' + (index + 4)" v-if="item.trueVariable && item.likes > 1"
@@ -655,7 +718,6 @@ const selectOption = (option) => {
                     personne(s) ont
                     aimé cette publication.</span>
                 </div>
-
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
                     @click="clickLikePost(item, `${'likePost-' + (index + 4)}`)">
@@ -676,7 +738,6 @@ const selectOption = (option) => {
                       <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
                     </span>
                   </span>
-
                   <Link :href="route('postUser', [item.id, item.user_id])"
                     class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
@@ -689,15 +750,40 @@ const selectOption = (option) => {
                   </Link>
                 </div>
               </div>
-
               <div v-else-if="item.file_profile">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2 px-2">
                     <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
                       class="rounded-full w-[35px] h-[35px] object-cover" />
-                    <div>
+                    <div class="flex flex-col">
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
                         item.name }}</Link>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
+                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
+                        il y'a {{ item.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
+                        il y'a {{ item.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        il y'a {{ item.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
+                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
+                        il y'a {{ item.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
+                        il y'a {{ item.diff_in_years }} an(s)
+                      </p>
                     </div>
                   </div>
                   <div class="relative basis-[2%] mr-2">
@@ -725,14 +811,12 @@ const selectOption = (option) => {
                     </transition>
                   </div>
                 </div>
-
                 <div class="mt-2">
                   <Link :href="route('postProfil', [item.idUser, item.id])">
                   <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
                     class="w-full h-96 object-cover" />
                   </Link>
                 </div>
-
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
                   <span :id="'like-' + (index + 4)" v-if="item.trueVariable && item.likes > 1"
@@ -751,7 +835,6 @@ const selectOption = (option) => {
                     personne(s) ont aimé
                     cette photo.</span>
                 </div>
-
                 <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
                     @click="clickLike(item, `${'like-' + (index + 4)}`)">
@@ -783,19 +866,15 @@ const selectOption = (option) => {
                     commentaire(s)</span>
                   </Link>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
-
-
         <div v-if="myTables.length > 12 && friends.length > 15" class="border-gray-300 border-y-[1px] py-2">
           <div class="flex flex-start m-auto w-[95%]">
             <Link :href="route('abonnements', $page.props.auth.user.uuid)"
               class="text-[12px] w-[35%] flex items-center justify-center gap-1 bg-[#0c7fb9] p-1 rounded text-white">
             Suggestions
-
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-3 h-3">
               <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -822,8 +901,6 @@ const selectOption = (option) => {
             </div>
           </div>
         </div>
-
-
         <div class="mt-2 bg-white py-1">
           <div class="flex flex-col gap-y-2">
             <div v-for="(item, index) in myTables.slice(10, myTables.length)" :key="index"
@@ -835,7 +912,7 @@ const selectOption = (option) => {
                       ? `/storage/profilImage/${item.image_user}`
                       : `/storage/images/account.png`
                       " alt="image_de_profil" class="rounded-full w-[35px] h-[35px] object-cover" />
-                    <div>
+                    <div class="flex flex-col">
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
                         v-if="item.tagged_names !== null && $page.props.auth.user.id == item.tagged_names.split('-')[0]">
                         <Link :href="route('myActivity', item.user_id)" class="text-[12px]">{{
@@ -853,7 +930,6 @@ const selectOption = (option) => {
                       <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700" v-else>
                         <Link :href="route('myActivity', item.user_id)">{{ item.creator_name
                         }}</Link>
-
                         <p class="text-[12px] flex flex-wrap items-center gap-x-1" v-if="item.tagged_names !== null"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-3 h-3">
@@ -864,9 +940,34 @@ const selectOption = (option) => {
                           }}</Link>
                         </p>
                       </h3>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
+                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
+                        il y'a {{ item.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
+                        il y'a {{ item.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        il y'a {{ item.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
+                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
+                        il y'a {{ item.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
+                        il y'a {{ item.diff_in_years }} an(s)
+                      </p>
                     </div>
                   </div>
-
                   <div class="relative basis-[2%] mr-2">
                     <span class="cursor-pointer" v-if="item.video !== null || item.image !== null"
                       @click="transitionFunction((index + 10))">
@@ -923,7 +1024,6 @@ const selectOption = (option) => {
                     </transition>
                   </div>
                 </div>
-
                 <div class="mt-[10px]">
                   <p v-if="item.bgc !== null && item.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
                     :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
@@ -937,7 +1037,6 @@ const selectOption = (option) => {
                       class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
                   </div>
                 </div>
-
                 <div :class="item.likes > 0 ? '' : 'hidden'"
                   class="mt-[1px] px-1 cursor-pointer hover:bg-sky-100 border-gray-300 border-b-[1px] font-bold">
                   <span :id="'likePost-' + (index + 10)" v-if="item.trueVariable && item.likes > 1"
@@ -955,7 +1054,6 @@ const selectOption = (option) => {
                     personne(s) ont
                     aimé cette publication.</span>
                 </div>
-
                 <div class="mt-2 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
                     @click="clickLikePost(item, `${'likePost-' + (index + 10)}`)">
@@ -976,7 +1074,6 @@ const selectOption = (option) => {
                       <span class="text-sky-500 text-[12px] font-bold">{{ item.likes }} j'aime(s)</span>
                     </span>
                   </span>
-
                   <Link :href="route('postUser', [item.id, item.user_id])"
                     class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
@@ -989,15 +1086,40 @@ const selectOption = (option) => {
                   </Link>
                 </div>
               </div>
-
               <div v-else-if="item.file_profile">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2 px-2">
                     <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
                       class="rounded-full w-[35px] h-[35px] object-cover" />
-                    <div>
+                    <div class="flex flex-col">
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
                         item.name }}</Link>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
+                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
+                        il y'a {{ item.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
+                        il y'a {{ item.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        il y'a {{ item.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
+                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
+                        il y'a {{ item.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
+                        il y'a {{ item.diff_in_years }} an(s)
+                      </p>
                     </div>
                   </div>
                   <div class="relative basis-[2%] mr-2">
@@ -1025,7 +1147,6 @@ const selectOption = (option) => {
                     </transition>
                   </div>
                 </div>
-
                 <div class="mt-2">
                   <Link :href="route('postProfil', [item.idUser, item.id])">
                   <img :src="`/storage/profilImage/${item.file_profile}`" alt="image_de_profil"
@@ -1050,7 +1171,6 @@ const selectOption = (option) => {
                     personne(s) ont aimé
                     cette photo.</span>
                 </div>
-
                 <div class="mt-1 flex justify-between items-center w-[95%] mx-auto">
                   <span class="basis-[48%] flex justify-center p-1 cursor-pointer gap-2 items-center"
                     @click="clickLike(item, `${'like-' + (index + 10)}`)">
@@ -1082,12 +1202,10 @@ const selectOption = (option) => {
                     commentaire(s)</span>
                   </Link>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
-
       </div>
       <div v-else class="bg-white mt-3 flex flex-col gap-y-4 items-center py-8">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
@@ -1097,9 +1215,7 @@ const selectOption = (option) => {
         </svg>
         <p class="basis-full text-[12px] font-bold text-gray-700">Pas de contenu !</p>
       </div>
-
     </section>
-
 
   </AuthenticatedLayout>
 </template>

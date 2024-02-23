@@ -21,3 +21,8 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+// Add the following line
+const linkElement = document.createElement('link')
+linkElement.rel = 'shortcut icon'
+linkElement.href = '/h5.png'
+document.head.appendChild(linkElement)

@@ -282,7 +282,14 @@ class ActivityUserController extends Controller
         $gallery = new GalleryUsersController();
         $tableau = $gallery::essentialData($id);
 
-        $allFilesProfils = DB::table("gallery_users")->select("gallery_users.file_profile", "gallery_users.id", "gallery_users.user_id", "gallery_users.created_at", "users.name", "users.id as idUser")
+        $allFilesProfils = DB::table("gallery_users")->select("gallery_users.file_profile", "gallery_users.id", "gallery_users.user_id", "gallery_users.created_at", "users.name", "users.id as idUser",
+        DB::raw("TIMESTAMPDIFF(SECOND, gallery_users.created_at, NOW()) as diff_in_seconds"),
+        DB::raw("TIMESTAMPDIFF(MINUTE, gallery_users.created_at, NOW()) as diff_in_minutes"),
+        DB::raw("TIMESTAMPDIFF(HOUR, gallery_users.created_at, NOW()) as diff_in_hours"),
+        DB::raw("TIMESTAMPDIFF(DAY, gallery_users.created_at, NOW()) as diff_in_days"),
+        DB::raw("TIMESTAMPDIFF(WEEK, gallery_users.created_at, NOW()) as diff_in_weeks"),
+        DB::raw("TIMESTAMPDIFF(MONTH, gallery_users.created_at, NOW()) as diff_in_months"),
+        DB::raw("TIMESTAMPDIFF(YEAR, gallery_users.created_at, NOW()) as diff_in_years"))
             ->join("users", "users.id", "=", "gallery_users.user_id")
             ->where("gallery_users.user_id", $id)->orderBy("gallery_users.created_at", "desc")->whereNotNull("gallery_users.file_profile")->get()->toArray();
 
@@ -332,7 +339,14 @@ class ActivityUserController extends Controller
             'p.video',
             'p.created_at',
             DB::raw('(SELECT GROUP_CONCAT(CONCAT(u_tagged.id, "-", u_tagged.name)) FROM tags_users tu INNER JOIN users u_tagged ON tu.user_id = u_tagged.id WHERE tu.uuid = p.uuid) as tagged_names'),
-            'p.user_id'
+            'p.user_id',
+            DB::raw("TIMESTAMPDIFF(SECOND, p.created_at, NOW()) as diff_in_seconds"),
+            DB::raw("TIMESTAMPDIFF(MINUTE, p.created_at, NOW()) as diff_in_minutes"),
+            DB::raw("TIMESTAMPDIFF(HOUR, p.created_at, NOW()) as diff_in_hours"),
+            DB::raw("TIMESTAMPDIFF(DAY, p.created_at, NOW()) as diff_in_days"),
+            DB::raw("TIMESTAMPDIFF(WEEK, p.created_at, NOW()) as diff_in_weeks"),
+            DB::raw("TIMESTAMPDIFF(MONTH, p.created_at, NOW()) as diff_in_months"),
+            DB::raw("TIMESTAMPDIFF(YEAR, p.created_at, NOW()) as diff_in_years")
         )
         ->leftJoin('users as u_creator', 'p.user_id', '=', 'u_creator.id')
         ->where("p.user_id", $id)
