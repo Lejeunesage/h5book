@@ -79,24 +79,55 @@ const selectOption = (option) => {
           </div>
 
           <div class="relative flex flex-col gap-y-2">
-            <div class="fixed top-11 left-0 right-0 bottom-32 w-full flex flex-col gap-y-3">
-              <div class="h-full flex items-center p-1" :class="colorArrayOne[selectColor]">
+            <div class="fixed top-11 left-0 right-0 bottom-28 w-full flex flex-col gap-y-3" :class="colorArrayOne[selectColor]">
+              <div class="h-full flex items-center p-1">
                 <textarea
                   class="min-w-full h-96 border-none text-white overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded-md text-center bg-transparent resize-none placeholder:text-white placeholder:text-[16px] text-[16px] placeholder:font-bold"
                   placeholder="Ecrivez quelque chose..." v-model="status"></textarea>
               </div>
+              <button @click="selectColorStatus()"
+                class="fixed bottom-32 right-2 w-8 h-8 flex justify-center items-center border-white border-[1px] text-white text-center text-[13px] p-2 rounded-full"><svg
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
+                  x="0px" y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve"
+                  width="80" height="80">
+                  <g>
+                    <path style="fill:#F5C276;"
+                      d="M39.999,77.5c-10.664-0.001-20.859-4.565-27.971-12.523C4.819,56.909,1.523,46.49,2.747,35.639   C4.645,18.805,18.198,5.005,34.976,2.827C36.646,2.61,38.337,2.5,40,2.5c16.174,0,30.474,10.302,35.584,25.634   c0.704,2.112,2.103,7.418-0.112,11.051c-1.17,1.918-3.219,3.116-6.089,3.562c-0.922,0.143-2.597,0.359-5.123,0.663   c-3.597,0.43-6.877,2.357-9.001,5.288c-2.152,2.97-2.941,6.585-2.222,10.18l0.431,2.153c0.812,4.055-0.225,8.216-2.843,11.417   S44.134,77.49,39.999,77.5L39.999,77.5z M37.585,55.5c-3.584,0-6.5,2.916-6.5,6.5s2.916,6.5,6.5,6.5s6.5-2.916,6.5-6.5   S41.169,55.5,37.585,55.5z" />
+                    <path style="fill:#C29653;"
+                      d="M40,3c15.958,0,30.067,10.164,35.11,25.292c0.682,2.046,2.041,7.178-0.065,10.632   c-1.09,1.787-3.021,2.906-5.739,3.328c-0.922,0.143-2.64,0.365-5.105,0.66c-3.734,0.447-7.141,2.449-9.347,5.492   c-2.202,3.038-3.043,6.891-2.307,10.571l0.431,2.154c0.782,3.907-0.217,7.918-2.74,11.002C47.715,75.216,43.983,76.991,40,77   c-10.523,0-20.582-4.503-27.599-12.356c-7.113-7.96-10.365-18.241-9.158-28.95C5.116,19.086,18.488,5.471,35.04,3.323   C36.69,3.109,38.358,3,40,3 M37.585,69c3.86,0,7-3.14,7-7s-3.14-7-7-7s-7,3.14-7,7S33.725,69,37.585,69 M40,2   c-1.674,0-3.371,0.108-5.089,0.331C17.844,4.547,4.178,18.481,2.25,35.583C-0.34,58.546,17.558,78,40,78   c8.991-0.021,15.721-8.251,13.958-17.067l-0.431-2.154c-1.431-7.157,3.545-14.006,10.792-14.874   c2.206-0.264,4.108-0.505,5.14-0.665c10.028-1.555,7.859-11.485,6.599-15.264C71.028,12.883,56.784,2,40,2L40,2z M37.585,68   c-3.314,0-6-2.686-6-6c0-3.314,2.686-6,6-6s6,2.686,6,6C43.585,65.314,40.898,68,37.585,68L37.585,68z" />
+                  </g>
+                  <g>
+                    <circle style="fill:#F78F8F;" cx="18.585" cy="49" r="6.5" />
+                    <path style="fill:#C74343;"
+                      d="M18.585,43c3.308,0,6,2.692,6,6s-2.692,6-6,6s-6-2.692-6-6S15.276,43,18.585,43 M18.585,42   c-3.866,0-7,3.134-7,7c0,3.866,3.134,7,7,7c3.866,0,7-3.134,7-7C25.585,45.134,22.451,42,18.585,42L18.585,42z" />
+                  </g>
+                  <g>
+                    <circle style="fill:#FFEEA3;" cx="18.585" cy="29" r="6.5" />
+                    <g>
+                      <path style="fill:#BA9B48;"
+                        d="M18.585,23c3.308,0,6,2.692,6,6s-2.692,6-6,6s-6-2.692-6-6S15.276,23,18.585,23 M18.585,22    c-3.866,0-7,3.134-7,7s3.134,7,7,7c3.866,0,7-3.134,7-7S22.451,22,18.585,22L18.585,22z" />
+                    </g>
+                  </g>
+                  <g>
+                    <circle style="fill:#BAE0BD;" cx="34.585" cy="17" r="6.5" />
+                    <g>
+                      <path style="fill:#5E9C76;"
+                        d="M34.585,11c3.308,0,6,2.692,6,6s-2.692,6-6,6s-6-2.692-6-6S31.276,11,34.585,11 M34.585,10    c-3.866,0-7,3.134-7,7s3.134,7,7,7c3.866,0,7-3.134,7-7S38.451,10,34.585,10L34.585,10z" />
+                    </g>
+                  </g>
+                  <g>
+                    <circle style="fill:#8BB7F0;" cx="54.585" cy="21" r="6.5" />
+                    <g>
+                      <path style="fill:#4E7AB5;"
+                        d="M54.585,15c3.308,0,6,2.692,6,6s-2.692,6-6,6s-6-2.692-6-6S51.276,15,54.585,15 M54.585,14    c-3.866,0-7,3.134-7,7s3.134,7,7,7c3.866,0,7-3.134,7-7S58.451,14,54.585,14L54.585,14z" />
+                    </g>
+                  </g>
+                </svg>
+              </button>
 
             </div>
 
-            <div class="fixed bottom-2 w-full flex flex-col items-end gap-y-2 px-3">
-              <button @click="selectColorStatus()"
-                class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-                </svg>
-              </button>
+            <div class="fixed bottom-4 w-full flex flex-col items-end gap-y-2 px-3">
               <label for="imageStatus"
                 class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -227,7 +258,7 @@ const selectOption = (option) => {
           </div>
         </div>
       </div>
-      
+
     </section>
 
     <!-- Contenu principal de la page -->
@@ -272,30 +303,30 @@ const selectOption = (option) => {
                         </p>
                       </h3>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
-                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                        il y a {{ item.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
-                        il y'a {{ item.diff_in_minutes }} minute(s)
+                        il y a {{ item.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
-                        il y'a {{ item.diff_in_hours }} heure(s)
+                        il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
-                        il y'a {{ item.diff_in_days }} jour(s)
+                        il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
-                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                        il y a {{ item.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
-                        il y'a {{ item.diff_in_months }} mois
+                        il y a {{ item.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
-                        il y'a {{ item.diff_in_years }} an(s)
+                        il y a {{ item.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -360,16 +391,20 @@ const selectOption = (option) => {
                     :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
                     v-html="item.body"></p>
                   <div v-else-if="item.body !== null">
-                    <p v-if="item.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2" v-html="item.body"></p>
-                    <p v-else class="text-[13px] w-[97%] mx-auto px-2" v-html="item.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
-                    <Link v-if="item.body.trim().split(/\s+/).length > 30" :href="route('postUser', [item.id, item.user_id])" class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
+                    <p v-if="item.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2"
+                      v-html="item.body"></p>
+                    <p v-else class="text-[13px] w-[97%] mx-auto px-2"
+                      v-html="item.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
+                    <Link v-if="item.body.trim().split(/\s+/).length > 30"
+                      :href="route('postUser', [item.id, item.user_id])"
+                      class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
                   </div>
                   <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
                     :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
                     class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="item.video">
-                    <video controls :src="`/storage/post_images_videos/${item.video}`"
-                      class="h-[400px] w-full rounded-lg" alt="video_post"></video>
+                    <video controls :src="`/storage/post_images_videos/${item.video}`" class="h-[400px] w-full rounded-lg"
+                      alt="video_post"></video>
                   </div>
                 </div>
                 <div :class="item.likes > 0 ? '' : 'hidden'"
@@ -431,30 +466,30 @@ const selectOption = (option) => {
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
                         item.name }} <span class="text-[11px]">a changé sa photo de profil</span></Link>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
-                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                        il y a {{ item.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
-                        il y'a {{ item.diff_in_minutes }} minute(s)
+                        il y a {{ item.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
-                        il y'a {{ item.diff_in_hours }} heure(s)
+                        il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
-                        il y'a {{ item.diff_in_days }} jour(s)
+                        il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
-                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                        il y a {{ item.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
-                        il y'a {{ item.diff_in_months }} mois
+                        il y a {{ item.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
-                        il y'a {{ item.diff_in_years }} an(s)
+                        il y a {{ item.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -610,30 +645,30 @@ const selectOption = (option) => {
                         </p>
                       </h3>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
-                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                        il y a {{ item.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
-                        il y'a {{ item.diff_in_minutes }} minute(s)
+                        il y a {{ item.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
-                        il y'a {{ item.diff_in_hours }} heure(s)
+                        il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
-                        il y'a {{ item.diff_in_days }} jour(s)
+                        il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
-                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                        il y a {{ item.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
-                        il y'a {{ item.diff_in_months }} mois
+                        il y a {{ item.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
-                        il y'a {{ item.diff_in_years }} an(s)
+                        il y a {{ item.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -699,16 +734,20 @@ const selectOption = (option) => {
                     :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
                     v-html="item.body"></p>
                   <div v-else-if="item.body !== null">
-                    <p v-if="item.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2" v-html="item.body"></p>
-                    <p v-else class="text-[13px] w-[97%] mx-auto px-2" v-html="item.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
-                    <Link v-if="item.body.trim().split(/\s+/).length > 30" :href="route('postUser', [item.id, item.user_id])" class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
+                    <p v-if="item.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2"
+                      v-html="item.body"></p>
+                    <p v-else class="text-[13px] w-[97%] mx-auto px-2"
+                      v-html="item.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
+                    <Link v-if="item.body.trim().split(/\s+/).length > 30"
+                      :href="route('postUser', [item.id, item.user_id])"
+                      class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
                   </div>
                   <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
                     :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
                     class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="item.video">
-                    <video controls :src="`/storage/post_images_videos/${item.video}`"
-                      class="h-[400px] w-full rounded-lg" alt="video_post"></video>
+                    <video controls :src="`/storage/post_images_videos/${item.video}`" class="h-[400px] w-full rounded-lg"
+                      alt="video_post"></video>
                   </div>
                 </div>
                 <div :class="item.likes > 0 ? '' : 'hidden'"
@@ -770,30 +809,30 @@ const selectOption = (option) => {
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
                         item.name }} <span class="text-[11px]">a changé sa photo de profil</span></Link>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
-                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                        il y a {{ item.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
-                        il y'a {{ item.diff_in_minutes }} minute(s)
+                        il y a {{ item.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
-                        il y'a {{ item.diff_in_hours }} heure(s)
+                        il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
-                        il y'a {{ item.diff_in_days }} jour(s)
+                        il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
-                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                        il y a {{ item.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
-                        il y'a {{ item.diff_in_months }} mois
+                        il y a {{ item.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
-                        il y'a {{ item.diff_in_years }} an(s)
+                        il y a {{ item.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -954,30 +993,30 @@ const selectOption = (option) => {
                         </p>
                       </h3>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
-                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                        il y a {{ item.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
-                        il y'a {{ item.diff_in_minutes }} minute(s)
+                        il y a {{ item.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
-                        il y'a {{ item.diff_in_hours }} heure(s)
+                        il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
-                        il y'a {{ item.diff_in_days }} jour(s)
+                        il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
-                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                        il y a {{ item.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
-                        il y'a {{ item.diff_in_months }} mois
+                        il y a {{ item.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
-                        il y'a {{ item.diff_in_years }} an(s)
+                        il y a {{ item.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -1042,16 +1081,20 @@ const selectOption = (option) => {
                     :class="item.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
                     v-html="item.body"></p>
                   <div v-else-if="item.body !== null">
-                    <p v-if="item.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2" v-html="item.body"></p>
-                    <p v-else class="text-[13px] w-[97%] mx-auto px-2" v-html="item.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
-                    <Link v-if="item.body.trim().split(/\s+/).length > 30" :href="route('postUser', [item.id, item.user_id])" class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
+                    <p v-if="item.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2"
+                      v-html="item.body"></p>
+                    <p v-else class="text-[13px] w-[97%] mx-auto px-2"
+                      v-html="item.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
+                    <Link v-if="item.body.trim().split(/\s+/).length > 30"
+                      :href="route('postUser', [item.id, item.user_id])"
+                      class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
                   </div>
                   <Link :href="route('postUser', [item.id, item.user_id])"><img v-if="item.image !== null"
                     :src="`/storage/post_images_videos/${item.image}`" alt="image_de_profil"
                     class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="item.video">
-                    <video controls :src="`/storage/post_images_videos/${item.video}`"
-                      class="h-[400px] w-full rounded-lg" alt="video_post"></video>
+                    <video controls :src="`/storage/post_images_videos/${item.video}`" class="h-[400px] w-full rounded-lg"
+                      alt="video_post"></video>
                   </div>
                 </div>
                 <div :class="item.likes > 0 ? '' : 'hidden'"
@@ -1113,30 +1156,30 @@ const selectOption = (option) => {
                       <Link :href="route('myActivity', item.user_id)" class="font-bold text-gray-700 text-[12px]">{{
                         item.name }} <span class="text-[11px]">a changé sa photo de profil</span></Link>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_seconds <= 59">
-                        il y'a {{ item.diff_in_seconds }} seconde(s)
+                        il y a {{ item.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_minutes > 0 && item.diff_in_hours === 0">
-                        il y'a {{ item.diff_in_minutes }} minute(s)
+                        il y a {{ item.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_hours > 0 && item.diff_in_days === 0">
-                        il y'a {{ item.diff_in_hours }} heure(s)
+                        il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
-                        il y'a {{ item.diff_in_days }} jour(s)
+                        il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months === 0 && item.diff_in_weeks > 0">
-                        il y'a {{ item.diff_in_weeks }} semaine(s)
+                        il y a {{ item.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="item.diff_in_months > 0 && item.diff_in_years === 0">
-                        il y'a {{ item.diff_in_months }} mois
+                        il y a {{ item.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="item.diff_in_years > 0">
-                        il y'a {{ item.diff_in_years }} an(s)
+                        il y a {{ item.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -1800,5 +1843,4 @@ export default {
 .v-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}
-</style>
+}</style>

@@ -30,29 +30,29 @@ import { Head, Link } from "@inertiajs/vue3";
                     <span class="text-[10px]"> a changé sa photo de profil</span>
                   </p>
                   <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_seconds <= 59">
-                        il y'a {{ image.diff_in_seconds }} seconde(s)
+                        il y a {{ image.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="image.diff_in_minutes > 0 && image.diff_in_hours === 0">
-                        il y'a {{ image.diff_in_minutes }} minute(s)
+                        il y a {{ image.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="image.diff_in_hours > 0 && image.diff_in_days === 0">
-                        il y'a {{ image.diff_in_hours }} heure(s)
+                        il y a {{ image.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_days > 0 && image.diff_in_days <= 7">
-                        il y'a {{ image.diff_in_days }} jour(s)
+                        il y a {{ image.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="image.diff_in_months === 0 && image.diff_in_weeks > 0">
-                        il y'a {{ image.diff_in_weeks }} semaine(s)
+                        il y a {{ image.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="image.diff_in_months > 0 && image.diff_in_years === 0">
-                        il y'a {{ image.diff_in_months }} mois
+                        il y a {{ image.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_years > 0">
-                        il y'a {{ image.diff_in_years }} an(s)
+                        il y a {{ image.diff_in_years }} a
                       </p>
                 </div>
               </div>
@@ -242,25 +242,25 @@ import { Head, Link } from "@inertiajs/vue3";
               </div>
               <div class="flex justify-between mt-2">
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_seconds <= 59">
-                  il y'a {{ commentaire.diff_in_seconds }} seconde(s)
+                  il y a {{ commentaire.diff_in_seconds }} s
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_minutes > 0 && commentaire.diff_in_hours === 0">
-                  il y'a {{ commentaire.diff_in_minutes }} minute(s)
+                  il y a {{ commentaire.diff_in_minutes }} min
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_hours > 0 && commentaire.diff_in_days === 0">
-                  il y'a {{ commentaire.diff_in_hours }} heure(s)
+                  il y a {{ commentaire.diff_in_hours }} h
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_days > 0 && commentaire.diff_in_days <= 7">
-                  il y'a {{ commentaire.diff_in_days }} jour(s)
+                  il y a {{ commentaire.diff_in_days }} j
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_months === 0 && commentaire.diff_in_weeks > 0">
-                  il y'a {{ commentaire.diff_in_weeks }} semaine(s)
+                  il y a {{ commentaire.diff_in_weeks }} sem
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_months > 0 && commentaire.diff_in_years === 0">
-                  il y'a {{ commentaire.diff_in_months }} mois
+                  il y a {{ commentaire.diff_in_months }} m
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_years > 0">
-                  il y'a {{ commentaire.diff_in_years }} an(s)
+                  il y a {{ commentaire.diff_in_years }} a
                 </span>
                 <div
                   :id="`allButtons-${commentaire.idComment}`"

@@ -177,29 +177,29 @@ import { Head, Link } from "@inertiajs/vue3";
                         </p>
                       </h3>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_seconds <= 59">
-                        il y'a {{ el.diff_in_seconds }} seconde(s)
+                        il y a {{ el.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_minutes > 0 && el.diff_in_hours === 0">
-                        il y'a {{ el.diff_in_minutes }} minute(s)
+                        il y a {{ el.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_hours > 0 && el.diff_in_days === 0">
-                        il y'a {{ el.diff_in_hours }} heure(s)
+                        il y a {{ el.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_days > 0 && el.diff_in_days <= 7">
-                        il y'a {{ el.diff_in_days }} jour(s)
+                        il y a {{ el.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_months === 0 && el.diff_in_weeks > 0">
-                        il y'a {{ el.diff_in_weeks }} semaine(s)
+                        il y a {{ el.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_months > 0 && el.diff_in_years === 0">
-                        il y'a {{ el.diff_in_months }} mois
+                        il y a {{ el.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_years > 0">
-                        il y'a {{ el.diff_in_years }} an(s)
+                        il y a {{ el.diff_in_years }} a
                       </p>
                     </div>
                   </div>
@@ -334,29 +334,29 @@ import { Head, Link } from "@inertiajs/vue3";
                     <div class="flex flex-col">
                       <h3 class="font-bold text-gray-700 text-[12px]">{{ el.name }} <span class="text-[11px]">a changé sa photo de profil</span></h3>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_seconds <= 59">
-                        il y'a {{ el.diff_in_seconds }} seconde(s)
+                        il y a {{ el.diff_in_seconds }} s
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_minutes > 0 && el.diff_in_hours === 0">
-                        il y'a {{ el.diff_in_minutes }} minute(s)
+                        il y a {{ el.diff_in_minutes }} min
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_hours > 0 && el.diff_in_days === 0">
-                        il y'a {{ el.diff_in_hours }} heure(s)
+                        il y a {{ el.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_days > 0 && el.diff_in_days <= 7">
-                        il y'a {{ el.diff_in_days }} jour(s)
+                        il y a {{ el.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_months === 0 && el.diff_in_weeks > 0">
-                        il y'a {{ el.diff_in_weeks }} semaine(s)
+                        il y a {{ el.diff_in_weeks }} sem
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
                         v-if="el.diff_in_months > 0 && el.diff_in_years === 0">
-                        il y'a {{ el.diff_in_months }} mois
+                        il y a {{ el.diff_in_months }} m
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_years > 0">
-                        il y'a {{ el.diff_in_years }} an(s)
+                        il y a {{ el.diff_in_years }} a
                       </p>
                     </div>
                   </div>
