@@ -20,15 +20,40 @@ import { Head, Link } from "@inertiajs/vue3";
                     class="rounded-full w-[40px] h-[40px] object-cover"
                   />
                 </Link>
-                <div class="flex">
+                <div class="flex flex-col">
                   <p class="text-[12px] font-bold">
                     <Link
                       :href="route('myActivity', lastImage.user_id)"
                       class="font-bold text-gray-700 text-[12px]"
                       >{{ users.name }}</Link
                     >
-                    a changé sa photo de profil
+                    <span class="text-[10px]"> a changé sa photo de profil</span>
                   </p>
+                  <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_seconds <= 59">
+                        il y'a {{ image.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="image.diff_in_minutes > 0 && image.diff_in_hours === 0">
+                        il y'a {{ image.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="image.diff_in_hours > 0 && image.diff_in_days === 0">
+                        il y'a {{ image.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_days > 0 && image.diff_in_days <= 7">
+                        il y'a {{ image.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="image.diff_in_months === 0 && image.diff_in_weeks > 0">
+                        il y'a {{ image.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="image.diff_in_months > 0 && image.diff_in_years === 0">
+                        il y'a {{ image.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_years > 0">
+                        il y'a {{ image.diff_in_years }} an(s)
+                      </p>
                 </div>
               </div>
             </div>

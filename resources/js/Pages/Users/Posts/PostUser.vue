@@ -16,7 +16,7 @@ import { Head, Link } from "@inertiajs/vue3";
                 ? `/storage/profilImage/${post.image_user}`
                 : `/storage/images/account.png`
                 " alt="image_de_profil" class="rounded-full w-[35px] h-[35px]" />
-              <div>
+              <div class="flex flex-col">
                 <h3 class="text-[12px] flex flex-wrap items-center gap-x-2 font-bold text-gray-700"
                   v-if="post.tagged_names !== null && $page.props.auth.user.id == post.tagged_names.split('-')[0]">
                   <Link :href="route('myActivity', post.user_id)">{{ post.creator_name }}</Link> <svg
@@ -40,6 +40,31 @@ import { Head, Link } from "@inertiajs/vue3";
                     }}</Link>
                   </p>
                 </h3>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_seconds <= 59">
+                        il y'a {{ post.diff_in_seconds }} seconde(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="post.diff_in_minutes > 0 && post.diff_in_hours === 0">
+                        il y'a {{ post.diff_in_minutes }} minute(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="post.diff_in_hours > 0 && post.diff_in_days === 0">
+                        il y'a {{ post.diff_in_hours }} heure(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_days > 0 && post.diff_in_days <= 7">
+                        il y'a {{ post.diff_in_days }} jour(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="post.diff_in_months === 0 && post.diff_in_weeks > 0">
+                        il y'a {{ post.diff_in_weeks }} semaine(s)
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium"
+                        v-if="post.diff_in_months > 0 && post.diff_in_years === 0">
+                        il y'a {{ post.diff_in_months }} mois
+                      </p>
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_years > 0">
+                        il y'a {{ post.diff_in_years }} an(s)
+                      </p>
               </div>
             </div>
             <div class="relative basis-[5%]">
@@ -84,7 +109,7 @@ import { Head, Link } from "@inertiajs/vue3";
             <p v-if="post.bgc !== null && post.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
               :class="post.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
               v-html="post.body"></p>
-            <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto text-justify"
+            <p v-else class="text-[13px] w-[97%] mx-auto px-2 text-justify"
               v-html="post.body"></p>
             <Link :href="route('postUser', [post.id, post.user_id])">
               <img v-if="post.image !== null"
@@ -94,7 +119,7 @@ import { Head, Link } from "@inertiajs/vue3";
 
             <div class="mt-2" v-if="post.video">
               <video controls :src="`/storage/post_images_videos/${post.video}`"
-                class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
+                class="h-[400px] w-full rounded-lg" alt="video_post"></video>
             </div>
           </div>
 

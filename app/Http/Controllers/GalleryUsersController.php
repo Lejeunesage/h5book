@@ -372,8 +372,17 @@ class GalleryUsersController extends Controller
      */
     public function postProfil($id, $image, gallery_users $gallery_users)
     {
-        $file = $gallery_users::where("user_id", $id)->whereNotNull("file_profile")
-            ->where("id", $image)
+        $file = $gallery_users::select("gallery_users.id", "gallery_users.file_profile", "gallery_users.cover_img", "gallery_users.user_id", "gallery_users.updated_at",
+            DB::raw("TIMESTAMPDIFF(SECOND, gallery_users.created_at, NOW()) as diff_in_seconds"),
+            DB::raw("TIMESTAMPDIFF(MINUTE, gallery_users.created_at, NOW()) as diff_in_minutes"),
+            DB::raw("TIMESTAMPDIFF(HOUR, gallery_users.created_at, NOW()) as diff_in_hours"),
+            DB::raw("TIMESTAMPDIFF(DAY, gallery_users.created_at, NOW()) as diff_in_days"),
+            DB::raw("TIMESTAMPDIFF(WEEK, gallery_users.created_at, NOW()) as diff_in_weeks"),
+            DB::raw("TIMESTAMPDIFF(MONTH, gallery_users.created_at, NOW()) as diff_in_months"),
+            DB::raw("TIMESTAMPDIFF(YEAR, gallery_users.created_at, NOW()) as diff_in_years"))
+        
+        ->where("gallery_users.user_id", $id)->whereNotNull("gallery_users.file_profile")
+            ->where("gallery_users.id", $image)
             ->first();
 
         if ($file !== null) {

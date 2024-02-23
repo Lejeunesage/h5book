@@ -35,7 +35,14 @@ class PostController extends Controller
                 'p.video',
                 'p.created_at',
                 DB::raw('(SELECT GROUP_CONCAT(CONCAT(u_tagged.id, "-", u_tagged.name)) FROM tags_users tu INNER JOIN users u_tagged ON tu.user_id = u_tagged.id WHERE tu.uuid = p.uuid) as tagged_names'),
-                'p.user_id'
+                'p.user_id',
+                DB::raw("TIMESTAMPDIFF(SECOND, p.created_at, NOW()) as diff_in_seconds"),
+                DB::raw("TIMESTAMPDIFF(MINUTE, p.created_at, NOW()) as diff_in_minutes"),
+                DB::raw("TIMESTAMPDIFF(HOUR, p.created_at, NOW()) as diff_in_hours"),
+                DB::raw("TIMESTAMPDIFF(DAY, p.created_at, NOW()) as diff_in_days"),
+                DB::raw("TIMESTAMPDIFF(WEEK, p.created_at, NOW()) as diff_in_weeks"),
+                DB::raw("TIMESTAMPDIFF(MONTH, p.created_at, NOW()) as diff_in_months"),
+                DB::raw("TIMESTAMPDIFF(YEAR, p.created_at, NOW()) as diff_in_years")
             )
             ->leftJoin('users as u_creator', 'p.user_id', '=', 'u_creator.id')
             ->where('p.id', $id)

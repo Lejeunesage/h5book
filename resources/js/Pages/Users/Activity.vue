@@ -111,7 +111,7 @@ import { Head, Link } from "@inertiajs/vue3";
               </div>
               <div v-if="nameImg !== null && valeur === 'video'" class="mt-2">
                 <video preload="auto" controls autoplay :src="`/storage/post_images_videos/${nameImg}`"
-                  class="object-cover h-48 w-full rounded-lg" alt="video_post"></video>
+                  class="h-48 w-full rounded-lg" alt="video_post"></video>
               </div>
               <span
                 class="cursor-pointer absolute top-[5px] right-[5px] border-gray-300 border-[1px] bg-gray-300 rounded-full p-1"
@@ -263,13 +263,17 @@ import { Head, Link } from "@inertiajs/vue3";
                   <p v-if="el.bgc !== null && el.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
                     :class="el.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
                     v-html="el.body"></p>
-                  <p v-else class="text-[13px] w-[97%] mx-auto px-2 max-h-[500px] overflow-y-auto" v-html="el.body"></p>
+                  <div v-else-if="el.body !== null">
+                    <p v-if="el.body.trim().split(/\s+/).length <= 30" class="text-[13px] w-[97%] mx-auto px-2" v-html="el.body"></p>
+                    <p v-else class="text-[13px] w-[97%] mx-auto px-2" v-html="el.body.trim().split(' ').slice(0, 30).join(' ') + ' ...'"></p>
+                    <Link v-if="el.body.trim().split(/\s+/).length > 30" :href="route('postUser', [el.id, el.user_id])" class="text-[12px] font-bold w-[95%] mx-auto px-3 text-sky-600">Voir plus</Link>
+                  </div>
                   <Link :href="route('postUser', [el.id, el.user_id])"><img v-if="el.image !== null"
                     :src="`/storage/post_images_videos/${el.image}`" alt="image_de_profil"
                     class="w-full h-96 object-cover" /></Link>
                   <div class="mt-2" v-if="el.video">
                     <video controls :src="`/storage/post_images_videos/${el.video}`"
-                      class="object-cover h-[400px] w-full rounded-lg" alt="video_post"></video>
+                      class="h-[400px] w-full rounded-lg" alt="video_post"></video>
                   </div>
                 </div>
 
@@ -328,7 +332,7 @@ import { Head, Link } from "@inertiajs/vue3";
                     <img :src="`/storage/profilImage/${getLastImgProfil.file_profile}`" alt="image_de_profil"
                       class="rounded-full w-[35px] h-[35px] object-cover" />
                     <div class="flex flex-col">
-                      <h3 class="font-bold text-gray-700 text-[12px]">{{ el.name }}</h3>
+                      <h3 class="font-bold text-gray-700 text-[12px]">{{ el.name }} <span class="text-[11px]">a changé sa photo de profil</span></h3>
                       <p class="text-[12px] text-gray-600 font-medium" v-if="el.diff_in_seconds <= 59">
                         il y'a {{ el.diff_in_seconds }} seconde(s)
                       </p>

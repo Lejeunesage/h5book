@@ -1,14 +1,15 @@
 
 <script setup>
 import Icon from "@/Components/Icons/Icon.vue";
+import { Head, Link } from "@inertiajs/vue3";
 
 </script>
 <template>
     <header class="headerBg py-2.5 sticky top-0 z-50">
         <div class="mx-auto w-[90%] flex justify-between items-center">
-            <div class="basis-[70%] flex items-center gap-">
+            <Link :href="route('accueil')" class="basis-[70%] flex items-center gap-">
                 <Icon name="logo_bleu" />
-            </div>
+            </Link>
             
             <div class="flex gap-4 basis-[10%]">
                 <div class="flex items-center gap-2">

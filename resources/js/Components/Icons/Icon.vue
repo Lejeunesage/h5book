@@ -25,7 +25,7 @@
 
 
 
-    <svg v-else-if="name === 'logo_bleu'" width="100"  viewBox="0 0 133 50" fill="none"
+    <svg v-else-if="name === 'logo_bleu'" width="70"  viewBox="0 0 133 50" fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <rect width="50" height="50" rx="10" fill="white" />
         <path
