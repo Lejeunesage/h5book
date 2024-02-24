@@ -16,6 +16,69 @@ use Inertia\Inertia;
 
 class AccueilController extends Controller
 {
+    
+    public function allImgSta(Request $request)
+    {
+        if(isset($request->statusImg) && count($request->statusImg) > 0)
+        {
+            foreach($request->statusImg as $key => $value)
+            {
+                try {
+                    unlink(base_path() . "/storage/app/public/statut/" . $value["image"]);
+                } catch (\Throwable $th) {
+                    return json_encode(["error" => "Une erreur est survenue lors de la suppression !"]);
+                }
+            }
+        }
+        return json_encode(["success" => "Suppression réussie"]);
+    }
+
+    public function statutImag(Request $request)
+    {
+        $allNames = $_FILES["myStatut"]["name"];
+        $allTab=[];
+        for($i=0; $i < count($allNames); $i++)
+        {
+            $name = $_FILES["myStatut"]["name"][$i];
+            $tmp_name = $_FILES["myStatut"]["tmp_name"][$i];
+            $size = $_FILES["myStatut"]["size"][$i];
+            $error = $_FILES["myStatut"]["error"][$i];
+            // Taille maximale qu'on accepte (15Mo)
+            $maximal = 15000000;
+    
+            // Les extensions d'image/de vidéo qu'on accepte
+            $tableauExtension = ["jpg", "jpeg", "png", "mp4", "webm"];
+    
+            // Récupération de l'extension de l'image/la vidéo sélectionnée par l'utilisateur
+            $extensionImage = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+    
+            // Vérifions si l'extension de l'image/la vidéo se trouve dans notre tableau d'extensions
+            if (in_array($extensionImage, $tableauExtension)) {
+                if ($size <= $maximal) {
+                    if ($error == 0) {
+                        $newName = uniqid("statut-", true);
+                        $file = $newName . "." . $extensionImage;
+                        $location = base_path() . "/storage/app/public/statut/" . $file;
+                        move_uploaded_file($tmp_name, $location);
+                        if (in_array($extensionImage, ["mp4", "webm"])) {
+                            array_push($allTab, ["video" => $file, "contenu" => ""]);
+                        } else {
+                            array_push($allTab, ["image" => $file, "contenu" => ""]);
+                        }
+    
+                    } else {
+                        return json_encode(["error" => "Le fichier ne peut être prise en charge !!!"]);
+                    }
+                } else {
+                    return json_encode(["error" => "La taille de ce fichier dépasse la taille maximale que nous validons (15Mo) !!!"]);
+                }
+            } else {
+                return json_encode(["error" => "L'extension de ce fichier ne figure pas dans la liste d'extension que nous acceptons !!!"]);
+            }
+        }
+        return json_encode(["success" => $allTab]);
+    }
+
     //
     public function index()
     {

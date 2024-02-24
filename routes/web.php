@@ -41,6 +41,8 @@ use Inertia\Inertia;
 //     return Inertia::render('Accueil');
 // })->middleware(['auth', 'verified'])->name('accueil');
 Route::get('/', [AccueilController::class, 'index'])->middleware(['auth', 'verified'])->name('accueil');
+Route::post('/statutImag', [AccueilController::class, 'statutImag'])->middleware(['auth', 'verified'])->name('statutImag');
+Route::delete('/allImgSta', [AccueilController::class, 'allImgSta'])->middleware(['auth', 'verified'])->name('allImgSta');
 
 // Route::get('/friends', [FollowersController::class, 'index'])->middleware(['auth', 'verified'])->name('friends');
 Route::post('/followingUser', [FollowersController::class, 'followingUser'])->name('followingUser')->middleware(['auth', 'verified']);

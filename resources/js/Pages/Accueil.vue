@@ -64,7 +64,7 @@ const selectOption = (option) => {
           <div class="relative text-gray-600 text-sm font-bold py-3 border-gray-300 border-b-[1px]">
             <div class="mx-auto w-[90%] flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="cursor-pointer border-white border-[1px] bg-gray-300 rounded-full p-1" @click="closeStatus">
+                <span class="cursor-pointer border-white border-[1px] bg-gray-300 rounded-full p-1" @click="openModalSt">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-3 h-3">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -79,14 +79,39 @@ const selectOption = (option) => {
           </div>
 
           <div class="relative flex flex-col gap-y-2">
-            <div class="fixed top-11 left-0 right-0 bottom-28 w-full flex flex-col gap-y-3" :class="colorArrayOne[selectColor]">
+            <div v-if="statModal"
+              class="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-90 w-full flex flex-col gap-y-3 z-50">
+              <div
+                class="w-[95%] m-auto rounded border-gray-400 border-[1px] h-[150px] py-4 px-1.5 flex flex-col gap-y-2 items-center justify-center bg-white">
+                <div
+                  class="flex justify-center text-[12px] font-bold w-full rounded py-2 px-1">
+                  Vous voulez vraiment annuler cette story ?</div>
+                <div
+                  class="flex justify-between items-center text-[12px] font-bold rounded py-2 px-1 w-[85%] m-auto">
+                  <button class="basis-[40%] text-white font-bold text-[12px] bg-[#0389c9] rounded py-1">Non, continuer</button>  
+                  <button class="basis-[40%] text-white font-bold text-[12px] bg-red-600 rounded py-1" @click="closeStatus">Oui, je le veux</button>  
+                </div>
+              </div>
+            </div>
+            <div v-if="chargement"
+              class="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-90 w-full flex flex-col gap-y-3 z-50">
+              <div
+                class="w-[95%] m-auto rounded border-gray-400 border-[1px] h-[150px] py-4 px-1.5 flex flex-col gap-y-2 items-center justify-center bg-white">
+                <div v-if="loader" class="flex justify-center"><span class="loader"></span></div>
+                <div v-if="loader === false && errorMsg"
+                  class="flex justify-center text-[12px] font-bold text-red-600 bg-red-300 w-full rounded py-2 px-1">{{errorMsg}}</div>
+              </div>
+            </div>
+            <div v-if="choice" class="fixed top-11 left-0 right-0 bottom-0 w-full flex flex-col gap-y-3"
+              :class="colorArrayOne[selectColor]">
               <div class="h-full flex items-center p-1">
                 <textarea
                   class="min-w-full h-96 border-none text-white overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded-md text-center bg-transparent resize-none placeholder:text-white placeholder:text-[16px] text-[16px] placeholder:font-bold"
                   placeholder="Ecrivez quelque chose..." v-model="status"></textarea>
               </div>
+
               <button @click="selectColorStatus()"
-                class="fixed bottom-32 right-2 w-8 h-8 flex justify-center items-center border-white border-[1px] text-white text-center text-[13px] p-2 rounded-full"><svg
+                class="fixed bottom-24 right-3 bg-white w-8 h-8 flex justify-center items-center border-white border-[1px] text-white text-center text-[13px] p-2 rounded-full"><svg
                   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
                   x="0px" y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve"
                   width="80" height="80">
@@ -125,26 +150,70 @@ const selectOption = (option) => {
                 </svg>
               </button>
 
+              <div class="fixed bottom-4 w-full flex flex-col items-end gap-y-2 px-3">
+                <label for="imageStatus"
+                  class="w-8 h-8 flex justify-center items-center bg-white text-white text-center text-[13px] p-2 rounded-full"><svg
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black"
+                    class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                  </svg>
+                </label>
+                <input type="file" class="hidden" id="imageStatus" @change="onChargementImag" multiple>
+                <div class="flex items-center gap-x-1">
+                  <button
+                    class="w-24 border-white border-[1px] text-white text-center text-[13px] p-1.5 rounded">Publier</button>
+                  <img class="h-8 w-8 rounded aspect-square object-cover" :src="img !== null
+                    ? `/storage/profilImage/${userInformation.file_profile}`
+                    : `/storage/images/account.png`
+                    " alt="image_de_l'utilisateur" />
+                </div>
+              </div>
             </div>
 
-            <div class="fixed bottom-4 w-full flex flex-col items-end gap-y-2 px-3">
-              <label for="imageStatus"
-                class="w-8 h-8 flex justify-center items-center bg-[#0c7fb9] text-white text-center text-[13px] p-2 rounded-full"><svg
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                </svg>
-              </label>
-              <input type="file" class="hidden" id="imageStatus">
-              <div class="flex items-center gap-x-1">
-                <button class="w-24 bg-[#0c7fb9] text-white text-center text-[13px] p-1.5 rounded">Publier</button>
-                <img class="h-8 w-8 rounded aspect-square object-cover" :src="img !== null
-                  ? `/storage/profilImage/${userInformation.file_profile}`
-                  : `/storage/images/account.png`
-                  " alt="image_de_l'utilisateur" />
+            <div v-else>
+              <div class="fixed top-12 left-0 right-0 w-full">
+                <div class="h-full">
+                  <img alt="image de statut" v-if="tableauImg[indexStatutImg].image" :src="`/storage/statut/${tableauImg[indexStatutImg].image}`" class="w-full h-96 object-cover" />
+                  <div v-else>
+                    <video  autoplay="false" controls :src="`/storage/statut/${tableauImg[indexStatutImg].video}`"
+                    class="h-96 w-full" alt="video_statut"></video>
+                  </div>
+                  <span
+                    class="cursor-pointer fixed z-50 top-14 right-[5px] border-gray-300 border-[1px] rounded-full bg-white p-1"
+                    @click="closeImgStatut">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="black" class="w-3 h-3">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="fixed bottom-4 w-full flex flex-col items-end gap-y-4 px-3">
+                <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-full m-auto">
+                  <div class="p-3 border rounded  flex-shrink-0 w-16 h-16 flex flex-col gap-y-1 shadow-md relative" v-for="(el, index) in tableauImg" @click="chargeImgDeo(index)">
+                    <div v-if="el.image" class="h-full">
+                      <img alt="image de statut" :src="`/storage/statut/${el.image}`" class="w-full h-full object-cover" />
+                    </div>
+                    <div v-else>
+                      <img alt="image de statut" :src="`/storage/statut/images.jpg`" class="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full flex items-center gap-x-1">
+                  <textarea
+                    class="w-full h-20 border-gray-600 border-[1px] text-white overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded p-1 bg-transparent resize-none placeholder:text-gray-700 placeholder:text-[12px] text-[12px] placeholder:font-bold"
+                    placeholder="Ecrivez quelque chose..." v-model="status"></textarea>
+                </div>
+                <div class="flex items-center gap-x-1">
+                  <button class="w-24 bg-[#0389c9] text-white text-center text-[13px] p-1.5 rounded">Publier</button>
+                  <img class="h-8 w-8 rounded aspect-square object-cover" :src="img !== null
+                    ? `/storage/profilImage/${userInformation.file_profile}`
+                    : `/storage/images/account.png`
+                    " alt="image_de_l'utilisateur" />
+                </div>
               </div>
             </div>
           </div>
@@ -1374,7 +1443,14 @@ export default {
       nameImg: null,
       valeur: null,
       status: '',
+      choice: true,
+      chargement: false,
+      loader: false,
+      errorMsg: false,
+      statModal: false,
+      indexStatutImg: 0,
 
+      tableauImg: [],
     }
   },
 
@@ -1396,6 +1472,43 @@ export default {
   },
 
   methods: {
+    chargeImgDeo(index)
+    {
+      this.indexStatutImg = index;
+    },
+
+    onChargementImag() {
+      this.chargement = true;
+      this.loader = true;
+      
+      let formData = new FormData();
+      // Récupérer les fichiers sélectionnés
+      let files = imageStatus.files;
+      // Ajouter chaque fichier au FormData
+      for (let i = 0; i < files.length; i++) {
+        formData.append("myStatut[]", files[i]);
+      }
+      
+      axios
+        .post(route("statutImag"), formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          if (!response.data.error) {
+            this.tableauImg = response.data.success;
+            this.chargement = false;
+            this.loader = false;
+            this.errorMsg = false;
+            this.choice = false;
+          } else {
+            this.loader = false;
+            this.errorMsg = response.data.error;
+          }
+        });
+    },
+
     selectColorStatus(index) {
       this.selectColor += 1;
 
@@ -1404,10 +1517,29 @@ export default {
       }
     },
 
+    openModalSt() {
+      this.statModal = true;
+    },
+
     closeStatus() {
-      this.selectColor = 0;
-      this.status = '';
-      divStatus.classList.add("hidden");
+      axios.delete(route("allImgSta", {
+        statusImg: this.tableauImg
+      })).then(response => {
+        if(response.data.success)
+        {
+          this.selectColor = 0;
+          this.status = '';
+          this.choice = true;
+          this.chargement = false;
+          this.loader = false;
+          this.errorMsg = false;
+          this.statModal = false;
+          this.indexStatutImg = 0;
+          this.tableauImg = [];
+          
+          divStatus.classList.add("hidden");
+        }
+      })
     },
 
     openStatus() {
@@ -1843,4 +1975,5 @@ export default {
 .v-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}</style>
+}
+</style>
