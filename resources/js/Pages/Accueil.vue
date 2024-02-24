@@ -1527,17 +1527,18 @@ export default {
       })).then(response => {
         if(response.data.success)
         {
-          this.selectColor = 0;
-          this.status = '';
-          this.choice = true;
-          this.chargement = false;
-          this.loader = false;
-          this.errorMsg = false;
-          this.statModal = false;
-          this.indexStatutImg = 0;
-          this.tableauImg = [];
+          // this.selectColor = 0;
+          // this.status = '';
+          // this.choice = true;
+          // this.chargement = false;
+          // this.loader = false;
+          // this.errorMsg = false;
+          // this.statModal = false;
+          // this.indexStatutImg = 0;
+          // this.tableauImg = [];
           
-          divStatus.classList.add("hidden");
+          // divStatus.classList.add("hidden");
+          window.location.href = window.location.href;
         }
       })
     },

@@ -24,7 +24,12 @@ class AccueilController extends Controller
             foreach($request->statusImg as $key => $value)
             {
                 try {
-                    unlink(base_path() . "/storage/app/public/statut/" . $value["image"]);
+                    if(isset($value["image"]))
+                    {
+                        unlink(base_path() . "/storage/app/public/statut/" . $value["image"]);
+                    } else {
+                        unlink(base_path() . "/storage/app/public/statut/" . $value["video"]);
+                    }
                 } catch (\Throwable $th) {
                     return json_encode(["error" => "Une erreur est survenue lors de la suppression !"]);
                 }
