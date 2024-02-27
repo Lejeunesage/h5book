@@ -83,13 +83,13 @@ const selectOption = (option) => {
               class="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-90 w-full flex flex-col gap-y-3 z-50">
               <div
                 class="w-[95%] m-auto rounded border-gray-400 border-[1px] h-[150px] py-4 px-1.5 flex flex-col gap-y-2 items-center justify-center bg-white">
-                <div
-                  class="flex justify-center text-[12px] font-bold w-full rounded py-2 px-1">
-                  Vous voulez vraiment annuler cette story ?</div>
-                <div
-                  class="flex justify-between items-center text-[12px] font-bold rounded py-2 px-1 w-[85%] m-auto">
-                  <button class="basis-[40%] text-white font-bold text-[12px] bg-[#0389c9] rounded py-1">Non, continuer</button>  
-                  <button class="basis-[40%] text-white font-bold text-[12px] bg-red-600 rounded py-1" @click="closeStatus">Oui, je le veux</button>  
+                <div class="flex justify-center text-[12px] font-bold w-full rounded py-2 px-1">
+                  Voulez-vous vraiment abandonner cette story ?</div>
+                <div class="flex justify-between items-center text-[12px] font-bold rounded py-2 px-1 w-[85%] m-auto">
+                  <button class="basis-[40%] text-white font-bold text-[12px] bg-[#0389c9] rounded py-1">Non,
+                    continuer</button>
+                  <button class="basis-[40%] text-white font-bold text-[12px] bg-red-600 rounded py-1"
+                    @click="closeStatus">Oui, je le veux</button>
                 </div>
               </div>
             </div>
@@ -99,7 +99,8 @@ const selectOption = (option) => {
                 class="w-[95%] m-auto rounded border-gray-400 border-[1px] h-[150px] py-4 px-1.5 flex flex-col gap-y-2 items-center justify-center bg-white">
                 <div v-if="loader" class="flex justify-center"><span class="loader"></span></div>
                 <div v-if="loader === false && errorMsg"
-                  class="flex justify-center text-[12px] font-bold text-red-600 bg-red-300 w-full rounded py-2 px-1">{{errorMsg}}</div>
+                  class="flex justify-center text-[12px] font-bold text-red-600 bg-red-300 w-full rounded py-2 px-1">
+                  {{ errorMsg }}</div>
               </div>
             </div>
             <div v-if="choice" class="fixed top-11 left-0 right-0 bottom-0 w-full flex flex-col gap-y-3"
@@ -164,7 +165,7 @@ const selectOption = (option) => {
                 <input type="file" class="hidden" id="imageStatus" @change="onChargementImag" multiple>
                 <div class="flex items-center gap-x-1">
                   <button
-                    class="w-24 border-white border-[1px] text-white text-center text-[13px] p-1.5 rounded">Publier</button>
+                    class="w-24 border-white border-[1px] text-white text-center text-[13px] p-1.5 rounded" @click="publishImgStatutFirst()">Publier</button>
                   <img class="h-8 w-8 rounded aspect-square object-cover" :src="img !== null
                     ? `/storage/profilImage/${userInformation.file_profile}`
                     : `/storage/images/account.png`
@@ -174,12 +175,13 @@ const selectOption = (option) => {
             </div>
 
             <div v-else>
-              <div class="fixed top-12 left-0 right-0 w-full">
+              <div class="fixed top-12 left-0 right-0 w-full" v-if="tableauImg.length > 0">
                 <div class="h-full">
-                  <img alt="image de statut" v-if="tableauImg[indexStatutImg].image" :src="`/storage/statut/${tableauImg[indexStatutImg].image}`" class="w-full h-96 object-cover" />
+                  <img alt="image de statut" v-if="tableauImg[indexStatutImg].image"
+                    :src="`/storage/statut/${tableauImg[indexStatutImg].image}`" class="w-full h-96 object-cover" />
                   <div v-else>
-                    <video  autoplay="false" controls :src="`/storage/statut/${tableauImg[indexStatutImg].video}`"
-                    class="h-96 w-full" alt="video_statut"></video>
+                    <video autoplay="false" controls :src="`/storage/statut/${tableauImg[indexStatutImg].video}`"
+                      class="h-96 w-full" alt="video_statut"></video>
                   </div>
                   <span
                     class="cursor-pointer fixed z-50 top-14 right-[5px] border-gray-300 border-[1px] rounded-full bg-white p-1"
@@ -191,11 +193,13 @@ const selectOption = (option) => {
                   </span>
                 </div>
               </div>
-              <div class="fixed bottom-4 w-full flex flex-col items-end gap-y-4 px-3">
+              <div class="fixed bottom-4 w-full flex flex-col items-end gap-y-4 px-3" v-if="tableauImg.length > 0">
                 <div class="flex gap-3 overflow-x-auto whitespace-no-wrap w-full m-auto">
-                  <div class="p-3 border rounded  flex-shrink-0 w-16 h-16 flex flex-col gap-y-1 shadow-md relative" v-for="(el, index) in tableauImg" @click="chargeImgDeo(index)">
+                  <div class="p-3 border rounded  flex-shrink-0 w-16 h-16 flex flex-col gap-y-1 shadow-md relative"
+                    v-for="(el, index) in tableauImg" @click="chargeImgDeo(index)">
                     <div v-if="el.image" class="h-full">
-                      <img alt="image de statut" :src="`/storage/statut/${el.image}`" class="w-full h-full object-cover" />
+                      <img alt="image de statut" :src="`/storage/statut/${el.image}`"
+                        class="w-full h-full object-cover" />
                     </div>
                     <div v-else>
                       <img alt="image de statut" :src="`/storage/statut/images.jpg`" class="w-full h-full object-cover" />
@@ -203,12 +207,16 @@ const selectOption = (option) => {
                   </div>
                 </div>
                 <div class="w-full flex items-center gap-x-1">
-                  <textarea
-                    class="w-full h-20 border-gray-600 border-[1px] text-white overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded p-1 bg-transparent resize-none placeholder:text-gray-700 placeholder:text-[12px] text-[12px] placeholder:font-bold"
-                    placeholder="Ecrivez quelque chose..." v-model="status"></textarea>
+                  <textarea @change="changeTextContenu" v-if="tableauImg[indexStatutImg].contenu == ''"
+                    class="w-full h-20 border-gray-600 border-[1px] text-gray-700 overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded p-1 bg-transparent resize-none placeholder:text-gray-700 placeholder:text-[12px] text-[12px] placeholder:font-bold"
+                    placeholder="Ecrivez quelque chose..." id="contenuStatut"></textarea>
+                  <textarea @change="changeTextContenu" v-else
+                    class="w-full h-20 border-gray-600 border-[1px] text-gray-700 overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded p-1 bg-transparent resize-none placeholder:text-gray-700 placeholder:text-[12px] text-[12px] placeholder:font-bold"
+                    placeholder="Ecrivez quelque chose..." id="contenuStatut">{{ tableauImg[indexStatutImg].contenu }}</textarea>
                 </div>
                 <div class="flex items-center gap-x-1">
-                  <button class="w-24 bg-[#0389c9] text-white text-center text-[13px] p-1.5 rounded">Publier</button>
+                  <button class="w-24 bg-[#0389c9] text-white text-center text-[13px] p-1.5 rounded"
+                    @click="publishImgStatut()">Publier</button>
                   <img class="h-8 w-8 rounded aspect-square object-cover" :src="img !== null
                     ? `/storage/profilImage/${userInformation.file_profile}`
                     : `/storage/images/account.png`
@@ -1472,15 +1480,65 @@ export default {
   },
 
   methods: {
-    chargeImgDeo(index)
-    {
+    publishImgStatutFirst() {
+      this.chargement = true;
+      this.loader = true;
+      axios.post(route("publishStatutFirst"), {
+        contenu: this.status,
+        select: this.colorArrayOne[this.selectColor]
+      }).then(response => {
+          if (!response.data.error) {
+            window.location.href = window.location.href;
+          } else {
+            this.loader = false;
+            this.errorMsg = response.data.error;
+          }
+      })
+    },
+
+    publishImgStatut() {
+      this.chargement = true;
+      this.loader = true;
+      axios.post(route("publishStatut"), {
+        tableau: this.tableauImg
+      }).then(response => {
+          if (!response.data.error) {
+            window.location.href = window.location.href;
+          } else {
+            this.loader = false;
+            this.errorMsg = response.data.error;
+          }
+      })
+    },
+
+    changeTextContenu() {
+      this.tableauImg[this.indexStatutImg].contenu = contenuStatut.value;
+    },
+
+    closeImgStatut() {
+      if (this.tableauImg.length > 1) {
+        axios.delete(route("imgStatut", {
+          tableau: this.tableauImg[this.indexStatutImg]
+        })).then(response => {
+          if(response.data.success)
+          {
+            this.tableauImg.splice(this.indexStatutImg, 1);
+            this.indexStatutImg = 0;
+          }
+        })
+      } else {
+        this.openModalSt();
+      }
+    },
+
+    chargeImgDeo(index) {
       this.indexStatutImg = index;
     },
 
     onChargementImag() {
       this.chargement = true;
       this.loader = true;
-      
+
       let formData = new FormData();
       // Récupérer les fichiers sélectionnés
       let files = imageStatus.files;
@@ -1488,7 +1546,7 @@ export default {
       for (let i = 0; i < files.length; i++) {
         formData.append("myStatut[]", files[i]);
       }
-      
+
       axios
         .post(route("statutImag"), formData, {
           headers: {
@@ -1525,8 +1583,7 @@ export default {
       axios.delete(route("allImgSta", {
         statusImg: this.tableauImg
       })).then(response => {
-        if(response.data.success)
-        {
+        if (response.data.success) {
           // this.selectColor = 0;
           // this.status = '';
           // this.choice = true;
@@ -1536,7 +1593,7 @@ export default {
           // this.statModal = false;
           // this.indexStatutImg = 0;
           // this.tableauImg = [];
-          
+
           // divStatus.classList.add("hidden");
           window.location.href = window.location.href;
         }

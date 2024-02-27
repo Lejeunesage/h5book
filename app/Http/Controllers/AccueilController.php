@@ -16,6 +16,26 @@ use Inertia\Inertia;
 
 class AccueilController extends Controller
 {
+
+    // Fonction pour supprimer une seule image
+    // KolaDev
+    public function imgStatut(Request $request)
+    {
+        if(isset($request->tableau) && count($request->tableau) > 0)
+        {
+                try {
+                    if(isset($request->tableau["image"]))
+                    {
+                        unlink(base_path() . "/storage/app/public/statut/" . $request->tableau["image"]);
+                    } else {
+                        unlink(base_path() . "/storage/app/public/statut/" . $request->tableau["video"]);
+                    }
+                } catch (\Throwable $th) {
+                    return json_encode(["error" => "Une erreur est survenue lors de la suppression !"]);
+                }
+        }
+        return json_encode(["success" => "Suppression réussie"]);
+    }
     
     public function allImgSta(Request $request)
     {
@@ -72,13 +92,13 @@ class AccueilController extends Controller
                         }
     
                     } else {
-                        return json_encode(["error" => "Le fichier ne peut être prise en charge !!!"]);
+                        // return json_encode(["error" => "Le fichier ne peut être prise en charge !!!"]);
                     }
                 } else {
-                    return json_encode(["error" => "La taille de ce fichier dépasse la taille maximale que nous validons (15Mo) !!!"]);
+                    // return json_encode(["error" => "La taille de ce fichier dépasse la taille maximale que nous validons (15Mo) !!!"]);
                 }
             } else {
-                return json_encode(["error" => "L'extension de ce fichier ne figure pas dans la liste d'extension que nous acceptons !!!"]);
+                // return json_encode(["error" => "L'extension de ce fichier ne figure pas dans la liste d'extension que nous acceptons !!!"]);
             }
         }
         return json_encode(["success" => $allTab]);

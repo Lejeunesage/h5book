@@ -5,7 +5,7 @@ import { Head, Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-  <Head  :title="post.creator_name + ' publication'" />
+  <Head :title="post.creator_name + ' publication'" />
   <AuthenticatedLayout>
     <main class="mt-[-20px] mb-24">
       <section>
@@ -40,31 +40,30 @@ import { Head, Link } from "@inertiajs/vue3";
                     }}</Link>
                   </p>
                 </h3>
-                      <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_seconds <= 59">
-                        il y a {{ post.diff_in_seconds }} s
-                      </p>
-                      <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="post.diff_in_minutes > 0 && post.diff_in_hours === 0">
-                        il y a {{ post.diff_in_minutes }} min
-                      </p>
-                      <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="post.diff_in_hours > 0 && post.diff_in_days === 0">
-                        il y a {{ post.diff_in_hours }} h
-                      </p>
-                      <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_days > 0 && post.diff_in_days <= 7">
-                        il y a {{ post.diff_in_days }} j
-                      </p>
-                      <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="post.diff_in_months === 0 && post.diff_in_weeks > 0">
-                        il y a {{ post.diff_in_weeks }} sem
-                      </p>
-                      <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="post.diff_in_months > 0 && post.diff_in_years === 0">
-                        il y a {{ post.diff_in_months }} m
-                      </p>
-                      <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_years > 0">
-                        il y a {{ post.diff_in_years }} a
-                      </p>
+                <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_seconds <= 59">
+                  il y a {{ post.diff_in_seconds }} s
+                </p>
+                <p class="text-[12px] text-gray-600 font-medium"
+                  v-if="post.diff_in_minutes > 0 && post.diff_in_hours === 0">
+                  il y a {{ post.diff_in_minutes }} min
+                </p>
+                <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_hours > 0 && post.diff_in_days === 0">
+                  il y a {{ post.diff_in_hours }} h
+                </p>
+                <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_days > 0 && post.diff_in_days <= 7">
+                  il y a {{ post.diff_in_days }} j
+                </p>
+                <p class="text-[12px] text-gray-600 font-medium"
+                  v-if="post.diff_in_months === 0 && post.diff_in_weeks > 0">
+                  il y a {{ post.diff_in_weeks }} sem
+                </p>
+                <p class="text-[12px] text-gray-600 font-medium"
+                  v-if="post.diff_in_months > 0 && post.diff_in_years === 0">
+                  il y a {{ post.diff_in_months }} m
+                </p>
+                <p class="text-[12px] text-gray-600 font-medium" v-if="post.diff_in_years > 0">
+                  il y a {{ post.diff_in_years }} a
+                </p>
               </div>
             </div>
             <div class="relative basis-[5%]">
@@ -84,7 +83,7 @@ import { Head, Link } from "@inertiajs/vue3";
                 </svg>
               </span>
             </div>
-          
+
             <transition>
               <div v-if="transitionVar" class="absolute right-2 top-8 bg-gray-300 rounded">
                 <ul class="cursor-pointer">
@@ -109,17 +108,16 @@ import { Head, Link } from "@inertiajs/vue3";
             <p v-if="post.bgc !== null && post.body.trim().split(/\s+/).length <= 30" class="text-[13px]"
               :class="post.bgc + ' py-8 px-2 flex items-center justify-center h-[280px] overflow-y-auto text-white'"
               v-html="post.body"></p>
-            <p v-else class="text-[13px] w-[97%] mx-auto px-2 text-justify"
-              v-html="post.body"></p>
+            <p v-else class="text-[13px] w-[97%] mx-auto px-2 text-justify" v-html="post.body"></p>
             <Link :href="route('postUser', [post.id, post.user_id])">
-              <img v-if="post.image !== null"
-              :src="`/storage/post_images_videos/${post.image}`" alt="image_de_profil" class="w-full h-96 object-cover" />
-            
+            <img v-if="post.image !== null" :src="`/storage/post_images_videos/${post.image}`" alt="image_de_profil"
+              class="w-full h-96 object-cover" />
+
             </Link>
 
             <div class="mt-2" v-if="post.video">
-              <video controls :src="`/storage/post_images_videos/${post.video}`"
-                class="h-[400px] w-full rounded-lg" alt="video_post"></video>
+              <video controls :src="`/storage/post_images_videos/${post.video}`" class="h-[400px] w-full rounded-lg"
+                alt="video_post"></video>
             </div>
           </div>
 
@@ -409,7 +407,7 @@ export default {
   },
 
   methods: {
-    
+
     // Fonction pour supprimer l'image
     // By KolaDev
     deleteImage() {

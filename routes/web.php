@@ -11,6 +11,7 @@ use App\Http\Controllers\LikeUserPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\StatutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
@@ -42,7 +43,10 @@ use Inertia\Inertia;
 // })->middleware(['auth', 'verified'])->name('accueil');
 Route::get('/', [AccueilController::class, 'index'])->middleware(['auth', 'verified'])->name('accueil');
 Route::post('/statutImag', [AccueilController::class, 'statutImag'])->middleware(['auth', 'verified'])->name('statutImag');
+Route::post('/publishStatut', [StatutController::class, 'store'])->middleware(['auth', 'verified'])->name('publishStatut');
+Route::post('/publishStatutFirst', [StatutController::class, 'storeFirst'])->middleware(['auth', 'verified'])->name('publishStatutFirst');
 Route::delete('/allImgSta', [AccueilController::class, 'allImgSta'])->middleware(['auth', 'verified'])->name('allImgSta');
+Route::delete('/imgStatut', [AccueilController::class, 'imgStatut'])->middleware(['auth', 'verified'])->name('imgStatut');
 
 // Route::get('/friends', [FollowersController::class, 'index'])->middleware(['auth', 'verified'])->name('friends');
 Route::post('/followingUser', [FollowersController::class, 'followingUser'])->name('followingUser')->middleware(['auth', 'verified']);
