@@ -62,12 +62,18 @@ const selectOption = (option) => {
           <span class="z-50 bg-gray-800 rounded-full w-5 h-5 flex justify-center items-center p-1">
             <Icon name="sun" />
           </span>
+          <video v-if="el[0].video !== null" autoplay="false" controls :src="`/storage/statut/${el[0].video}`"
+            class="h-32 absolute left-0 right-0 rounded top-0 bottom-0" alt="video_statut"></video>
 
-          <p v-if="el[0].bgc" :class="el[0].bgc" class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32 flex justify-center items-center text-[9px] text-justify text-white" v-html="el[0].body.split(' ').slice(0, 8).join(' ') + '...'"></p>
+          <p v-if="el[0].bgc" :class="el[0].bgc"
+            class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32 flex justify-center items-center text-[9px] text-justify text-white p-1"
+            v-html="el[0].body.split(' ').slice(0, 8).join(' ') + '...'"></p>
 
-          <img v-if="el[0].image !== null" class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32" :src="`/storage/statut/${el[0].image}`" />
+          <img v-if="el[0].image !== null" class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32"
+            :src="`/storage/statut/${el[0].image}`" />
           <div class="absolute bottom-2">
-            <p class="text-[9px] text-white" v-if="el[0].name.split(' ').length > 2">{{ el[0].name.split(' ').slice(0, 2).join(' ') + '...' }}</p>
+            <p class="text-[9px] text-white" v-if="el[0].name.split(' ').length > 2">{{ el[0].name.split(' ').slice(0,
+              2).join(' ') + '...' }}</p>
             <p class="text-[9px] text-white" v-else>{{ el[0].name.split(' ').slice(0, 2).join(' ') }}</p>
             <p class="text-[9px] text-white">Actif</p>
           </div>
@@ -179,8 +185,8 @@ const selectOption = (option) => {
                 </label>
                 <input type="file" class="hidden" id="imageStatus" @change="onChargementImag" multiple>
                 <div class="flex items-center gap-x-1">
-                  <button
-                    class="w-24 border-white border-[1px] text-white text-center text-[13px] p-1.5 rounded" @click="publishImgStatutFirst()">Publier</button>
+                  <button class="w-24 border-white border-[1px] text-white text-center text-[13px] p-1.5 rounded"
+                    @click="publishImgStatutFirst()">Publier</button>
                   <img class="h-8 w-8 rounded aspect-square object-cover" :src="img !== null
                     ? `/storage/profilImage/${userInformation.file_profile}`
                     : `/storage/images/account.png`
@@ -227,7 +233,8 @@ const selectOption = (option) => {
                     placeholder="Ecrivez quelque chose..." id="contenuStatut"></textarea>
                   <textarea @change="changeTextContenu" v-else
                     class="w-full h-20 border-gray-600 border-[1px] text-gray-700 overflow-hidden focus:ring focus:ring-transparent cursor:text outline-none rounded p-1 bg-transparent resize-none placeholder:text-gray-700 placeholder:text-[12px] text-[12px] placeholder:font-bold"
-                    placeholder="Ecrivez quelque chose..." id="contenuStatut">{{ tableauImg[indexStatutImg].contenu }}</textarea>
+                    placeholder="Ecrivez quelque chose..."
+                    id="contenuStatut">{{ tableauImg[indexStatutImg].contenu }}</textarea>
                 </div>
                 <div class="flex items-center gap-x-1">
                   <button class="w-24 bg-[#0389c9] text-white text-center text-[13px] p-1.5 rounded"
@@ -1403,13 +1410,13 @@ export default {
     getLastImgProfil: Array,
     mergesTab: Array,
     img: Array,
-    status: Array,
+    statuts: Array,
   },
 
   data() {
     return {
       myTables: this.mergesTab,
-      allStatus: this.status,
+      allStatus: this.statuts,
       userInformation: this.getLastImgProfil,
       friends: this.follow,
 
@@ -1504,12 +1511,12 @@ export default {
         contenu: this.status,
         select: this.colorArrayOne[this.selectColor]
       }).then(response => {
-          if (!response.data.error) {
-            window.location.href = window.location.href;
-          } else {
-            this.loader = false;
-            this.errorMsg = response.data.error;
-          }
+        if (!response.data.error) {
+          window.location.href = window.location.href;
+        } else {
+          this.loader = false;
+          this.errorMsg = response.data.error;
+        }
       })
     },
 
@@ -1519,12 +1526,12 @@ export default {
       axios.post(route("publishStatut"), {
         tableau: this.tableauImg
       }).then(response => {
-          if (!response.data.error) {
-            window.location.href = window.location.href;
-          } else {
-            this.loader = false;
-            this.errorMsg = response.data.error;
-          }
+        if (!response.data.error) {
+          window.location.href = window.location.href;
+        } else {
+          this.loader = false;
+          this.errorMsg = response.data.error;
+        }
       })
     },
 
@@ -1537,8 +1544,7 @@ export default {
         axios.delete(route("imgStatut", {
           tableau: this.tableauImg[this.indexStatutImg]
         })).then(response => {
-          if(response.data.success)
-          {
+          if (response.data.success) {
             this.tableauImg.splice(this.indexStatutImg, 1);
             this.indexStatutImg = 0;
           }

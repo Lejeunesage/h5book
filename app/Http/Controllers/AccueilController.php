@@ -295,7 +295,7 @@ class AccueilController extends Controller
             $img = null;
         }
 
-        $tableau["status"] = $status;
+        $tableau["statuts"] = $status;
         $tableau["img"] = $img;
         $tableau["getLastImgProfil"] = $getLastImgProfil;
         $tableau["mergesTab"] = $merges;
