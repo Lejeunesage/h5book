@@ -47,7 +47,7 @@ const selectOption = (option) => {
             </div>
           </div>
         </div>
-        <div class="p-2 border rounded bg-orange-400 flex-shrink-0 w-24 h-32 flex flex-col gap-y-1 shadow-md relative"
+        <!-- <div class="p-2 border rounded bg-orange-400 flex-shrink-0 w-24 h-32 flex flex-col gap-y-1 shadow-md relative"
           v-for="(el, index) in 10">
           <span>
             <Icon name="sun" />
@@ -55,6 +55,21 @@ const selectOption = (option) => {
           <div class="absolute bottom-2">
             <p class="text-[10px] text-white">Josephile Water</p>
             <p class="text-[10px] text-white">Actif</p>
+          </div>
+        </div> -->
+        <div class="p-2 border rounded flex-shrink-0 w-24 h-32 flex flex-col gap-y-1 shadow-md relative"
+          v-for="(el, index) in allStatus">
+          <span class="z-50 bg-gray-800 rounded-full w-5 h-5 flex justify-center items-center p-1">
+            <Icon name="sun" />
+          </span>
+
+          <p v-if="el[0].bgc" :class="el[0].bgc" class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32 flex justify-center items-center text-[9px] text-justify text-white" v-html="el[0].body.split(' ').slice(0, 8).join(' ') + '...'"></p>
+
+          <img v-if="el[0].image !== null" class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32" :src="`/storage/statut/${el[0].image}`" />
+          <div class="absolute bottom-2">
+            <p class="text-[9px] text-white" v-if="el[0].name.split(' ').length > 2">{{ el[0].name.split(' ').slice(0, 2).join(' ') + '...' }}</p>
+            <p class="text-[9px] text-white" v-else>{{ el[0].name.split(' ').slice(0, 2).join(' ') }}</p>
+            <p class="text-[9px] text-white">Actif</p>
           </div>
         </div>
       </div>
@@ -1388,11 +1403,13 @@ export default {
     getLastImgProfil: Array,
     mergesTab: Array,
     img: Array,
+    status: Array,
   },
 
   data() {
     return {
       myTables: this.mergesTab,
+      allStatus: this.status,
       userInformation: this.getLastImgProfil,
       friends: this.follow,
 
