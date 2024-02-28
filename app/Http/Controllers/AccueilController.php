@@ -246,14 +246,21 @@ class AccueilController extends Controller
         }
 
         // Récupérons les statuts des personnes que l'utilisateur suit
-        $status = Statut::select("statuts.uuid", "statuts.user_id", "statuts.id", "statuts.body", "statuts.image", "statuts.video", "statuts.bgc", "users.id As idUser")
-            ->join("users", "users.id", "=", "statuts.user_id")
-            ->whereIn("statuts.user_id", $identifiants)
-            ->get()
-            ->toArray();
+        // $status = Statut::select("statuts.uuid", "statuts.user_id", "statuts.id", "statuts.body", "statuts.image", "statuts.video", "statuts.bgc", "users.id As idUser")
+        //     ->join("users", "users.id", "=", "statuts.user_id")
+        //     ->whereIn("statuts.user_id", $identifiants)
+        //     ->get()
+        //     ->toArray();
         $tableauStatut = [];
         for ($i = 0; $i < count($identifiants); $i++) {
-            $statut = Statut::select("statuts.uuid", "statuts.user_id", "statuts.id", "statuts.body", "statuts.image", "statuts.video", "statuts.bgc", "users.id As idUser", "users.name")
+            $statut = Statut::select("statuts.uuid", "statuts.user_id", "statuts.id", "statuts.body", "statuts.image", "statuts.video", "statuts.bgc", "users.id As idUser", "users.name",
+            DB::raw("TIMESTAMPDIFF(SECOND, statuts.created_at, NOW()) as diff_in_seconds"),
+            DB::raw("TIMESTAMPDIFF(MINUTE, statuts.created_at, NOW()) as diff_in_minutes"),
+            DB::raw("TIMESTAMPDIFF(HOUR, statuts.created_at, NOW()) as diff_in_hours"),
+            DB::raw("TIMESTAMPDIFF(DAY, statuts.created_at, NOW()) as diff_in_days"),
+            DB::raw("TIMESTAMPDIFF(WEEK, statuts.created_at, NOW()) as diff_in_weeks"),
+            DB::raw("TIMESTAMPDIFF(MONTH, statuts.created_at, NOW()) as diff_in_months"),
+            DB::raw("TIMESTAMPDIFF(YEAR, statuts.created_at, NOW()) as diff_in_years"))
                 ->join("users", "users.id", "=", "statuts.user_id")
                 ->where("statuts.user_id", $identifiants[$i])
                 ->get()
@@ -263,11 +270,11 @@ class AccueilController extends Controller
                 // Récupérons la dernière image de profil de l'utilisateur
                 $getLast = gallery_users::where("user_id", intval($identifiants[$i]))->orderBy("created_at", "desc")->whereNotNull("file_profile")->first();
                 if ($getLast !== null) {
-                    $tableauStatut[$i] = $statut;
-                    $tableauStatut[$i]["image_profil"] = $getLast->file_profile;
+                    $statut[0]["image_profil"] = $getLast->file_profile;
+                    array_push($tableauStatut, $statut);
                 } else {
-                    $tableauStatut[$i] = $statut;
-                    $tableauStatut[$i]["image_profil"] = null;
+                    $statut[0]["image_profil"] = null;
+                    array_push($tableauStatut, $statut);
                 }
             }
         }
@@ -283,6 +290,7 @@ class AccueilController extends Controller
         //     }
         // }
         $status = $tableauStatut;
+        $countStatus = count($status);
 
         $follow = $tab1;
 
@@ -295,6 +303,7 @@ class AccueilController extends Controller
             $img = null;
         }
 
+        $tableau["countStatus"] = $countStatus;
         $tableau["statuts"] = $status;
         $tableau["img"] = $img;
         $tableau["getLastImgProfil"] = $getLastImgProfil;

@@ -58,7 +58,7 @@ const selectOption = (option) => {
           </div>
         </div> -->
         <div class="p-2 border rounded flex-shrink-0 w-24 h-32 flex flex-col gap-y-1 shadow-md relative"
-          v-for="(el, index) in allStatus">
+          v-for="(el, i) in allStatus" @click="openViewStatut(i)">
           <span class="z-50 bg-gray-800 rounded-full w-5 h-5 flex justify-center items-center p-1">
             <Icon name="sun" />
           </span>
@@ -80,7 +80,81 @@ const selectOption = (option) => {
         </div>
       </div>
 
+      <div class="relative" v-if="chargementOne">
+        <div :class="allStatus[elementIndexe][indexe].bgc !== null ? allStatus[elementIndexe][indexe].bgc : ''"
+          class="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 w-full flex flex-col gap-y-3 z-50">
+        </div>
+        <div class="fixed top-2 left-0 right-0 z-50 flex flex-col">
+          <div class="flex items-center justify-start gap-x-1 px-2">
+            <template v-for="(el, ind) in allStatus[elementIndexe]">
+              <div class="border-gray-400 border-2 w-full rounded" v-if="indexe === ind"></div>
+              <div class="border-white border-2 w-full rounded" v-else></div>
+            </template>
+          </div>
+          <div class="flex items-center justify-between px-2 mt-2">
+            <div class="flex gap-x-2 basis-[85%]">
+              <img
+                :src="allStatus[elementIndexe][0].image_profil !== null ? `/storage/profilImage/${allStatus[elementIndexe][0].image_profil}` : `/storage/images/account.png`"
+                class="w-10 h-10 object-cover rounded" alt="image_utilisateur">
+              <div class="flex flex-col">
+                <Link class="text-[14px] text-white" :href="route('myActivity', allStatus[elementIndexe][0].idUser)">{{
+                  allStatus[elementIndexe][0].name }}</Link>
+                      <p class="text-[12px] text-white font-medium" v-if="allStatus[elementIndexe][indexe].diff_in_seconds <= 59">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_seconds }} s
+                      </p>
+                      <p class="text-[12px] text-white font-medium"
+                        v-if="allStatus[elementIndexe][indexe].diff_in_minutes > 0 && allStatus[elementIndexe][indexe].diff_in_hours === 0">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_minutes }} min
+                      </p>
+                      <p class="text-[12px] text-white font-medium"
+                        v-if="allStatus[elementIndexe][indexe].diff_in_hours > 0 && allStatus[elementIndexe][indexe].diff_in_days === 0">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_hours }} h
+                      </p>
+                      <p class="text-[12px] text-white font-medium"
+                        v-if="allStatus[elementIndexe][indexe].diff_in_days > 0 && allStatus[elementIndexe][indexe].diff_in_days <= 7">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_days }} j
+                      </p>
+                      <p class="text-[12px] text-white font-medium"
+                        v-if="allStatus[elementIndexe][indexe].diff_in_months === 0 && allStatus[elementIndexe][indexe].diff_in_weeks > 0">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_weeks }} sem
+                      </p>
+                      <p class="text-[12px] text-white font-medium"
+                        v-if="allStatus[elementIndexe][indexe].diff_in_months > 0 && allStatus[elementIndexe][indexe].diff_in_years === 0">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_months }} m
+                      </p>
+                      <p class="text-[12px] text-white font-medium" v-if="allStatus[elementIndexe][indexe].diff_in_years > 0">
+                        il y a {{ allStatus[elementIndexe][indexe].diff_in_years }} a
+                      </p>
+              </div>
+            </div>
+            <span class="cursor-pointer p-1" @click="cacheStatut">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
+                class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </span>
+          </div>
+          <div class="px-2 mt-4 flex flex-col h-96" @click="indexSuivant">
+            <img v-if="allStatus[elementIndexe][indexe].image !== null"
+              :src="`/storage/statut/${allStatus[elementIndexe][indexe].image}`" class="w-full h-96 object-cover rounded"
+              alt="image_statut" />
+
+            <p v-if="allStatus[elementIndexe][indexe].bgc !== null && allStatus[elementIndexe][indexe].body"
+              v-html="allStatus[elementIndexe][indexe].body" class="text-justify text-[14px] text-white max-h-96 overflow-y-auto"></p>
+              
+              <video autoplay="false" v-if="allStatus[elementIndexe][indexe].video !== null" controls
+              :src="`/storage/statut/${allStatus[elementIndexe][indexe].video}`" class="h-96 w-full"
+              alt="video_statut"></video>
+            </div>
+            <div class="px-2 mt-2 relative flex flex-col">
+              <p v-if="allStatus[elementIndexe][indexe].bgc === null && allStatus[elementIndexe][indexe].body" v-html="allStatus[elementIndexe][indexe].body"
+                class="mt-2 text-justify text-[14px] text-white max-h-[200px] overflow-y-auto"></p>
+            </div>
+          </div>
+      </div>
+
       <transition>
+
         <div id="divStatus" class="hidden z-50 bg-white top-0 fixed bottom-0 left-0 right-0">
           <div class="relative text-gray-600 text-sm font-bold py-3 border-gray-300 border-b-[1px]">
             <div class="mx-auto w-[90%] flex items-center justify-between">
@@ -1411,6 +1485,7 @@ export default {
     mergesTab: Array,
     img: Array,
     statuts: Array,
+    countStatus: Number,
   },
 
   data() {
@@ -1477,10 +1552,13 @@ export default {
       status: '',
       choice: true,
       chargement: false,
+      chargementOne: false,
       loader: false,
       errorMsg: false,
       statModal: false,
       indexStatutImg: 0,
+      elementIndexe: 0,
+      indexe: 0,
 
       tableauImg: [],
     }
@@ -1504,6 +1582,31 @@ export default {
   },
 
   methods: {
+    indexSuivant() {
+      this.indexe += 1;
+      if(this.indexe === this.allStatus[this.elementIndexe].length)
+      {
+        this.indexe = 0;
+        this.elementIndexe += 1;
+        if(this.elementIndexe === this.countStatus)
+        {
+          this.indexe = 0;
+          this.elementIndexe = 0;
+        }
+      }
+    },
+
+    cacheStatut() {
+      this.chargementOne = false;
+      this.indexe = 0;
+      this.elementIndexe = 0;
+    },
+
+    openViewStatut(index) {
+      this.chargementOne = !this.chargementOne;
+      this.elementIndexe = index;
+    },
+
     publishImgStatutFirst() {
       this.chargement = true;
       this.loader = true;
@@ -2056,5 +2159,4 @@ export default {
 .v-leave-to {
   transform: translateY(-10px);
   opacity: 0;
-}
-</style>
+}</style>
