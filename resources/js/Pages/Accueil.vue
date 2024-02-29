@@ -111,7 +111,7 @@ const selectOption = (option) => {
                         il y a {{ allStatus[elementIndexe][indexe].diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-white font-medium"
-                        v-if="allStatus[elementIndexe][indexe].diff_in_days > 0 && allStatus[elementIndexe][indexe].diff_in_days <= 7">
+                        v-if="allStatus[elementIndexe][indexe].diff_in_days > 0 && allStatus[elementIndexe][indexe].diff_in_weeks === 0">
                         il y a {{ allStatus[elementIndexe][indexe].diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-white font-medium"
@@ -134,7 +134,9 @@ const selectOption = (option) => {
               </svg>
             </span>
           </div>
-          <div class="px-2 mt-4 flex flex-col h-96" @click="indexSuivant">
+          <div class="px-2 mt-4 flex flex-col h-96 relative">
+            <div class="w-14 bg-transparent z-50 h-full absolute" @click="indexPrecedent"></div>
+            <div class="w-14 bg-transparent z-50 h-full absolute right-0" @click="indexSuivant"></div>
             <img v-if="allStatus[elementIndexe][indexe].image !== null"
               :src="`/storage/statut/${allStatus[elementIndexe][indexe].image}`" class="w-full h-96 object-cover rounded"
               alt="image_statut" />
@@ -146,8 +148,8 @@ const selectOption = (option) => {
               :src="`/storage/statut/${allStatus[elementIndexe][indexe].video}`" class="h-96 w-full"
               alt="video_statut"></video>
             </div>
-            <div class="px-2 mt-2 relative flex flex-col">
-              <p v-if="allStatus[elementIndexe][indexe].bgc === null && allStatus[elementIndexe][indexe].body" v-html="allStatus[elementIndexe][indexe].body"
+            <div class="px-2 mt-2 relative flex flex-col" v-if="allStatus[elementIndexe][indexe].bgc === null && allStatus[elementIndexe][indexe].body">
+              <p v-html="allStatus[elementIndexe][indexe].body"
                 class="mt-2 text-justify text-[14px] text-white max-h-[200px] overflow-y-auto"></p>
             </div>
           </div>
@@ -487,7 +489,7 @@ const selectOption = (option) => {
                         il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        v-if="item.diff_in_days > 0 && item.diff_in_weeks == 0">
                         il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -650,7 +652,7 @@ const selectOption = (option) => {
                         il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        v-if="item.diff_in_days > 0 && item.diff_in_weeks == 0">
                         il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -829,7 +831,7 @@ const selectOption = (option) => {
                         il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        v-if="item.diff_in_days > 0 && item.diff_in_weeks == 0">
                         il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -993,7 +995,7 @@ const selectOption = (option) => {
                         il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        v-if="item.diff_in_days > 0 && item.diff_in_weeks == 0">
                         il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -1177,7 +1179,7 @@ const selectOption = (option) => {
                         il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        v-if="item.diff_in_days > 0 && item.diff_in_weeks == 0">
                         il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -1340,7 +1342,7 @@ const selectOption = (option) => {
                         il y a {{ item.diff_in_hours }} h
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
-                        v-if="item.diff_in_days > 0 && item.diff_in_days <= 7">
+                        v-if="item.diff_in_days > 0 && item.diff_in_weeks == 0">
                         il y a {{ item.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -1582,6 +1584,21 @@ export default {
   },
 
   methods: {
+    indexPrecedent() {
+      this.indexe -= 1;
+      if(this.indexe < 0)
+      {
+          this.indexe = 0;
+          if(this.elementIndexe >= 1)
+          {
+          this.elementIndexe -= 1;
+        } else {
+          this.elementIndexe = this.countStatus - 1;
+          this.indexe = this.allStatus[this.elementIndexe].length - 1;
+        }
+      }
+    },
+
     indexSuivant() {
       this.indexe += 1;
       if(this.indexe === this.allStatus[this.elementIndexe].length)

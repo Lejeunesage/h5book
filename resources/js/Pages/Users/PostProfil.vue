@@ -40,7 +40,7 @@ import { Head, Link } from "@inertiajs/vue3";
                         v-if="image.diff_in_hours > 0 && image.diff_in_days === 0">
                         il y a {{ image.diff_in_hours }} h
                       </p>
-                      <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_days > 0 && image.diff_in_days <= 7">
+                      <p class="text-[12px] text-gray-600 font-medium" v-if="image.diff_in_days > 0 && image.diff_in_weeks === 0">
                         il y a {{ image.diff_in_days }} j
                       </p>
                       <p class="text-[12px] text-gray-600 font-medium"
@@ -250,7 +250,7 @@ import { Head, Link } from "@inertiajs/vue3";
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_hours > 0 && commentaire.diff_in_days === 0">
                   il y a {{ commentaire.diff_in_hours }} h
                 </span>
-                <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_days > 0 && commentaire.diff_in_days <= 7">
+                <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_days > 0 && commentaire.diff_in_weeks == 0">
                   il y a {{ commentaire.diff_in_days }} j
                 </span>
                 <span class="text-[12px] text-gray-600 font-medium" v-if="commentaire.diff_in_months === 0 && commentaire.diff_in_weeks > 0">
