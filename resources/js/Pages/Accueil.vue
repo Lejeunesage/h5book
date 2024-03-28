@@ -62,8 +62,8 @@ const selectOption = (option) => {
           <span class="z-50 bg-gray-800 rounded-full w-5 h-5 flex justify-center items-center p-1">
             <Icon name="sun" />
           </span>
-          <video v-if="el[0].video !== null" autoplay="false" controls :src="`/storage/statut/${el[0].video}`"
-            class="h-32 absolute left-0 right-0 rounded top-0 bottom-0" alt="video_statut"></video>
+          <video v-if="el[0].video !== null"  :src="`/storage/statut/${el[0].video}`"
+            class="h-32 absolute left-0 right-0 rounded top-0 bottom-0 object-cover" alt="video_statut"></video>
 
           <p v-if="el[0].bgc" :class="el[0].bgc"
             class="absolute left-0 right-0 rounded top-0 bottom-0 object-cover h-32 flex justify-center items-center text-[9px] text-justify text-white p-1"
@@ -127,12 +127,27 @@ const selectOption = (option) => {
                       </p>
               </div>
             </div>
+            <span class="cursor-pointer p-1" @click="parametreStatut" v-if="$page.props.auth.user.id === allStatus[elementIndexe][0].idUser">
+              <svg class="w-5 h-5" data-slot="icon" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path
+                        d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z">
+                    </path>
+                </svg>
+            </span>
             <span class="cursor-pointer p-1" @click="cacheStatut">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
                 class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
             </span>
+
+            <transition>
+            <div v-if="transitionStory" class="w-[140px] top-12 right-10 bg-white z-50 absolute rounded flex flex-col gap-y-1">
+              <button class="text-gray-700 text-[13px] py-1.5 px-1 border-gray-300 border-b-[1px]" @click="statutDelete">Supprimer ce statut</button>
+              <button class="text-gray-700 text-[13px] py-1.5 px-1" @click="storyDelete">Supprimer cette story</button>
+            </div>
+            </transition>
           </div>
           <div class="px-2 mt-4 flex flex-col h-96 relative">
             <div class="w-14 bg-transparent z-50 h-full absolute" @click="indexPrecedent"></div>
@@ -142,7 +157,7 @@ const selectOption = (option) => {
               alt="image_statut" />
 
             <p v-if="allStatus[elementIndexe][indexe].bgc !== null && allStatus[elementIndexe][indexe].body"
-              v-html="allStatus[elementIndexe][indexe].body" class="text-justify text-[14px] text-white max-h-96 overflow-y-auto"></p>
+              v-html="allStatus[elementIndexe][indexe].body" class="text-justify flex justify-center items-center text-[14px] text-white h-96 overflow-y-auto"></p>
               
               <video autoplay="false" v-if="allStatus[elementIndexe][indexe].video !== null" controls
               :src="`/storage/statut/${allStatus[elementIndexe][indexe].video}`" class="h-96 w-full"
@@ -1558,6 +1573,7 @@ export default {
       loader: false,
       errorMsg: false,
       statModal: false,
+      transitionStory: false,
       indexStatutImg: 0,
       elementIndexe: 0,
       indexe: 0,
@@ -1584,6 +1600,32 @@ export default {
   },
 
   methods: {
+    storyDelete() {
+      this.transitionStory = !this.transitionStory;
+      axios.delete(route("storyDelete", {
+        tableau: this.allStatus[this.elementIndexe],
+      })).then(response => {
+        if (response.data.success) {
+          window.location.href = window.location.href;
+        }
+      })
+    },
+
+    statutDelete() {
+      this.transitionStory = !this.transitionStory;
+      axios.delete(route("statutDelete", {
+        elementSelectionne: this.allStatus[this.elementIndexe][this.indexe],
+      })).then(response => {
+        if (response.data.success) {
+          window.location.href = window.location.href;
+        }
+      })
+    },
+
+    parametreStatut() {
+      this.transitionStory = !this.transitionStory;
+    },
+
     indexPrecedent() {
       this.indexe -= 1;
       if(this.indexe < 0)
@@ -1592,6 +1634,7 @@ export default {
           if(this.elementIndexe >= 1)
           {
           this.elementIndexe -= 1;
+          this.indexe = this.allStatus[this.elementIndexe].length - 1;
         } else {
           this.elementIndexe = this.countStatus - 1;
           this.indexe = this.allStatus[this.elementIndexe].length - 1;

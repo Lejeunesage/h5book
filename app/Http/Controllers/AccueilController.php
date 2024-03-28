@@ -18,6 +18,58 @@ use Inertia\Inertia;
 class AccueilController extends Controller
 {
 
+    // Fonction pour supprimer une story
+    // KolaDev
+    public function storyDelete(Request $request)
+    {
+        foreach ($request->tableau as $key => $stat) {
+            $verif = Statut::where("id", intval($stat["id"]))->first();
+            if($verif !== null)
+            {
+                $file = null;
+                if($verif->image !== null)
+                {
+                    $file = $verif->image;
+                }
+                else if($verif->video !== null)
+                {
+                    $file = $verif->video;
+                }
+
+                if($file !== null)
+                {
+                    unlink(base_path() . "/storage/app/public/statut/" . $file);
+                }
+                $verif->delete();
+            }
+        }
+        return json_encode(["success" => "Suppression réussie"]);
+    }
+
+    // Fonction pour supprimer un statut
+    // KolaDev
+    public function statutDelete(Request $request)
+    {
+        if (isset($request->elementSelectionne) && count($request->elementSelectionne) > 0) {
+            try {
+                if (isset($request->elementSelectionne["image"])) {
+                    unlink(base_path() . "/storage/app/public/statut/" . $request->elementSelectionne["image"]);
+                } else if(isset($request->elementSelectionne["video"])) {
+                    unlink(base_path() . "/storage/app/public/statut/" . $request->elementSelectionne["video"]);
+                }
+                $verif = Statut::where("id", intval($request->elementSelectionne["id"]))->first();
+                if($verif !== null)
+                {
+                    $verif->delete();
+                }
+
+            } catch (\Throwable $th) {
+                return json_encode(["error" => "Une erreur est survenue lors de la suppression !"]);
+            }
+        }
+        return json_encode(["success" => "Suppression réussie"]);
+    }
+
     // Fonction pour supprimer une seule image
     // KolaDev
     public function imgStatut(Request $request)

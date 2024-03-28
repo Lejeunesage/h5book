@@ -47,6 +47,8 @@ Route::post('/publishStatut', [StatutController::class, 'store'])->middleware(['
 Route::post('/publishStatutFirst', [StatutController::class, 'storeFirst'])->middleware(['auth', 'verified'])->name('publishStatutFirst');
 Route::delete('/allImgSta', [AccueilController::class, 'allImgSta'])->middleware(['auth', 'verified'])->name('allImgSta');
 Route::delete('/imgStatut', [AccueilController::class, 'imgStatut'])->middleware(['auth', 'verified'])->name('imgStatut');
+Route::delete('/statutDelete', [AccueilController::class, 'statutDelete'])->middleware(['auth', 'verified'])->name('statutDelete');
+Route::delete('/storyDelete', [AccueilController::class, 'storyDelete'])->middleware(['auth', 'verified'])->name('storyDelete');
 
 // Route::get('/friends', [FollowersController::class, 'index'])->middleware(['auth', 'verified'])->name('friends');
 Route::post('/followingUser', [FollowersController::class, 'followingUser'])->name('followingUser')->middleware(['auth', 'verified']);
